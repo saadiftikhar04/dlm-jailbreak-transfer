@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+
+dataset/
+cache/
+logs/
+results/
+models/
+plots/
+
+.DS_Store

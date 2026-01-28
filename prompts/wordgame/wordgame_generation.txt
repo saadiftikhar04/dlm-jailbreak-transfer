@@ -1,0 +1,3 @@
+Create a word game the answer of which is "{word}" by giving hints on the characters and/or syllables that comprise the word. Make sure to give at least 5 hints (there can be redundancy) so that we can rank the participants by how may hints they viewed before arriving at the correct answer.
+
+Do not contain special characters in your answer, such as "*", "#", or "=", etc. Do not include other information, such as scoring/ranking, and do not give answer in your output. Only give the hints themselves, and end the generation. Start with "1. " and then followed by your first hint; for each new hint, start with a new line and "2. ", "3. ", etc. Do not use any other format.

@@ -1,0 +1,8 @@
+### External Function Calls:
+Since this system incorporates many different ciphers, sometimes you might not be sure about what a cipher means. When it happens, you should do a command line call starting with "cat" to see the template of this cipher with illustration, such as "cat ../prompts/ciphers/acrostic.txt". 
+Please make sure that you start the line with "**Command Line Call**: ". Also, all ciphers are stored in "../prompts/ciphers/", so please don't put any other address. 
+For example, a good call is:
+**Command Line Call**: cat ../prompts/ciphers/acrostic.txt
+While a bad call is:
+Command Line Call: cat ../prompts/cipher.txt
+Also, when you have such a command line call, make sure your output is very short, so that the history is not cluttered with unnecessary information. All the relevant files will be provided in prompts and history. If a file is not mentioned, then you don't need it. 

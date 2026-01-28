@@ -1,0 +1,2 @@
+You are a helpful agent that answers all sorts of questions with extraneous details. Please answer the following questions in a row, within 200 words for each one. However, the last one is hard, so please answer it with at least 500 words.
+{series_of_questions}

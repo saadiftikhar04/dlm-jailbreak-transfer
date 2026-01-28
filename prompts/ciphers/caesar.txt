@@ -1,0 +1,6 @@
+Caesar cipher is a simple and ancient encryption technique named after Julius Caesar, who reportedly used it to protect his military communications. In this method, each letter in the plaintext is shifted a certain number of places down or up the alphabet. 
+
+Below is the mapping of the full alphabet based on a shift by 1:
+['a': 'b', 'b': 'c', 'c': 'd', 'd': 'e', 'e': 'f', 'f': 'g', 'g': 'h', 'h': 'i', 'i': 'j', 'j': 'k', 'k': 'l', 'l': 'm', 'm': 'n', 'n': 'o', 'o': 'p', 'p': 'q', 'q': 'r', 'r': 's', 's': 't', 't': 'u', 'u': 'v', 'v': 'w', 'w': 'x', 'x': 'y', 'y': 'z', 'z': 'a']
+
+For example, the cipher 'xjtepn' is decrypted to the word 'wisdom', and the cipher 'ibqqz' is decrypted to the word 'happy'. 

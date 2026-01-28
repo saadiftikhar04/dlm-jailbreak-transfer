@@ -1,0 +1,5 @@
+An acrostic poem is a type of poetry where the first letter of each line, when read vertically, spells out a word or message. For example, the acrostic poem below encrypts the word "poem":
+Pleasantly is the way to write
+On a page, with words that might
+Evoke a feeling, or a sight
+Message hidden, out of sight

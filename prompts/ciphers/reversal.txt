@@ -1,0 +1,1 @@
+The reversal cypher is a simple encryption technique that reverses the order of the characters in the plaintext. For example, "olleh" is decrypteed to "hello", and "yadot" is decrypted to "today".

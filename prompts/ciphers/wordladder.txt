@@ -1,0 +1,1 @@
+The word ladder represents a word with a changed letter. To decrypt it, replace the letter at the right location as instructed. For example "replace the fourth letter to 'e' in 'intaresting'" makes "interesting"; "replace the first letter to 'b' in 'pake'" makes "bake".
