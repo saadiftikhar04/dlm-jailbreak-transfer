@@ -1,250 +1,180 @@
-# Jailbreak Attack Runners - Delivery Package
+# DLM Jailbreak Evaluation Framework
 
-**Date**: January 2025  
-**Purpose**: Complete setup and runner scripts for PiF, ArrAttack, and GCG attacks  
-**For**: MetaCipher Jailbreak Transferability Analysis
+A comprehensive evaluation framework for assessing the safety of Diffusion Language Models against adversarial jailbreak attacks.
 
-## What's Included
+## Overview
 
-This package contains everything needed to run comprehensive jailbreak attack experiments on the MetaCipher platform.
+This repository implements three state-of-the-art jailbreak methods and provides standardized evaluation protocols across multiple benchmark datasets. The framework supports both whitebox and blackbox attack scenarios with automated judging systems.
 
-### 📋 Documentation (5 files)
+## Methods
 
-<<<<<<< HEAD
-1. **QUICK_START.md**
-=======
-1. **QUICK_START.md** ⭐ START HERE
->>>>>>> 6c7c78e (Update repository with latest changes from Jubail)
-   - 5-minute setup guide
-   - Essential commands only
-   - Troubleshooting basics
+**PiF (Prompt Injection with Formatting)**
+- Whitebox gradient-based optimization
+- Perturbs input embeddings to maximize harmful completion likelihood
+- Adaptable to diffusion model architectures
 
-2. **SETUP_README.md** 
-   - Complete setup instructions
-   - Detailed usage for each runner
-   - Troubleshooting section
-   - Expected results
+**ArrAttack (Adversarial Representation Refinement)**
+- Blackbox candidate generation approach
+- Multiple rewriting strategies including role-playing, encoding, and context injection
+- Model-agnostic with high transferability
 
-3. **DEPLOYMENT_CHECKLIST.md**
-   - Step-by-step deployment guide
-   - Pre-deployment checklist
-   - Monitoring and management
-   - Common issues and solutions
+**MetaCipher**
+- Cipher-based obfuscation technique
+- Supports Caesar, Atbash, Vigenere, substitution, and Morse encodings
+- Exploits instruction-following capabilities
 
-4. **PACKAGE_SUMMARY.md**
-   - Technical details
-   - Design principles
-   - Integration guide
-   - Performance characteristics
+## Datasets
 
-5. **experiments.yaml**
-   - Sample configuration
-   - All attacks/datasets/victims
-   - Customizable parameters
+The framework supports evaluation on seven benchmark datasets:
 
-### 🔧 Setup Scripts (2 files)
+- AdvBench
+- HarmBench
+- Harmful Tasks
+- JailbreakBench
+- MaliciousInstruct
+- StrongREJECT
+- VBCDE-100
 
-1. **setup_hpc.sh**
-   - Creates conda environment
-   - Installs all dependencies
-   - Downloads NLTK data
-   - Generates .env template
-   - **Run this first!**
-
-2. **organize_repo.sh**
-   - Organizes file structure
-   - Creates directories
-   - Makes scripts executable
-   - **Run this second!**
-
-### 🎯 Attack Runners (3 files)
-
-1. **run_pif.py** - PiF Attack
-   - Flattens attention distribution
-   - Injects neutral words
-   - Uses synonyms and prefixes
-   - Fast, black-box
-
-2. **run_arrattack.py** - ArrAttack
-   - Adaptive robust rewriting
-   - 8 rewriting strategies
-   - Robustness judging
-   - LLM-based
-
-3. **run_gcg.py** - GCG Attack
-   - Gradient-guided optimization
-   - Adversarial suffix generation
-   - Transfer attacks
-   - GPU-accelerated
-
-### 🎮 Control Scripts (3 files)
-
-1. **run_all_experiments.py**
-   - Master experiment runner
-   - Runs all combinations
-   - Configuration support
-   - Progress tracking
-
-2. **quick_test.py**
-   - Quick validation
-   - Tests all runners
-   - Single-prompt tests
-   - Debug mode
-
-3. **validate_environment.py**
-   - Environment checker
-   - Validates setup
-   - Checks dependencies
-   - Colorized output
-
-## File Sizes
+## Structure
 
 ```
-Total: ~130KB (scripts + documentation)
-+ 50GB (models cache after setup)
-+ 10GB (results after experiments)
+dlm-jailbreak-transfer/
+├── dataset/               # Benchmark datasets
+├── playground/            # Development and testing
+│   ├── dlm_attacks_unified.py
+│   ├── dlm_judges.py
+│   ├── pipeline.py
+│   └── infer_*.py
+├── scripts/               # Experiment runners
+│   ├── evaluation/
+│   ├── experiments/
+│   └── infer_*.py
+├── src/                   # Core implementations
+│   ├── agent.py
+│   ├── generate_cipher.py
+│   ├── llm.py
+│   └── utils.py
+└── results/               # Experiment outputs
 ```
 
-## Quick Deploy
+## Installation
 
 ```bash
-# 1. Upload to HPC
-scp -r delivery_package/ user@hpc:/workspace/
+# Create environment
+conda create -n dlm-jailbreak python=3.10
+conda activate dlm-jailbreak
 
-# 2. SSH and setup
-ssh user@hpc
-cd /workspace/delivery_package/
-./setup_hpc.sh
+# Install dependencies
+pip install torch transformers pandas tqdm anthropic openai
+pip install jailbreakbench  # For JailbreakBench evaluation
 
-# 3. Organize
-./organize_repo.sh
-
-# 4. Configure
-nano .env  # Add API keys
-
-# 5. Validate
-conda activate metacipher
-python validate_environment.py
-
-# 6. Test
-python quick_test.py
-
-# 7. Run experiments
-python run_all_experiments.py --config experiments.yaml
+# Configure API keys
+export ANTHROPIC_API_KEY="your_key"
+export OPENAI_API_KEY="your_key"
 ```
 
-## What You'll Get
+## Usage
 
-After running experiments:
+### Single Attack Evaluation
 
-### Results Structure
+```python
+from playground.dlm_attacks_unified import MetaCipherAttack, JailbreakConfig
+from src.llm import load_model
+
+# Load model
+model, tokenizer = load_model('model_path')
+
+# Configure attack
+config = JailbreakConfig(method='metacipher', cipher_type='caesar')
+attack = MetaCipherAttack(model, tokenizer, config)
+
+# Execute
+result = attack.attack("harmful_prompt")
+```
+
+### Batch Experiments
+
+```python
+from playground.pipeline import ExperimentPipeline
+
+pipeline = ExperimentPipeline('config.json')
+pipeline.run_full_pipeline(
+    model_path='model_path',
+    datasets=['harmbench', 'jailbreakbench'],
+    methods=['pif', 'arrattack', 'metacipher']
+)
+```
+
+### Command Line
+
+```bash
+python playground/pipeline.py \
+    --model model_path \
+    --dataset harmbench \
+    --method metacipher \
+    --num-samples 100
+```
+
+## Evaluation
+
+Results are automatically evaluated using dataset-specific judges:
+
+- **HarmBench**: Classifier-based binary evaluation
+- **JailbreakBench**: Dual-judge system (jailbreak + refusal)
+- **StrongREJECT**: Continuous scoring (0-1 scale)
+- **MaliciousInstruct**: Hybrid classifier with refusal filtering
+- **General**: LLM-as-judge with structured rubrics
+
+Output format:
+```csv
+prompt,perturbed_prompt,response,method,label,score
+```
+
+## Configuration
+
+Experiments can be configured via JSON:
+
+```json
+{
+  "methods": {
+    "pif": {"num_steps": 100, "k": 10, "alpha": 0.1},
+    "arrattack": {"num_samples": 20, "temperature": 1.0},
+    "metacipher": {"cipher_type": "caesar", "include_instructions": true}
+  },
+  "datasets": ["harmbench", "jailbreakbench"],
+  "computation": {"use_gpu": true, "batch_size": 8}
+}
+```
+
+## Results
+
+Experimental results are saved in structured format:
+
 ```
 results/
-├── pif/
-│   ├── jailbreakbench/
-│   │   ├── claude-sonnet-4.5.csv
-│   │   ├── llama2-70b-chat.csv
-│   │   └── ...
-│   └── ...
-├── arrattack/
-│   └── ...
-└── gcg/
-    └── ...
+├── method_name/
+│   ├── dataset_name/
+│   │   ├── model_name.csv
+│   │   └── model_name_judged.csv
+│   └── summary.json
 ```
 
-### CSV Schema
-Each CSV contains:
-- `prompt`: Original malicious prompt
-- `category`: Prompt category
-- `victim_response`: Model's response
-- `success`: Attack success (boolean)
-- `time`: Time taken
-- Attack-specific columns
+Success rates and statistical analyses are generated automatically.
+
+## Testing
+
+```bash
+# Validate environment
+python playground/test_framework.py
+
+# Quick functional test
+python playground/test_dlm_inference.py
+```
 
 ## Requirements
 
-### Minimal
 - Python 3.10+
-- 50GB storage
-- 16GB RAM
-- Internet access
-
-### Recommended
-- GPU (for GCG)
-- 64GB RAM
-- 8+ CPU cores
-- SLURM cluster
-
-### API Keys (at least one)
-- OpenAI API key (for GPT models)
-- Anthropic API key (for Claude)
-- Google API key (for Gemini)
-
-## Documentation Guide
-
-| Document | When to Read |
-|----------|--------------|
-| QUICK_START.md | First time setup |
-| SETUP_README.md | Need detailed info |
-| DEPLOYMENT_CHECKLIST.md | HPC deployment |
-| PACKAGE_SUMMARY.md | Technical details |
-
-## Expected Timeline
-
-- **Setup**: 30 minutes
-- **Testing**: 15 minutes
-- **Single experiment**: 1-4 hours
-- **Full suite**: 6-12 days (parallel) or 150-300 hours (sequential)
-
-## Support
-
-1. **Check documentation**: All info is in the MD files
-2. **Run validation**: `python validate_environment.py`
-3. **Check logs**: `logs/` directory
-4. **Verbose mode**: Add `--log-level DEBUG` to any command
-
-## Integration
-
-These scripts integrate with:
-- ✓ Existing `src/llm.py` model factory
-- ✓ Existing `src/utils.py` utilities
-- ✓ Existing dataset format (`processed.csv`)
-- ✓ Existing MetaCipher runner
-- ✓ Existing post-processing judges
-
-No modifications to existing code needed!
-
-## Verification Checklist
-
-After deployment, verify:
-- [ ] `setup_hpc.sh` completed successfully
-- [ ] `validate_environment.py` shows all ✓
-- [ ] `quick_test.py` passes for at least one attack
-- [ ] Results CSV created in `results/` directory
-- [ ] Logs created in `logs/` directory
-
-## Next Steps
-
-1. **Read**: QUICK_START.md
-2. **Setup**: Run setup_hpc.sh
-3. **Test**: Run quick_test.py
-<<<<<<< HEAD
-=======
-4. **Deploy**: Run experiments
-5. **Analyze**: Use post-processing scripts
-
-## Contact
-
-For issues:
-1. Check troubleshooting in SETUP_README.md
-2. Review logs in `logs/` directory
-3. Run with `--verbose` or `--log-level DEBUG`
-
----
-
-**Ready to deploy?** Start with `QUICK_START.md`!
-
-**Package Version**: 1.0  
-**Delivered**: January 2025  
-**Status**: Production-ready ✓
->>>>>>> 6c7c78e (Update repository with latest changes from Jubail)
+- PyTorch 2.0+
+- transformers 4.35+
+- CUDA-capable GPU (recommended)
+- Minimum 16GB RAM
