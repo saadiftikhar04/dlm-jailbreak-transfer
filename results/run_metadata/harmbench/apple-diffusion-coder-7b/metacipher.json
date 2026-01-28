@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Apple-Diffusion-Coder-7B",
+  "method": "metacipher",
+  "n": 400,
+  "successful": 36,
+  "failed": 364,
+  "asr_reported": 9.0,
+  "asr_target_combined": 9.0,
+  "selection": "deterministic_hash_order"
+}

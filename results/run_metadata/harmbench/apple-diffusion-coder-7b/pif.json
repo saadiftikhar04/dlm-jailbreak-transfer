@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Apple-Diffusion-Coder-7B",
+  "method": "pif",
+  "n": 400,
+  "successful": 46,
+  "failed": 354,
+  "asr_reported": 11.5,
+  "asr_target_combined": 11.4,
+  "selection": "deterministic_hash_order"
+}

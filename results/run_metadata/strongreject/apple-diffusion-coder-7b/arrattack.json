@@ -1,0 +1,11 @@
+{
+  "dataset": "strongreject",
+  "model": "Apple-Diffusion-Coder-7B",
+  "method": "arrattack",
+  "n": 313,
+  "successful": 24,
+  "failed": 289,
+  "asr_reported": 7.7,
+  "asr_target_combined": 7.8,
+  "selection": "deterministic_hash_order"
+}

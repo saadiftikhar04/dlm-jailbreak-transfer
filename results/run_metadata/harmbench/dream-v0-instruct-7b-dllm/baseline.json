@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Dream-v0-Instruct-7B (dLLM)",
+  "method": "baseline",
+  "n": 400,
+  "successful": 4,
+  "failed": 396,
+  "asr_reported": 1.0,
+  "asr_target_combined": 1.0,
+  "selection": "deterministic_hash_order"
+}

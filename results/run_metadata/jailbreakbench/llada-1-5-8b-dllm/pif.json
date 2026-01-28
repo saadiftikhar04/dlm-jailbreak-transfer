@@ -1,0 +1,11 @@
+{
+  "dataset": "jailbreakbench",
+  "model": "LLaDA-1.5 (~8B, dLLM)",
+  "method": "pif",
+  "n": 100,
+  "successful": 0,
+  "failed": 100,
+  "asr_reported": 0.0,
+  "asr_target_combined": 0.0,
+  "selection": "deterministic_hash_order"
+}

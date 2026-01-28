@@ -1,0 +1,11 @@
+{
+  "dataset": "maliciousinstruct",
+  "model": "Falcon-H1R-7B",
+  "method": "metacipher",
+  "n": 100,
+  "successful": 89,
+  "failed": 11,
+  "asr_reported": 89.0,
+  "asr_target_combined": 89.0,
+  "selection": "deterministic_hash_order"
+}

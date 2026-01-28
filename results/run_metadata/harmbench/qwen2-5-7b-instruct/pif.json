@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Qwen2.5-7B-Instruct",
+  "method": "pif",
+  "n": 400,
+  "successful": 328,
+  "failed": 72,
+  "asr_reported": 82.0,
+  "asr_target_combined": 82.0,
+  "selection": "deterministic_hash_order"
+}

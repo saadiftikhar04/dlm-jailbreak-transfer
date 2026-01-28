@@ -3,11 +3,4 @@ __pycache__/
 .env
 .venv/
 
-dataset/
-cache/
-logs/
-results/
-models/
-plots/
-
 .DS_Store
