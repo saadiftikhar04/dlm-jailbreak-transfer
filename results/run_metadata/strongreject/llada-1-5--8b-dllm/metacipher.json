@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "LLaDA-1.5 (~8B, dLLM)",
+  "method": "metacipher",
+  "n": 313,
+  "successful": 5,
+  "failed": 308,
+  "asr_reported": 1.6,
+  "selection": "deterministic_hash_order"
+}

@@ -6,6 +6,5 @@
   "successful": 81,
   "failed": 19,
   "asr_reported": 81.0,
-  "asr_target_combined": 81.0,
   "selection": "deterministic_hash_order"
 }

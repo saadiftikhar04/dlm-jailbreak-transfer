@@ -3,9 +3,8 @@
   "model": "Dream-v0-Instruct-7B (dLLM)",
   "method": "arrattack",
   "n": 100,
-  "successful": 13,
-  "failed": 87,
-  "asr_reported": 13.0,
-  "asr_target_combined": 12.5,
+  "successful": 5,
+  "failed": 95,
+  "asr_reported": 5.0,
   "selection": "deterministic_hash_order"
 }

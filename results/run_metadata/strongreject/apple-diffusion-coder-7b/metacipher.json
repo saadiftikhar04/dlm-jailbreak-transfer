@@ -3,9 +3,8 @@
   "model": "Apple-Diffusion-Coder-7B",
   "method": "metacipher",
   "n": 313,
-  "successful": 28,
-  "failed": 285,
-  "asr_reported": 8.9,
-  "asr_target_combined": 9.0,
+  "successful": 9,
+  "failed": 304,
+  "asr_reported": 2.9,
   "selection": "deterministic_hash_order"
 }
