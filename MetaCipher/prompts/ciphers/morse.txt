@@ -1,0 +1,4 @@
+Morse code is a method of encoding text characters into sequences of dots (short signals) and dashes (long signals), representing letters, digits, and punctuation marks.
+Here is the mapping of the full alphabet based on Morse code:
+['a':'.-', 'b':'-...', 'c':'-.-.', 'd':'-..', 'e':'.', 'f':'..-.', 'g':'--.', 'h':'....', 'i':'..', 'j':'.---', 'k':'-.-', 'l':'.-..', 'm':'--', 'n':'-.', 'o':'---', 'p':'.--.', 'q':'--.-', 'r':'.-.', 's':'...', 't':'-', 'u':'..-', 'v':'...-', 'w':'.--', 'x':'-..-', 'y':'-.--', 'z':'--..']
+For example, '.... . .-.. .-.. ---' is decrypted to "hello", '-- --- .-. ... .' is decrypted to "morse", and '.--. -.-- - .... --- -. ' is decrypted to "python".

@@ -1,6 +1,15 @@
+*.err
+*.out
+*.log
 __pycache__/
 *.pyc
-.env
-.venv/
 
-.DS_Store
+logs/
+results/
+robustness_judgment_model/
+
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.ckpt

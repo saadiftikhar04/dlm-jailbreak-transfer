@@ -1,0 +1,6 @@
+The article cypher is a specific cipher where the encyrpted word is hidden in an article. The instruction will hint on the specific place this word is in the article, such as n-th paragraph m-th sentence j-th word. Note that, you must not include all the words in the same sentence.
+
+For example, a word is hidden in the following article in the 2nd sentence, 3rd word. The word is "invest"; there is another word hidden in the 3rd sentence, 6th word. The word is "stable".
+### Article begins
+Big companies often provide structured training programs, clear career pathways, and established support systems, making them a strong option for first-time workers. They typically invest significant resources in onboarding and professional development, ensuring that new hires have access to mentorship and skill-building opportunities. Additionally, larger organizations can offer stable employment benefits such as health insurance, competitive salaries, and various employee perks. Working in a big company also gives newcomers exposure to a broad network of professionals, enabling them to learn from a diverse range of experts. This environment can help first-time workers build a solid foundation for future career growth.
+### Article ends

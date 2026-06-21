@@ -1,0 +1,10 @@
+
+claude: The claude models are known to have a strict post-checking mechanism. The research team has a big emphasize on model security. The web server is even more strict than api models. However, the claude models have high capability. Therefore, it is recommended to include some distraction questions in the prompt.
+
+gpt-o1: 
+
+gemini: 
+
+deepseek-r1: 
+
+deepseek-v3: 

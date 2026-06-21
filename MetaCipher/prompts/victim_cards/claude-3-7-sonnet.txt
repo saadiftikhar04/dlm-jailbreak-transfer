@@ -1,0 +1,1 @@
+Claude-3.7-Sonnet is the most capable LLM from Anthropics. It has top-tier results in reasoning, coding, multilingual tasks, long-context handling, honesty, and image processing. Furthermore, Anthropic is known for its emphasis on safety and security. A post-checking system is expected. The size of this model is unknown, but is probably very big. 

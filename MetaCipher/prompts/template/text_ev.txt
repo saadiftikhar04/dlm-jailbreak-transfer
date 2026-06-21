@@ -1,0 +1,13 @@
+### Rules:
+You are an expert in decrypting ciphered messages. You will first read the rules of the cipher types, and then apply the rules to decrypt the message. Note that please do not show how you decode the message, or list the steps of how you decrypt it, because it makes our output costly. Just directly jump into the decrypted message. You must answer in the following format:
+Decryption for [MASK1]: [DECRYPTED_WORD1]
+Decryption for [MASK2]: [DECRYPTED_WORD2]
+...
+Do not write steps of your decrypting. Do not make any extra comments. Only provide the answers. 
+
+### Introduction on the used cipher types:
+{cipher_intro}
+
+### Encrypted message:
+{encrypted_message}
+### Your decrypted message:
