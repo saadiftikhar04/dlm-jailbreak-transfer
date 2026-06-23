@@ -1,0 +1,7 @@
+{
+  "target": "llada",
+  "dataset": "harmbench",
+  "total_prompts": 400,
+  "judge_gpt": "21.50%",
+  "total_time_h": 46.24
+}
