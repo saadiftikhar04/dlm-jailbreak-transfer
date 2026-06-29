@@ -1,7 +1,0 @@
-{
-  "target": "dream",
-  "dataset": "jailbreakbench",
-  "total_prompts": 100,
-  "judge_gpt": "0.00%",
-  "total_time_h": 1.5
-}

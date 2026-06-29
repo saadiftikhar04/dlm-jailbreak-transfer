@@ -1,7 +1,0 @@
-{
-  "target": "qwen2.5",
-  "dataset": "malicious_instruct",
-  "total_prompts": 100,
-  "judge_gpt": "6.00%",
-  "total_time_h": 9.56
-}

@@ -1,7 +1,0 @@
-{
-  "target": "dream",
-  "dataset": "harmbench",
-  "total_prompts": 400,
-  "judge_gpt": "0.00%",
-  "total_time_h": 6.39
-}
