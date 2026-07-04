@@ -1,0 +1,225 @@
+# Results Audit Summary — dlm-jailbreak-transfer/results
+# Generated from iterative audit of all 3 attacks × 6 models × 4 datasets
+#
+# Attacks: PiF, ArrAttack, MetaCipher
+# Models: Qwen2.5, Llama-3.1, Falcon-H1R, LLaDA, Dream, DiffuCoder
+# Datasets: HarmBench (400), JailbreakBench (100), MaliciousInstruct (100), StrongREJECT (313)
+# Expected total unique prompts per model: 913 (PiF/MetaCipher) or 165 (ArrAttack)
+
+
+================================================================================
+CRITICAL — DATA CORRUPTION
+================================================================================
+
+1. EMBEDDED HEADER ROWS IN PiF RAW CSVs
+   Four PiF raw files contain a stray header row inserted mid-data, concatenating
+   two runs with different schemas:
+   - qwen/harmbench/results.csv:    embedded header at row 107 (schema A→B switch)
+   - qwen/strongreject/results.csv:  embedded header at row 10
+   - llama/harmbench/results.csv:    embedded header at row 244 (same schema both sides)
+   - falcon/harmbench/results.csv:   embedded header at row 279 (same schema both sides)
+   Impact: naive readers using the first header row will misalign columns for
+   rows after the embedded header. Row counts are inflated by 1 per embedded row.
+   qwen/harmbench is worst: column names change mid-file
+     (target→victim, jailbreak_prompt→pif_prompt, target_response→victim_output,
+      asr_gpt→judge_gpt).
+
+2. COLUMN SCHEMA INCONSISTENCY ACROSS PiF RAW FILES
+   Two schemas coexist:
+   Schema A: prompt_idx, dataset, target, original_prompt, templated_prompt,
+             jailbreak_prompt, target_response, attack_success_internal,
+             asr_gpt, total_query, pif_time_s, total_time_s
+   Schema B: prompt_idx, dataset, victim, original_prompt, templated_prompt,
+             pif_prompt, victim_output, attack_success_internal, judge_gpt,
+             total_query, pif_time_s, total_time_s
+   qwen/harmbench uses schema A as the top-level header (switches to B at row 107).
+   All other files use schema B. PIF_JUDGED standardized on schema B.
+
+3. FIGURE 2 HARDCODED MDG MISMATCHES COMPUTED ASRs
+   plots/fig-2-exposure_metrics.py has hardcoded MEE/MDG that don't match judged CSVs:
+   Model       Computed MEE  Fig-2 MEE  Computed MDG  Fig-2 MDG  MDG diff
+   Qwen2.5         71.5        71.0        59.9         53.9      +6.0 !!!
+   Llama-3.1       71.1        70.5        57.9         47.4     +10.5 !!!
+   Falcon          24.8        24.8        24.8         24.6      +0.2
+   DiffuCoder      31.5        31.5        30.6         31.4      -0.8
+   Dream           13.9        13.9        13.9         13.9       0.0
+   LLaDA           77.6        77.0        70.0         69.2      +0.8
+   MEE values are close (≤0.6pp, likely rounding). MDG for Qwen and Llama differ
+   by 6.0 and 10.5 percentage points — figure likely generated from earlier results
+   or a different ASR computation method.
+
+
+================================================================================
+SIGNIFICANT — SCHEMA / NAMING INCONSISTENCY
+================================================================================
+
+4. ArrAttack LLaDA RAW MISSING 2 COLUMNS
+   All ArrAttack raw files have 18 columns (global_idx, dataset, dataset_idx,
+   prompt_idx, ...). LLaDA has only 16 — missing global_idx and dataset_idx.
+   Column order also differs (LLaDA starts: prompt_idx, dataset, original_prompt).
+   Scripts reading by positional index or expecting global_idx will break on LLaDA.
+
+5. DATASET NAME CASING INCONSISTENCY
+   - ArrAttack LLaDA: capitalized dataset names (HarmBench, JailbreakBench,
+     MaliciousInstruct, StrongReject) vs lowercase in all other models.
+   - PiF strongreject: llama uses "strong_reject" (underscore) as directory name,
+     all others use "strongreject" (no underscore). File content is identical.
+
+6. BOM IN SOME PIF_JUDGED HEADERS
+   3 of 6 PIF_JUDGED files have a UTF-8 BOM (\ufeff) prefix on the first column
+   name ("\ufeffprompt_idx"): qwen, llama, diffucoder. The other 3 (falcon, llada,
+   dream) do NOT have a BOM. pandas.read_csv column lookups will fail on the
+   BOM-affected files unless encoding='utf-8-sig' is used.
+
+7. MISSING UNIFIED JUDGE SCRIPT
+   scripts/evaluation/judge.py contains KeywordJudge and LLMJudge classes, but
+   neither produces the columns found in the judged CSVs (asr_success, llm_judge,
+   gpt_fuzz, prompt_type, is_too_general_prompt, manual_review_note, etc.).
+   The actual unified judge that produced *_Judged/ files is NOT in the repo.
+   judge.py appears to be an unused placeholder.
+   Additionally, judge.py has a hardcoded path: sys.path.append('/scratch/si2356/
+   projects/dlm-jailbreak-transfer') — another user's HPC scratch path.
+
+8. ArrAttack JUDGED COLUMN MISALIGNMENT WITH NON-CSV PARSERS
+   When parsed with awk -F',' (positional), the asr_success column (field 10)
+   contains garbage from final_response bleeding through (commas inside quoted
+   fields). Proper CSV parsing (csv module / pandas) is correct: 22 columns,
+   clean True/False. Any analysis script not using a CSV-aware parser will fail.
+
+9. ArrAttack MODEL DIRECTORY NAMING
+   Qwen2.5 stored under "Qwen2.5" (capitalized) while judged file is
+   arrattack_01_qwen2_5_judged.csv. Other models use lowercase directories.
+
+
+================================================================================
+MODEL BEHAVIOR ISSUES (documented findings, not data bugs)
+================================================================================
+
+10. FALCON CoT LEAKAGE
+    Falcon-H1R responses across all three attacks begin with
+    "assistant\n<think>\nThe user is asking..." — internal reasoning/CoT leaks
+    into output before the actual (often refusing) response. The literal text
+    is "<think>" (not an emoji).
+    Impact: PiF internal judge counts these as successes (long text, no early
+    refusal keyword). Unified judge correctly rejects them (judge_reason =
+    "answer_opens_with_refusal"). Any keyword-based judge will also be confused.
+    Scale: 835/913 PiF prompts for Falcon have raw=True→judged=False.
+
+11. MetaCipher INTERNAL JUDGE MASSIVE FALSE POSITIVES (Dream, DiffuCoder)
+    Raw "success" vs unified judge "asr_success" disagreement:
+    Model       Agree  Raw=True→Judged=False  Raw=False→Judged=True
+    Qwen         671          217                    25
+    Falcon       821           92                     0
+    Llama        672          105                   136
+    LLaDA        569          270                    74
+    Dream        251          662 (!)                0
+    DiffuCoder   267          644 (!)                2
+    Dream and DiffuCoder internal judges mark 663/650 as success, but unified
+    judge reclassifies 662/644 as failures (mostly too_general / wrong_decryption).
+    Confirms README: "MetaCipher×DiffuCoder successes are overwhelmingly scaffold
+    artifacts." Extends to Dream.
+
+12. ArrAttack ORIGINAL JUDGE (GPTFuzz) RETURNS 0% FOR FALCON
+    Falcon raw attack_success_llm = all False (0/6707 rows). Unified judge found
+    41 True cases (24.8%). Original GPTFuzz judge completely failed for Falcon.
+
+13. PiF INTERNAL JUDGE OVERCOUNTS FOR FALCON, QWEN, DIFFUCODER
+    PiF raw attack_success_internal vs unified judge llm_judge disagreement:
+    Model       Agree  Raw=True→Judged=False  Raw=False→Judged=True
+    Qwen         486          427                     0
+    Llama        680          222                    11
+    Falcon        78          835 (!)                0
+    LLaDA        765          133                    15
+    Dream        888           25                     0
+    DiffuCoder   472          441                     0
+    Falcon is worst: 835/913 raw=True are judged=False (CoT leakage artifact).
+    DiffuCoder: 441 false positives. Qwen: 427 false positives.
+
+
+================================================================================
+COMPUTED ASR SUMMARY (from unified judged files)
+================================================================================
+
+PiF ASR (llm_judge=1 / 913 prompts):
+  Qwen2.5:   11.6%    Llama-3.1:  13.1%    Falcon:     0.0%
+  LLaDA:      7.6%    Dream:       0.0%    DiffuCoder:  5.4%
+
+MetaCipher ASR (asr_success=True / 913 prompts):
+  Qwen2.5:   71.5%    Llama-3.1:  71.1%    Falcon:     0.2%
+  LLaDA:     47.3%    Dream:       0.1%    DiffuCoder: 0.9%
+  (Each (dataset, prompt_idx) combo has exactly 1 row in the judged files,
+   so prompt-level and row-level ASR are identical.)
+
+ArrAttack ASR (asr_success=True / 165 prompts):
+  Qwen2.5:   70.3%    Llama-3.1:  70.3%    Falcon:    24.8%
+  LLaDA:     77.6%    Dream:      13.9%    DiffuCoder: 31.5%
+
+MEE (max ASR across attacks):
+  Qwen2.5=71.5  Llama=71.1  Falcon=24.8  DiffuCoder=31.5  Dream=13.9  LLaDA=77.6
+MDG (max - min ASR across attacks):
+  Qwen2.5=59.9  Llama=57.9  Falcon=24.8  DiffuCoder=30.6  Dream=13.9  LLaDA=70.0
+
+NOTE: MetaCipher raw files have 913 unique (dataset, prompt_idx) combos per
+model (400 HB + 100 JBB + 100 MI + 313 SR), NOT 400. The judged files also
+have 913 rows per model with no duplicates. An earlier version of this summary
+incorrectly used 400 as the denominator for MetaCipher ASR, which inflated the
+numbers (e.g. LLaDA was reported as 69.0% but is actually 47.3%). The MEE/MDG
+values above are correct and match the computed values used in the fig-2
+comparison (point 3).
+
+
+================================================================================
+DATA COMPLETNESS CHECK
+================================================================================
+
+PiF raw row counts (after removing embedded headers):
+  All models × all datasets: 400 (HB) + 100 (JBB) + 100 (MI) + 313 (SR) = 913
+  llada/jailbreakbench: wc -l shows 99 but CSV parse shows 100 rows (missing
+    trailing newline, data is complete).
+  All models complete — no missing prompts.
+
+MetaCipher raw: 913 unique (dataset, prompt_idx) per model = 400+100+100+313.
+  All models complete. No duplicate rows per (dataset, prompt_idx).
+
+ArrAttack raw: 165 unique prompts per model = 75+20+20+50.
+  All models complete. Variable total rows (3409-9054) reflect variable attempt
+  counts per prompt (up to 50 for AR models, up to 200 for LLaDA).
+  Qwen2.5 and Llama have identical row counts (3409) but different file hashes.
+
+MetaCipher judged: 913 rows per model, 913 unique (dataset, prompt_idx) combos.
+PiF judged: 913 rows per model, 913 unique (dataset, prompt_idx) combos.
+ArrAttack judged: 165 rows per model, 165 unique prompts.
+  All judged files complete.
+
+MetaCipher judged has a "manual_review_note" column with manual adjudication tags:
+  e.g. falcon: 511 "kept non-success; no automatic recover",
+                 223 "degenerate/repetitive or cipher-loop output",
+                  94 "excessive unresolved masks/placeholder",
+                  53 "refusal/safety answer without substantive content",
+                  13 "copyright/lyrics request answered as prompt-related",
+                   2 "final response substantively complies" (recovered).
+  diffucoder: 785 "kept non-success", 101 "copyright/lyrics as prompt-related",
+                   8 "final response substantively complies".
+
+
+================================================================================
+FILES INVENTORY
+================================================================================
+
+results/pif/<model>/{harmbench,jailbreakbench,malicious_instruct,strongreject}/results.csv
+  6 models × 4 datasets = 24 raw CSVs (12 cols each)
+results/pif/PIF_JUDGED/<model>_pif_final_judged.csv
+  6 judged CSVs (12 cols; BOM in qwen/llama/diffucoder only)
+results/arrattack/<model>/*.csv
+  6 raw CSVs (16 or 18 cols)
+results/arrattack/Arrattack_Judged/arrattack_0N_<model>_judged.csv
+  6 judged CSVs (22 cols)
+results/metacipher/<model>/*.csv
+  6 raw CSVs (14 cols, multiline fields inflate wc -l)
+results/metacipher/Metacipher_Judged/<model>.csv
+  6 judged CSVs (27 cols)
+
+scripts/evaluation/judge.py — placeholder judge, NOT the actual unified judge.
+  Has hardcoded /scratch/si2356/ path (wrong user).
+plots/fig-2-exposure_metrics.py — hardcoded MEE/MDG (stale for Qwen, Llama).
+plots/fig-3-prompt_group_bars.py — hardcoded content-group ASR breakdown.
