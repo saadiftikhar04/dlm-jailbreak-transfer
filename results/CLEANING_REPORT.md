@@ -113,27 +113,7 @@ exact duplicates of the sibling `results.csv` (identical shape and columns). The
 
 ## Part 2 — Issues that cannot be fixed by editing the data (explanations)
 
-### A. Figure 2 hardcoded MEE/MDG is stale for Qwen and Llama (audit #3)
-
-`plots/fig-2-exposure_metrics.py` hardcodes MEE/MDG values instead of computing them
-from the judged CSVs. This is a **plotting-script bug, not a data corruption** — the fix
-is to regenerate the figure from the cleaned judged files, not to edit a CSV. The correct
-values recomputed from the cleaned data are:
-
-| Model | MEE (max ASR) | MDG (max − min ASR) |
-|---|---|---|
-| Qwen2.5 | 71.5 | 59.9 |
-| Llama-3.1 | 71.1 | 58.0 |
-| Falcon-H1R | 24.8 | 24.8 |
-| DiffuCoder | 31.5 | 30.6 |
-| Dream | 13.9 | 13.9 |
-| LLaDA | 77.6 | 72.3 |
-
-The script's stale Qwen MDG (53.9) and Llama MDG (47.4) should be replaced by **59.9**
-and **58.0**. The plot should read these off the judged files at render time so it can
-never drift again.
-
-### B. The actual unified judge is not in the repo (audit #7)
+### A. The actual unified judge is not in the repo (audit #7)
 
 `scripts/evaluation/judge.py` contains only placeholder `KeywordJudge`/`LLMJudge`
 classes that do **not** produce the columns present in the `*_Judged/` files
@@ -144,7 +124,7 @@ edits — the judged outputs are self-contained and correct, but the judge **cod
 be located and committed (or the placeholder removed and the hardcoded path deleted) for
 reproducibility. Nothing in the cleaned data depends on it.
 
-### C. ArrAttack judged "column misalignment" is a parser choice, not a bug (audit #8)
+### B. ArrAttack judged "column misalignment" is a parser choice, not a bug (audit #8)
 
 The `asr_success` field only looks corrupted when parsed with `awk -F','` because
 `final_response` contains commas inside quoted fields. Parsed with any CSV-aware reader
@@ -153,7 +133,7 @@ The `asr_success` field only looks corrupted when parsed with `awk -F','` becaus
 CSV-aware parser**. Confirmed: all six ArrAttack judged files parse to `(165, 22)` with
 clean booleans.
 
-### D. Model-behavior findings (audit #10–#13) are results, not defects
+### C. Model-behavior findings (audit #10–#13) are results, not defects
 
 Falcon CoT/`<think>` leakage, MetaCipher/PiF internal-judge false positives on
 Dream/DiffuCoder/Falcon, and GPTFuzz returning 0% for Falcon are all **real modelling
@@ -162,7 +142,7 @@ source of truth). They are not data errors and require no file edits — they ar
 substance of the paper's "internal judge vs unified judge" analysis. The cleaned raw
 files retain the internal-judge columns so this disagreement remains auditable.
 
-### E. Data ↔ paper reconciliation (surfaced during cleaning)
+### D. Data ↔ paper reconciliation (surfaced during cleaning)
 
 Recomputing ASR from the cleaned judged files surfaces a few places where the **paper
 text is stale relative to the data**. These are manuscript edits, not data fixes:
