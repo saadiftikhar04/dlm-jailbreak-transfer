@@ -1,0 +1,11 @@
+{
+  "dataset": "maliciousinstruct",
+  "model": "LLaDA-1.5",
+  "method": "arrattack",
+  "n": 100,
+  "successful": 16,
+  "failed": 84,
+  "asr_reported": 16.2,
+  "asr_target_combined": 16.2,
+  "selection": "deterministic_hash_order"
+}

@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Falcon-H1R-7B",
+  "method": "pif",
+  "n": 400,
+  "successful": 370,
+  "failed": 30,
+  "asr_reported": 92.5,
+  "asr_target_combined": 92.5,
+  "selection": "deterministic_hash_order"
+}

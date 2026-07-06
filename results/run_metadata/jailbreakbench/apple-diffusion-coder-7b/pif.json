@@ -1,0 +1,11 @@
+{
+  "dataset": "jailbreakbench",
+  "model": "Apple-Diff-Coder",
+  "method": "pif",
+  "n": 100,
+  "successful": 1,
+  "failed": 99,
+  "asr_reported": 1.15,
+  "asr_target_combined": 1.15,
+  "selection": "deterministic_hash_order"
+}

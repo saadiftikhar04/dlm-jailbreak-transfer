@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Apple-Diff-Coder",
+  "method": "arrattack",
+  "n": 400,
+  "successful": 33,
+  "failed": 367,
+  "asr_reported": 8.3,
+  "asr_target_combined": 8.3,
+  "selection": "deterministic_hash_order"
+}

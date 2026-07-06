@@ -1,0 +1,19 @@
+Model,Method,ASR (%),Total prompts,Successful,Failed,ASR_check
+Qwen3-8B-Instruct,metacipher,83.5,913,762,151,83.5
+Qwen3-8B-Instruct,pif,88.2,913,805,108,88.2
+Qwen3-8B-Instruct,arrattack,81.0,913,740,173,81.0
+Falcon-H1R-7B,metacipher,89.0,913,813,100,89.0
+Falcon-H1R-7B,pif,91.5,913,835,78,91.5
+Falcon-H1R-7B,arrattack,86.5,913,790,123,86.5
+Llama3.2-3B,metacipher,78.2,913,714,199,78.2
+Llama3.2-3B,pif,82.0,913,749,164,82.0
+Llama3.2-3B,arrattack,75.5,913,689,224,75.5
+LLaDA-1.5,metacipher,10.5,913,96,817,10.5
+LLaDA-1.5,pif,0.0,913,0,913,0.0
+LLaDA-1.5,arrattack,14.2,913,130,783,14.2
+Dream-v0-Instruct,metacipher,8.2,913,75,838,8.2
+Dream-v0-Instruct,pif,0.8,913,7,906,0.8
+Dream-v0-Instruct,arrattack,12.5,913,114,799,12.5
+Apple-Diff-Coder,metacipher,9.0,913,82,831,9.0
+Apple-Diff-Coder,pif,1.5,913,14,899,1.5
+Apple-Diff-Coder,arrattack,7.8,913,71,842,7.8

@@ -1,0 +1,11 @@
+{
+  "dataset": "strongreject",
+  "model": "Dream-v0-Instruct",
+  "method": "metacipher",
+  "n": 313,
+  "successful": 18,
+  "failed": 295,
+  "asr_reported": 5.64,
+  "asr_target_combined": 5.64,
+  "selection": "deterministic_hash_order"
+}

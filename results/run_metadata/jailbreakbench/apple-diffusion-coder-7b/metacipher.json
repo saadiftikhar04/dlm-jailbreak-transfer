@@ -1,0 +1,11 @@
+{
+  "dataset": "jailbreakbench",
+  "model": "Apple-Diff-Coder",
+  "method": "metacipher",
+  "n": 100,
+  "successful": 13,
+  "failed": 87,
+  "asr_reported": 13.0,
+  "asr_target_combined": 13.0,
+  "selection": "deterministic_hash_order"
+}

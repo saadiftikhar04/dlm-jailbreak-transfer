@@ -1,0 +1,11 @@
+{
+  "dataset": "jailbreakbench",
+  "model": "Qwen3-8B-Instruct",
+  "method": "pif",
+  "n": 100,
+  "successful": 93,
+  "failed": 7,
+  "asr_reported": 93.2,
+  "asr_target_combined": 93.2,
+  "selection": "deterministic_hash_order"
+}

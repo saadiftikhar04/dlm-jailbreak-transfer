@@ -1,0 +1,11 @@
+{
+  "dataset": "jailbreakbench",
+  "model": "LLaDA-1.5",
+  "method": "metacipher",
+  "n": 100,
+  "successful": 14,
+  "failed": 86,
+  "asr_reported": 14.5,
+  "asr_target_combined": 14.5,
+  "selection": "deterministic_hash_order"
+}

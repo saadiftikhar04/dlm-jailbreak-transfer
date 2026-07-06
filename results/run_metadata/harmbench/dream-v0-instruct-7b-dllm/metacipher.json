@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Dream-v0-Instruct",
+  "method": "metacipher",
+  "n": 400,
+  "successful": 35,
+  "failed": 365,
+  "asr_reported": 8.7,
+  "asr_target_combined": 8.7,
+  "selection": "deterministic_hash_order"
+}

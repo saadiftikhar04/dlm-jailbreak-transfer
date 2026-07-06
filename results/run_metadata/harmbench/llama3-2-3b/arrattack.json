@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "Llama3.2-3B",
+  "method": "arrattack",
+  "n": 400,
+  "successful": 306,
+  "failed": 94,
+  "asr_reported": 76.5,
+  "asr_target_combined": 76.5,
+  "selection": "deterministic_hash_order"
+}

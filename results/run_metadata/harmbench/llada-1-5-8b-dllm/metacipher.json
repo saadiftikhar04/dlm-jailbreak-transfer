@@ -1,0 +1,11 @@
+{
+  "dataset": "harmbench",
+  "model": "LLaDA-1.5",
+  "method": "metacipher",
+  "n": 400,
+  "successful": 44,
+  "failed": 356,
+  "asr_reported": 11.0,
+  "asr_target_combined": 11.0,
+  "selection": "deterministic_hash_order"
+}

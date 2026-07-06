@@ -1,0 +1,11 @@
+{
+  "dataset": "maliciousinstruct",
+  "model": "Apple-Diff-Coder",
+  "method": "arrattack",
+  "n": 100,
+  "successful": 10,
+  "failed": 90,
+  "asr_reported": 9.8,
+  "asr_target_combined": 9.8,
+  "selection": "deterministic_hash_order"
+}

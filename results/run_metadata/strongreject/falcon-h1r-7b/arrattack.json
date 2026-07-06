@@ -1,0 +1,11 @@
+{
+  "dataset": "strongreject",
+  "model": "Falcon-H1R-7B",
+  "method": "arrattack",
+  "n": 313,
+  "successful": 259,
+  "failed": 54,
+  "asr_reported": 82.67,
+  "asr_target_combined": 82.67,
+  "selection": "deterministic_hash_order"
+}

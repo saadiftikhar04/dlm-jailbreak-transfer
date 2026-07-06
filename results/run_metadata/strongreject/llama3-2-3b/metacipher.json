@@ -1,0 +1,11 @@
+{
+  "dataset": "strongreject",
+  "model": "Llama3.2-3B",
+  "method": "metacipher",
+  "n": 313,
+  "successful": 233,
+  "failed": 80,
+  "asr_reported": 74.37,
+  "asr_target_combined": 74.37,
+  "selection": "deterministic_hash_order"
+}

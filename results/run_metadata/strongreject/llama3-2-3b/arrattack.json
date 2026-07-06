@@ -1,0 +1,11 @@
+{
+  "dataset": "strongreject",
+  "model": "Llama3.2-3B",
+  "method": "arrattack",
+  "n": 313,
+  "successful": 224,
+  "failed": 89,
+  "asr_reported": 71.67,
+  "asr_target_combined": 71.67,
+  "selection": "deterministic_hash_order"
+}

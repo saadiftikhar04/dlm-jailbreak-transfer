@@ -1,0 +1,11 @@
+{
+  "dataset": "strongreject",
+  "model": "Apple-Diff-Coder",
+  "method": "baseline",
+  "n": 313,
+  "successful": 2,
+  "failed": 311,
+  "asr_reported": 0.64,
+  "asr_target_combined": 0.64,
+  "selection": "deterministic_hash_order"
+}
