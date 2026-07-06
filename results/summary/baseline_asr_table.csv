@@ -1,7 +1,0 @@
-Model,Category,Baseline ASR-e (%),Source / Paper Equivalent,Total prompts,Successful,Failed,ASR_check,model_run_name
-Qwen3-8B-Instruct,LLM (Autoregressive),0.1,Representative AR baseline ASR,913,1,912,0.11,Qwen3-8B-Instruct
-Falcon-H1R-7B,LLM (Autoregressive),0.5,Representative AR baseline ASR,913,5,908,0.55,Falcon-H1R-7B
-Llama3.2-3B,LLM (Autoregressive),0.6,Benchmarked AR baseline,913,5,908,0.55,Llama3.2-3B
-LLaDA-1.5,dLLM (Diffusion),0.2,Benchmarked dLLM,913,2,911,0.22,LLaDA-1.5
-Dream-v0-Instruct,dLLM (Diffusion),0.3,Benchmarked dLLM,913,3,910,0.33,Dream-v0-Instruct
-Apple-Diff-Coder,dLLM (Diffusion),0.8,Evaluated via DiffuCoder baseline,913,7,906,0.77,Apple-Diff-Coder
