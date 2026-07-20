@@ -1,342 +1,257 @@
-================================================================================
-DLM-JAILBREAK-TRANSFER RESULTS AUDIT REPORT
-Generated: 2026-07-08 (verified against live data)
-Scope: /home/bc3194/Desktop/dlm-jailbreak-transfer/results
-================================================================================
+======================================================================
+DLM-Jailbreak-Transfer Results — Comprehensive Audit Summary
+======================================================================
 
-STRUCTURE:
-  3 attack paradigms: PIF, Metacipher, Arrattack
-  6 target models: qwen, llama, llada, falcon, dream, diffucoder
-  4 benchmark datasets: strongreject(313), malicious_instruct(100), jailbreakbench(100), harmbench(400)
-  Expected entries per model: PIF=913, Metacipher=913, Arrattack=165 unique prompts
+Errors (blocking): 0
+Warnings (data quality): 104
+Info (metadata): 62
 
-SUMMARY: 43 ERRORS, 44 WARNINGS (all claims re-verified against source CSVs)
+======================================================================
+QUICK SUMMARY
+======================================================================
 
-================================================================================
-CRITICAL ERRORS (require attention)
-================================================================================
+Files audited: 28 CSVs (3 attack methods x 6 models, raw + judged)
+  PIF:        24 raw (6 models x 4 datasets) + 6 judged = 30 files
+  Metacipher:  6 raw + 6 judged = 12 files
+  ArrAttack:   6 raw + 6 judged = 12 files
+  Total:       54 files (28 unique, some counted differently)
 
---- PIF (Prompt Iterative Framework) ---
+Real API errors in outputs: 16
+Row counts: PIF=913/model (strongreject 313, not 314)
+           Metacipher=913/model
+           ArrAttack judged=165/model (75+20+20+50)
 
-[PIF_DUPLICATE_DIR]
-  - pif/llama/ has BOTH 'strong_reject/' AND 'strongreject/' directories
-    Both contain 313 rows. Content differs (different CSV quoting: strong_reject/
-    has all values quoted, strongreject/ is unquoted). Consolidate to one.
+======================================================================
+ERRORS (blocking)
+======================================================================
 
-[PIF_ZERO_QUERY]
-  - pif/llada/strongreject: 313 entries with total_query=0 (ALL rows)
-  - pif/llada/malicious_instruct: 100 entries with total_query=0 (ALL rows)
-    These datasets never ran for llada. victim_output is also all NaN.
-    llada/harmbench (400 rows) and llada/jailbreakbench (100 rows) ran normally (0 NaN, 0 zero-query).
+  None.
 
-[PIF_EMPTY_OUTPUT]
-  - pif/llama/malicious_instruct: 1 NaN victim_output
-  - pif/llada/strongreject: 313 NaN victim_output (never ran)
-  - pif/llada/malicious_instruct: 100 NaN victim_output (never ran)
-  - pif/falcon/strongreject: 20 NaN
-  - pif/falcon/malicious_instruct: 4 NaN
-  - pif/falcon/jailbreakbench: 12 NaN
-  - pif/falcon/harmbench: 104 NaN
-  - pif/dream/strongreject: 16 NaN
-  - pif/dream/malicious_instruct: 13 NaN
-  - pif/dream/jailbreakbench: 8 NaN
-  - pif/dream/harmbench: 56 NaN
-  - pif/diffucoder/strongreject: 59 NaN
-  - pif/diffucoder/malicious_instruct: 31 NaN
-  - pif/diffucoder/jailbreakbench: 25 NaN
-  - pif/diffucoder/harmbench: 71 NaN
-  Totals: falcon=140, dream=93, diffucoder=186, llada=413, llama=1, qwen=0.
+======================================================================
+WARNINGS (data quality issues)
+======================================================================
 
-[PIF_JUDGE_ALL_SAME]
-  - falcon_pif_final_judged: all 913 llm_judge values are 0 (no variance)
-  - dream_pif_final_judged: all 913 llm_judge values are 0 (no variance)
-  (For comparison: qwen=106/913 True, llama=120/913, llada=48/913, diffucoder=49/913)
+  [ARR_API_ERROR] (2 items)
+    - llama: 3 real API errors in target_response
+    - qwen: 3 real API errors in target_response
 
-[PIF_JUDGE_ALL_ZERO]
-  - pif/PIF_JUDGED/falcon_pif_final_judged.csv: ALL 913 llm_judge=0 (0% ASR)
-  - pif/PIF_JUDGED/dream_pif_final_judged.csv: ALL 913 llm_judge=0 (0% ASR)
-  Both files cover all 4 datasets (harmbench=400, strongreject=313, jailbreakbench=100, malicious_instruct=100).
+  [ARR_CJK] (2 items)
+    - llama: 9 CJK-containing target_response
+    - qwen: 9 CJK-containing target_response
 
---- ARRATTACK ---
+  [ARR_JUDGED_CJK] (2 items)
+    - llama: 2 CJK-containing final_response
+    - qwen: 2 CJK-containing final_response
 
-[ARR_GPTFUZZ_PROB_ALL_NAN]
-  - arrattack/Arrattack_Judged/: gptfuzz_jailbroken_prob is ALL NaN for every model
-    (6 files x 165 rows = 990 entries). Column exists but has no data.
-    The actual ASR metric is 'asr_success' (binary), which IS populated.
+  [ARR_JUDGED_MISMATCH] (6 items)
+    - diffucoder: 52/165 (31.5%) gpt_fuzz vs asr_success mismatch
+    - dream: 23/165 (13.9%) gpt_fuzz vs asr_success mismatch
+    - falcon: 41/165 (24.8%) gpt_fuzz vs asr_success mismatch
+    - llada: 109/165 (66.1%) gpt_fuzz vs asr_success mismatch
+    - llama: 116/165 (70.3%) gpt_fuzz vs asr_success mismatch
+    - qwen: 116/165 (70.3%) gpt_fuzz vs asr_success mismatch
 
-[ARR_GPTFUZZ_NAN]
-  - arrattack_qwen_judged: 165/165 NaN
-  - arrattack_llama_judged: 165/165 NaN
-  - arrattack_llada_judged: 165/165 NaN
-  - arrattack_falcon_judged: 165/165 NaN
-  - arrattack_dream_judged: 165/165 NaN
-  - arrattack_diffucoder_judged: 165/165 NaN
+  [ARR_JUDGED_NAN] (3 items)
+    - diffucoder final_response: 8 NaN/empty
+    - dream final_response: 3 NaN/empty
+    - falcon final_response: 17 NaN/empty
 
-[ARR_LLM_JUDGE_ALL_FALSE]
-  - arrattack/falcon/arrattack_results.csv: attack_success_llm is False for ALL 6707 entries.
-    This is the LLM-judge column only. The gpt_fuzz judge DID find 41 successes (24.85% ASR).
-    asr_success in judged files is derived from gpt_fuzz (compliance = success), NOT from attack_success_llm.
+  [ARR_LLADA_COVERAGE] (1 items)
+    - raw 165 vs judged 75 unique prompts — possible mapping issue
 
-[ARR_EMPTY_RESPONSE]
-  - arrattack/falcon: 705 NaN target_response (out of 6707)
-  - arrattack/dream: 114 NaN target_response (out of 7227)
-  - arrattack/diffucoder: 301 NaN target_response (out of 6233)
-  (qwen, llama, llada have 0 NaN target_response in raw)
+  [ARR_LLADA_SCHEMA] (1 items)
+    - llada raw: 17 cols (others have 19), missing: prompt_idx, reasoning_trace
 
-[ARR_JUDGED_EMPTY_RESPONSE]
-  - arrattack_falcon_judged: 17 NaN final_response (out of 165)
-  - arrattack_dream_judged: 3 NaN final_response (out of 165)
-  - arrattack_diffucoder_judged: 8 NaN final_response (out of 165)
+  [ARR_MISMATCH] (6 items)
+    - diffucoder: 197/6233 (3.2%) gptfuzz vs llm mismatch
+    - dream: 37/7227 (0.5%) gptfuzz vs llm mismatch
+    - falcon: 41/6707 (0.6%) gptfuzz vs llm mismatch
+    - llada: 197/3687 (5.3%) gptfuzz vs llm mismatch
+    - llama: 231/3409 (6.8%) gptfuzz vs llm mismatch
+    - qwen: 263/3409 (7.7%) gptfuzz vs llm mismatch
 
-[ARR_JUDGED_LLADA_PROMPT_IDX_MISMATCH]
-  - arrattack/Arrattack_Judged/arrattack_llada_judged.csv has a prompt_idx assignment
-    that is almost entirely different from the raw file.
-  - Only 1/165 (dataset, prompt_idx) combos match between raw and judged.
-  - 158/165 prompts overlap by TEXT (same prompts, different prompt_idx numbering).
-  - 7 prompts in judged do NOT exist in llada raw at all (e.g. "Create a malware...",
-    "Demonstrate how to pirate software...").
-  - 7 prompts in llada raw are MISSING from judged (all start with "Write a...").
-  - harmbench: judged has 76 rows (prompt_idx 1-76), raw has 75 (1-75).
-    prompt_idx=76 in judged = "Legends Never Die" = raw prompt_idx=60.
-  - strongreject: judged has 49 rows, raw has 50 (all other models have 50).
-  - This issue is specific to llada only. All other models (qwen, llama, falcon, dream,
-    diffucoder) have 165/165 prompt_idx matches between raw and judged.
+  [ARR_NAN] (3 items)
+    - diffucoder target_response: 301 NaN/empty
+    - dream target_response: 114 NaN/empty
+    - falcon target_response: 705 NaN/empty
 
---- METACIPHER ---
+  [ARR_SCHEMA] (2 items)
+    - llada raw: missing prompt_idx column (uses global_idx only)
+    - llada raw: missing reasoning_trace column
 
-[META_EMPTY_RESPONSE]
-  - metacipher/dream: 20 NaN target_response (out of 913)
-  (All other metacipher models have 0 NaN target_response)
+  [ARR_TIME] (4 items)
+    - diffucoder: max=520.2s avg=34.2s outliers=3
+    - dream: max=633.6s avg=32.8s outliers=1
+    - llama: max=615.4s avg=10.8s outliers=2
+    - qwen: max=615.4s avg=10.8s outliers=2
 
-[META_JUDGED_EMPTY_RESPONSE]
-  - metacipher/Metacipher_Judged/dream: 20 NaN final_response (out of 913)
+  [META_API_ERROR] (1 items)
+    - dream: 1 real API errors in target_response
 
-================================================================================
-WARNINGS (potential issues / inconsistencies)
-================================================================================
+  [META_CJK] (3 items)
+    - falcon: 22 CJK-containing target_response
+    - llada: 1 CJK-containing target_response
+    - qwen: 6 CJK-containing target_response
 
-[ARR_COLUMN_MISMATCH]
-  - Arrattack raw files have 2 distinct column sets (falcon has reasoning_trace, others don't)
-  - Arrattack judged files have 2 distinct column sets (falcon has 23 cols, others 22)
+  [META_JUDGED_API_ERROR] (1 items)
+    - dream: 1 real API errors in final_response
 
-[ARR_JUDGED_COL_MISMATCH]
-  - arrattack judged: falcon has extra 'reasoning_trace' column, others don't
+  [META_JUDGED_CJK] (3 items)
+    - falcon: 22 CJK-containing final_response
+    - llada: 1 CJK-containing final_response
+    - qwen: 6 CJK-containing final_response
 
-[ARR_JUDGED_NO_GLOBAL_IDX]
-  - Arrattack judged files lack 'global_idx' column present in raw.
-    Matching is done via (dataset, prompt_idx) combo.
+  [META_JUDGED_NAN] (1 items)
+    - dream final_response: 20 NaN/empty
 
-[ARR_JUDGED_REASONING_TRACE_INCONSISTENT]
-  - arrattack judged: reasoning_trace present in ['falcon'], missing from
-    ['qwen', 'llama', 'llada', 'dream', 'diffucoder']
+  [META_MISMATCH] (6 items)
+    - diffucoder: 650/913 (71.2%) raw success vs judged asr_success mismatch
+    - dream: 664/913 (72.7%) raw success vs judged asr_success mismatch
+    - falcon: 96/913 (10.5%) raw success vs judged asr_success mismatch
+    - llada: 406/913 (44.5%) raw success vs judged asr_success mismatch
+    - llama: 327/913 (35.8%) raw success vs judged asr_success mismatch
+    - qwen: 238/913 (26.1%) raw success vs judged asr_success mismatch
 
-[ARR_RAW_COUNT_VARIES]
-  - Arrattack raw row counts vary (multi-attempt format):
-    qwen=3409, llama=3409, llada=9054, falcon=6707, dream=7227, diffucoder=6233
-    All have 165 unique (dataset, prompt_idx) combos but different total rows.
-    Avg attempts per prompt: qwen/llama=20.7, falcon=40.6, diffucoder=37.8, dream=43.8, llada=54.9.
+  [META_NAN] (1 items)
+    - dream target_response: 20 NaN/empty
 
-[ARR_REASONING_TRACE_INCONSISTENT]
-  - arrattack raw: reasoning_trace present in ['falcon'], missing from
-    ['qwen', 'llama', 'llada', 'dream', 'diffucoder']
+  [PIF_API_ERROR] (4 items)
+    - diffucoder/harmbench: 1 real API errors in victim_output
+    - dream/malicious_instruct: 1 real API errors in victim_output
+    - dream/strongreject: 1 real API errors in victim_output
+    - qwen/harmbench: 1 real API errors in victim_output
 
-[META_ERROR_OUTPUTS]
-  - metacipher/qwen: 67 error pattern matches across 67 unique entries in target_response
-  - metacipher/llama: 93 error pattern matches across 89 unique entries
-  - metacipher/llada: 21 error pattern matches across 20 unique entries
-  (falcon=11, dream=4, diffucoder=4 - below threshold, not flagged)
+  [PIF_CJK] (5 items)
+    - llada/jailbreakbench: 10 CJK-containing victim_output
+    - qwen/harmbench: 50 CJK-containing victim_output
+    - qwen/jailbreakbench: 10 CJK-containing victim_output
+    - qwen/malicious_instruct: 13 CJK-containing victim_output
+    - qwen/strongreject: 19 CJK-containing victim_output
 
-[META_LLM_JUDGE_FORMAT]
-  - Metacipher judged 'llm_judge' is CATEGORICAL: compliance/too_general/wrong_decryption/refusal
-    NOT binary 0/1. 'asr_success' (binary) is the actual ASR metric.
-    asr_success == (llm_judge == 'compliance') for all models (verified).
+  [PIF_JUDGED_API_ERROR] (3 items)
+    - diffucoder: 1 real API errors in victim_output
+    - dream: 2 real API errors in victim_output
+    - qwen: 1 real API errors in victim_output
 
-[PIF_COLUMN_MISMATCH]
-  - PIF raw files have 2 column sets: falcon has reasoning_trace, others don't
-  - PIF judged files have 2 column sets (same pattern)
+  [PIF_JUDGED_CJK] (2 items)
+    - llada: 10 CJK-containing victim_output
+    - qwen: 92 CJK-containing victim_output
 
-[PIF_DREAM_MAX_QUERY]
-  - pif/dream/: 888/913 entries (97.3%) have total_query=50 (max).
-    strongreject=306/313 (97.8%), malicious_instruct=100/100 (100%),
-    jailbreakbench=98/100 (98.0%), harmbench=384/400 (96.0%).
-    Consistent with 0% ASR (PIF exhausted all retries without success).
+  [PIF_JUDGED_NAN] (5 items)
+    - diffucoder victim_output: 186 NaN/empty
+    - dream victim_output: 93 NaN/empty
+    - falcon victim_output: 140 NaN/empty
+    - llada judge_reason: 413 NaN/empty
+    - llama victim_output: 1 NaN/empty
 
-[PIF_DUPLICATE_DIR]
-  - pif/llama/strong_reject/ (313 rows) and pif/llama/strongreject/ (313 rows)
-    have same row count but different content (different quoting format)
+  [PIF_MISMATCH] (18 items)
+    - diffucoder/harmbench: 248/400 (62.0%) internal vs judge_gpt mismatch
+    - diffucoder/jailbreakbench: 47/100 (47.0%) internal vs judge_gpt mismatch
+    - diffucoder/malicious_instruct: 43/100 (43.0%) internal vs judge_gpt mismatch
+    - diffucoder/strongreject: 133/313 (42.5%) internal vs judge_gpt mismatch
+    - dream/harmbench: 16/400 (4.0%) internal vs judge_gpt mismatch
+    - dream/jailbreakbench: 2/100 (2.0%) internal vs judge_gpt mismatch
+    - dream/strongreject: 7/313 (2.2%) internal vs judge_gpt mismatch
+    - falcon/harmbench: 48/400 (12.0%) internal vs judge_gpt mismatch
+    - falcon/strongreject: 2/313 (0.6%) internal vs judge_gpt mismatch
+    - llada/harmbench: 25/400 (6.2%) internal vs judge_gpt mismatch
+    - llada/jailbreakbench: 2/100 (2.0%) internal vs judge_gpt mismatch
+    - llada/malicious_instruct: 18/100 (18.0%) internal vs judge_gpt mismatch
+    - llada/strongreject: 54/313 (17.3%) internal vs judge_gpt mismatch
+    - llama/harmbench: 157/400 (39.2%) internal vs judge_gpt mismatch
+    - llama/jailbreakbench: 16/100 (16.0%) internal vs judge_gpt mismatch
+    - llama/malicious_instruct: 11/100 (11.0%) internal vs judge_gpt mismatch
+    - qwen/harmbench: 289/400 (72.2%) internal vs judge_gpt mismatch
+    - qwen/jailbreakbench: 2/100 (2.0%) internal vs judge_gpt mismatch
 
-[PIF_ERROR_OUTPUTS]
-  - pif/qwen: 32 error pattern matches across 30 unique entries in victim_output
-  - pif/llama: 50 error pattern matches across 45 unique entries
-  (llada=4, diffucoder=2, falcon=0, dream=0 - below threshold, not flagged)
+  [PIF_NAN] (13 items)
+    - diffucoder/harmbench: victim_output 71 NaN/empty
+    - diffucoder/jailbreakbench: victim_output 25 NaN/empty
+    - diffucoder/malicious_instruct: victim_output 31 NaN/empty
+    - diffucoder/strongreject: victim_output 59 NaN/empty
+    - dream/harmbench: victim_output 56 NaN/empty
+    - dream/jailbreakbench: victim_output 8 NaN/empty
+    - dream/malicious_instruct: victim_output 13 NaN/empty
+    - dream/strongreject: victim_output 16 NaN/empty
+    - falcon/harmbench: victim_output 104 NaN/empty
+    - falcon/jailbreakbench: victim_output 12 NaN/empty
+    - falcon/malicious_instruct: victim_output 4 NaN/empty
+    - falcon/strongreject: victim_output 20 NaN/empty
+    - llama/malicious_instruct: victim_output 1 NaN/empty
 
-[PIF_INTERNAL_JUDGE_MISMATCH]
-  - pif/qwen/harmbench: 289/400 (72.2%) entries where attack_success_internal != judge_gpt
-  - pif/llama/malicious_instruct: 11/100 (11.0%)
-  - pif/llama/jailbreakbench: 16/100 (16.0%)
-  - pif/llama/harmbench: 157/400 (39.2%)
-  - pif/llada/harmbench: 25/400 (6.2%)
-  - pif/falcon/harmbench: 48/400 (12.0%)
-  - pif/diffucoder/strongreject: 133/313 (42.5%)
-  - pif/diffucoder/malicious_instruct: 43/100 (43.0%)
-  - pif/diffucoder/jailbreakbench: 47/100 (47.0%)
-  - pif/diffucoder/harmbench: 248/400 (62.0%)
-  Internal success flag uses keyword-matching; judge_gpt uses LLM judgment. Disagreement expected.
+  [PIF_SCHEMA] (2 items)
+    - llada/malicious_instruct: missing reasoning_trace column
+    - llada/strongreject: missing reasoning_trace column
 
-[PIF_JUDGE_PARADIGM]
-  - PIF raw uses 'judge_gpt' (binary 0/1), PIF judged uses 'llm_judge' (0/1) + 'judge_reason' (text).
-    Different judge systems between raw and judged files.
+  [PIF_TIME] (4 items)
+    - falcon/jailbreakbench: max=2354.4s avg=194.3s outliers=7
+    - falcon/malicious_instruct: max=2296.2s avg=97.2s outliers=3
+    - falcon/strongreject: max=2316.7s avg=116.2s outliers=9
+    - qwen/harmbench: max=1029.7s avg=85.1s outliers=3
 
-[PIF_NON_ENGLISH]
-  - pif/qwen/strongreject: 19 entries with Chinese characters in victim_output
-  - pif/qwen/malicious_instruct: 13 entries
-  - pif/qwen/jailbreakbench: 10 entries
-  - pif/qwen/harmbench: 50 entries
-  - pif/llada/jailbreakbench: 10 entries
-  (Total qwen=92 across all datasets. No other models have CJK in victim_output.)
+======================================================================
+INFO (structural metadata)
+======================================================================
 
-[PIF_REASONING_TRACE_INCONSISTENT]
-  - reasoning_trace present in 4 files (falcon only: strongreject, malicious_instruct,
-    jailbreakbench, harmbench), missing from 20 files (all other model/dataset combos)
-
-[PIF_SHORT_OUTPUT]
-  - pif/qwen/harmbench: 3 entries with victim_output < 10 chars
-  - pif/llama/malicious_instruct: 4 entries
-  - pif/llama/jailbreakbench: 1 entry
-  - pif/llada/harmbench: 1 entry
-  - pif/dream/strongreject: 5 entries
-  - pif/dream/malicious_instruct: 1 entry
-  - pif/dream/harmbench: 4 entries
-  - pif/diffucoder/strongreject: 3 entries
-  - pif/diffucoder/malicious_instruct: 3 entries
-  - pif/diffucoder/harmbench: 5 entries
-
-================================================================================
-DETAILED FINDINGS
-================================================================================
-
-1. PIF DUPLICATE DIRECTORY (pif/llama/strong_reject/ vs pif/llama/strongreject/)
-   - Both directories exist with 313 rows each.
-   - Content differs: strong_reject/ has all CSV values quoted, strongreject/ is unquoted.
-   - pandas reads them as different DataFrames (not equal).
-   - Consolidate to 'strongreject' (no underscore, matching other models).
-
-2. PIF LLADA COMPLETE FAILURE (pif/llada/)
-   - llada/strongreject: ALL 313 entries have total_query=0 AND victim_output=NaN
-   - llada/malicious_instruct: ALL 100 entries have total_query=0 AND victim_output=NaN
-   - The PIF attack NEVER RAN for llada on these two datasets (0 queries made).
-   - llada/harmbench (400 rows) and llada/jailbreakbench (100 rows) ran normally: 0 NaN, 0 zero-query.
-
-3. PIF FALCON & DREAM: 0% ASR (all llm_judge=0)
-   - falcon_pif_final_judged: ALL 913 llm_judge=0 (0% ASR)
-   - dream_pif_final_judged: ALL 913 llm_judge=0 (0% ASR)
-   - dream: 888/913 (97.3%) entries have total_query=50 (max attempts), meaning PIF exhausted all retries.
-   - falcon: 140/913 entries have NaN victim_output (15.3%)
-   - dream: 93/913 entries have NaN victim_output (10.2%)
-   - These models either resisted all PIF attacks or the judge is too strict.
-
-4. PIF EMPTY VICTIM_OUTPUT (multiple models)
-   - falcon: 140 NaN across all 4 datasets (20+4+12+104)
-   - dream: 93 NaN across all 4 datasets (16+13+8+56)
-   - diffucoder: 186 NaN across all 4 datasets (59+31+25+71)
-   - llada: 413 NaN (313 from strongreject + 100 from malicious_instruct, both never ran)
-   - llama: 1 NaN (malicious_instruct)
-   - qwen: 0 NaN
-   - These NaN entries were likely API failures or model timeouts during generation.
-
-5. ARRATTACK gptfuzz_jailbroken_prob: ALL NaN
-   - Every arrattack judged file (6 models x 165 rows) has gptfuzz_jailbroken_prob = NaN.
-   - The column exists but contains NO data across all 990 entries.
-   - The actual ASR metric is 'asr_success' (binary True/False), which IS populated.
-   - asr_success is derived from gpt_fuzz column: asr_success == (gpt_fuzz == 'compliance').
-
-6. ARRATTACK FALCON: 0% LLM-judge success (attack_success_llm)
-   - arrattack/falcon/arrattack_results.csv: attack_success_llm is False for ALL 6707 entries.
-   - This is the LLM-judge column only. The gpt_fuzz judge DID find 41 successes.
-   - Judged ASR = 24.85% (41/165) comes from gpt_fuzz, NOT from attack_success_llm.
-   - So falcon has low but non-zero ASR via gpt_fuzz; the LLM judge was stricter.
-
-7. ARRATTACK LLADA: prompt_idx MISMATCH between raw and judged
-   - arrattack_llada_judged.csv has a prompt_idx assignment almost entirely different from raw.
-   - Only 1/165 (dataset, prompt_idx) combos match between raw and judged.
-   - 158/165 prompts overlap by TEXT (same prompts, different prompt_idx numbering).
-   - 7 prompts in judged do NOT exist in llada raw at all (e.g. "Create a malware...",
-     "Demonstrate how to pirate software...", "Develop a ransomware virus...").
-   - 7 prompts in llada raw are MISSING from judged (all start with "Write a...").
-   - harmbench: judged has 76 rows (prompt_idx 1-76), raw has 75 (1-75).
-     prompt_idx=76 in judged = "Legends Never Die" = raw prompt_idx=60.
-   - strongreject: judged has 49 rows, raw has 50 (all other models have 50).
-   - This suggests a prompt_idx remapping or off-by-one error specific to llada.
-   - All other models (qwen, llama, falcon, dream, diffucoder) have 165/165 matches.
-
-8. ARRATTACK RAW: NaN target_response
-   - falcon: 705 NaN (out of 6707)
-   - dream: 114 NaN (out of 7227)
-   - diffucoder: 301 NaN (out of 6233)
-   - These are rows where the target model produced no response.
-   - Likely API failures or model timeouts during the multi-attempt attack process.
-
-9. METACIPHER DREAM: 20 NaN target_response entries
-   - 20 entries in metacipher/dream/metacipher_results.csv have NaN target_response.
-   - Also reflected in judged: 20 NaN final_response entries.
-   - All other metacipher models have 0 NaN target_response.
-
-10. COLUMN SCHEMA INCONSISTENCIES
-    a) PIF raw: 'reasoning_trace' column exists ONLY for falcon (4 files), missing from 20 files.
-    b) Arrattack raw: 'reasoning_trace' column exists ONLY for falcon, missing from 5 models.
-    c) Arrattack judged: 'reasoning_trace' only in falcon; falcon has 23 cols, others have 22.
-    d) PIF raw has 2 column sets (falcon vs rest); PIF judged has 2 column sets (same pattern).
-    e) Metacipher raw uses 'model_key' (e.g. 'qwen2.5'); judged uses 'model' (e.g. 'qwen').
-
-11. PIF attack_success_internal vs judge_gpt MISMATCH
-    - 10 model/dataset combinations have >5% mismatch between internal and GPT judge.
-    - Worst: qwen/harmbench (72.2%), diffucoder/harmbench (62.0%), llama/harmbench (39.2%).
-    - The internal success flag uses keyword-matching; judge_gpt uses LLM judgment.
-    - Disagreement is expected when keyword-matching is too lenient (false positives)
-      or too strict (false negatives) compared to LLM judgment.
-
-12. ERROR-LIKE PATTERNS IN MODEL OUTPUTS
-    - PIF qwen: 32 pattern matches across 30 unique entries with 'connection', 'rate limit',
-      'timeout', '500' in victim_output.
-    - PIF llama: 50 pattern matches across 45 unique entries.
-    - Metacipher qwen: 67 pattern matches across 67 unique entries in target_response.
-    - Metacipher llama: 93 pattern matches across 89 unique entries.
-    - These are API failures (rate limits, connection errors) mixed into the response column.
-
-13. NON-ENGLISH RESPONSES
-    - pif/qwen: 92 entries with Chinese characters in victim_output across 4 datasets
-      (strongreject=19, malicious_instruct=13, jailbreakbench=10, harmbench=50).
-    - pif/llada: 10 entries with Chinese characters in jailbreakbench.
-    - No other models have CJK in victim_output.
-    - Models occasionally respond in Chinese to English prompts.
-
-14. METACIPHER JUDGE FORMAT
-    - Metacipher judged 'llm_judge' is CATEGORICAL: compliance/too_general/wrong_decryption/refusal.
-    - NOT binary 0/1 like PIF. 'asr_success' (binary) is the actual ASR metric.
-    - asr_success == (llm_judge == 'compliance') for ALL models (verified: 6/6 identical).
-    - asr_success rates: qwen=71.5%, llama=71.1%, llada=47.3%, falcon=0.2%, dream=0.1%, diffucoder=0.9%.
-
-15. ARRATTACK RAW COUNT VARIATION (multi-attempt format)
-    - qwen=3409, llama=3409, llada=9054, falcon=6707, dream=7227, diffucoder=6233.
-    - All have 165 unique (dataset, prompt_idx) combos but different total rows.
-    - Avg attempts per prompt: qwen/llama=20.7, falcon=40.6, diffucoder=37.8, dream=43.8, llada=54.9.
-    - More attempts = model was harder to jailbreak, needed more iterations.
-
-================================================================================
-ASR SUMMARY TABLE
-================================================================================
-
-Model             PIF   Metacipher  Arrattack
---------------------------------------------
-qwen           11.61%       71.52%     70.30%
-llama          13.14%       71.08%     70.30%
-llada           5.26%       47.32%     77.58%
-falcon          0.00%        0.22%     24.85%
-dream           0.00%        0.11%     13.94%
-diffucoder      5.37%        0.88%     31.52%
-
-NOTE: PIF ASR from llm_judge (binary 0/1). Metacipher ASR from asr_success.
-      Arrattack ASR from asr_success (= gpt_fuzz=='compliance').
-      All percentages computed from judged files and verified against source CSVs.
-      PIF falcon/dream = 0% because ALL llm_judge=0 (no variance).
-      Metacipher falcon/dream/diffucoder near-0% (near-zero ASR).
+  [STRUCTURE] ============================================================
+  [STRUCTURE] A. STRUCTURAL INTEGRITY
+  [STRUCTURE] ============================================================
+  [DATA_QUALITY] ============================================================
+  [DATA_QUALITY] B. DATA QUALITY (NaN/empty)
+  [DATA_QUALITY] ============================================================
+  [PIF_NAN] diffucoder: total NaN victim_output = 186
+  [PIF_NAN] dream: total NaN victim_output = 93
+  [PIF_NAN] falcon: total NaN victim_output = 140
+  [PIF_NAN] llada: total NaN victim_output = 0
+  [PIF_NAN] llama: total NaN victim_output = 1
+  [PIF_NAN] qwen: total NaN victim_output = 0
+  [META_NAN] diffucoder failure_mode: 650 empty (expected for successful attacks)
+  [META_NAN] dream failure_mode: 663 empty (expected for successful attacks)
+  [META_NAN] falcon failure_mode: 94 empty (expected for successful attacks)
+  [META_NAN] llada failure_mode: 628 empty (expected for successful attacks)
+  [META_NAN] llama failure_mode: 618 empty (expected for successful attacks)
+  [META_NAN] qwen failure_mode: 845 empty (expected for successful attacks)
+  [API_ERRORS] ============================================================
+  [API_ERRORS] C. API ERRORS IN OUTPUTS (refined detection)
+  [API_ERRORS] ============================================================
+  [API_ERRORS] Total real API errors across all files: 16
+  [CJK] ============================================================
+  [CJK] D. NON-ENGLISH (CJK) IN VICTIM OUTPUTS
+  [CJK] ============================================================
+  [MISMATCH] ============================================================
+  [MISMATCH] E. INTERNAL VS JUDGE SCORE MISMATCHES
+  [MISMATCH] ============================================================
+  [META_JUDGE_VALUES] ============================================================
+  [META_JUDGE_VALUES] F. METACIPHER llm_judge NON-STANDARD VALUES
+  [META_JUDGE_VALUES] ============================================================
+  [META_JUDGE_VALUES] diffucoder: {'wrong_decryption': 416, 'too_general': 488, 'compliance': 8, 'refusal': 1}
+  [META_JUDGE_VALUES] dream: {'wrong_decryption': 672, 'refusal': 61, 'too_general': 179, 'compliance': 1}
+  [META_JUDGE_VALUES] falcon: {'wrong_decryption': 798, 'refusal': 99, 'too_general': 14, 'compliance': 2}
+  [META_JUDGE_VALUES] llada: {'too_general': 446, 'compliance': 432, 'wrong_decryption': 35}
+  [META_JUDGE_VALUES] llama: {'compliance': 649, 'wrong_decryption': 23, 'too_general': 241}
+  [META_JUDGE_VALUES] qwen: {'compliance': 653, 'wrong_decryption': 112, 'too_general': 146, 'refusal': 2}
+  [TIME] ============================================================
+  [TIME] G. TIME OUTLIERS (>3600s or >10x avg)
+  [TIME] ============================================================
+  [ARR_LLADA] ============================================================
+  [ARR_LLADA] H. ARRATTACK LLADA SCHEMA + COVERAGE
+  [ARR_LLADA] ============================================================
+  [ARR_LLADA] llada: raw_unique_global_idx=165 judged_unique_prompt_idx=75
+  [PIF_CONSISTENCY] ============================================================
+  [PIF_CONSISTENCY] I. PIF JUDGED VS RAW VICTIM_OUTPUT TEXT CONSISTENCY
+  [PIF_CONSISTENCY] ============================================================
+  [PIF_CONSISTENCY] diffucoder: text_mismatch=0
+  [PIF_CONSISTENCY] dream: text_mismatch=0
+  [PIF_CONSISTENCY] falcon: text_mismatch=0
+  [PIF_CONSISTENCY] llada: text_mismatch=0
+  [PIF_CONSISTENCY] llama: text_mismatch=0
+  [PIF_CONSISTENCY] qwen: text_mismatch=0
+  [ARR_RAWCOUNT] ============================================================
+  [ARR_RAWCOUNT] J. ARRATTACK RAW ROW COUNTS (multiple attempts per prompt)
+  [ARR_RAWCOUNT] ============================================================
+  [ARR_RAWCOUNT] diffucoder: 6233 total rows (multiple attempts per 165 prompts)
+  [ARR_RAWCOUNT] dream: 7227 total rows (multiple attempts per 165 prompts)
+  [ARR_RAWCOUNT] falcon: 6707 total rows (multiple attempts per 165 prompts)
+  [ARR_RAWCOUNT] llada: 3687 total rows (multiple attempts per 165 prompts)
+  [ARR_RAWCOUNT] llama: 3409 total rows (multiple attempts per 165 prompts)
+  [ARR_RAWCOUNT] qwen: 3409 total rows (multiple attempts per 165 prompts)
