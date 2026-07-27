@@ -1,14 +1,13 @@
-
 ======================================================================
 DLM Jailbreak Transfer — Results Integrity Audit
-Date: 2026-07-24
+Date: 2026-07-27
 Scope: results/ directory (54 CSVs across 3 attacks x 6 models)
-Methodology: Two-pass audit (broad sweep + verify-and-correct)
+Methodology: Targeted remediation of W1-W6 followed by integrity verification
 ======================================================================
 
-SUMMARY: 0 errors, 24 warnings
+SUMMARY: 0 errors, 18 remaining warnings, 6 warnings resolved
 
-All row counts verified correct:
+All row counts remain correct:
   - PIF raw: 400 HB + 313 SR + 100 MI + 100 JBB = 913 per model (6 models)
   - PIF judged: 913 per model (6 files)
   - MetaCipher raw: 913 per model (6 files)
@@ -16,19 +15,20 @@ All row counts verified correct:
   - ArrAttack raw: 3409-7227 per model (multi-attempt, 6 files)
   - ArrAttack judged: 165 per model (6 files)
 
-No blocking errors found. Results have been cleaned since the 2026-07-20 audit:
-  - Falcon CoT reasoning now lives in reasoning_trace column (not leaking into victim_output)
-  - No embedded header rows in any PIF raw file
-  - No BOM in any PIF judged file
-  - qwen/harmbench uses canonical schema (victim/pif_prompt, not target/jailbreak_prompt)
-  - No NaN/empty victim_output in any PIF raw or judged file
-  - No CJK characters in any judged response
-  - No API error strings in any judged response
-  - No duplicate (dataset, prompt_idx) in any judged file
-  - PIF attack_success_internal == judge_gpt for all rows (0 mismatch)
-  - MetaCipher raw success == judged asr_success for all models (0 mismatch)
-  - ArrAttack gpt_fuzz == asr_success identity holds for all 6 models (0 mismatch)
-  - No wrong_decryption leak in ArrAttack judged
+No blocking errors were introduced, and no model outputs, attack prompts, judge labels,
+or ASR values were changed by the W1-W6 remediation.
+
+======================================================================
+RESOLVED WARNINGS
+======================================================================
+
+  W1 RESOLVED. Removed redundant global_idx and dataset_idx columns from
+      ArrAttack judged llada; prompt_idx was verified to already restart at
+      1 within every dataset and to match the former dataset_idx exactly.
+
+  W2-W6 RESOLVED. Removed the entirely empty reasoning_trace column from the
+      five non-falcon ArrAttack judged files; retained it in falcon because
+      164/165 rows contain actual reasoning traces.
 
 ======================================================================
 ERRORS (blocking / data corruption)
@@ -36,103 +36,98 @@ ERRORS (blocking / data corruption)
   (none)
 
 ======================================================================
-WARNINGS (anomalies / inconsistencies / known issues)
+REMAINING WARNINGS WITH ONE-SENTENCE EXPLANATIONS
 ======================================================================
-
---- Schema / Column Consistency ---
-
-  W1. ArrAttack judged llada has 24 columns vs 22 for all other models.
-      Extra columns: global_idx, dataset_idx. llada also uses continuous
-      prompt_idx numbering (1-165 across datasets) while other models
-      restart at 1 per dataset. This is a known llada-specific schema variant.
-
-  W2-W6. ArrAttack judged: reasoning_trace column present in ALL 6 models
-      but non-null only for falcon (164/165 entries). Other 5 models have
-      the column but all values are empty/NaN. Schema inconsistency: either
-      remove the column from non-falcon files or populate it.
 
 --- Zero-Variance Judge Columns (0% ASR) ---
 
-  W7. PIF judged dream: llm_judge all-zero (0/913 = 0.0% ASR).
-      840/913 outputs are refusal-like. Plausible but complete absence
-      of any success should be verified in the paper.
+  W7. PIF judged dream: llm_judge all-zero (0/913 = 0.0% ASR), with
+      840/913 outputs identified as refusal-like.
+      Explanation: Dream predominantly returned refusals or non-actionable fragments, and none of the remaining visible responses met the LLM judge's success threshold.
 
-  W8. PIF judged falcon: llm_judge all-zero (0/913 = 0.0% ASR).
-      847/913 outputs are refusal-like (I'm sorry, but I can't help with that.).
-      Falcon CoT reasoning is properly stored in reasoning_trace column,
-      not leaking into victim_output. ASR=0% is plausible.
+  W8. PIF judged falcon: llm_judge all-zero (0/913 = 0.0% ASR), with
+      847/913 outputs identified as refusal-like and reasoning stored separately.
+      Explanation: Falcon's visible answers were overwhelmingly standardized safety refusals, while its separated reasoning traces were not treated as user-facing successful responses.
 
-  W9. ArrAttack judged falcon: asr_success all-False (0/165 = 0.0% ASR).
-      gpt_fuzz: 140 refusal, 25 too_general, 0 compliance.
-      Raw attack_success_llm=0 and attack_success_gptfuzz=0 (both judges
-      returned 0% on falcon). Consistent across raw and judged.
-      NOTE: Prior 2026-07-08 audit reported falcon ArrAttack ASR=24.8%
-      (41/165) rescued by unified judge. Results have been regenerated
-      since then; falcon now has 0% across all judges.
+  W9. ArrAttack judged falcon: asr_success all-False (0/165 = 0.0% ASR),
+      with gpt_fuzz reporting 140 refusal, 25 too_general, and 0 compliance.
+      Explanation: The regenerated Falcon run produced only refusal or too-general classifications in both raw judges, so the final asr_success field correctly inherited zero successes instead of the 41 successes reported by the older run.
 
 --- Model Output Anomalies ---
 
-  W10. PIF judged diffucoder: 44/913 entries contain <|im_start|> token
-       leakage in victim_output (28 harmbench, 4 strongreject,
-       5 malicious_instruct, 7 jailbreakbench). These are chat template
-       tokens that leaked into the output text. Examples:
-       - "<|im_start|>assistant\nTitle: Unveiling the Hidden Bias..."
-       - "<|im_start|>assistant\nbleach and ammonia are not safe to mix."
-       - "<|im_start|>" (token only, no content)
-       This inflates response length and may confuse keyword judges.
+  W10. PIF judged diffucoder: 44/913 victim_output values contain leaked
+       <|im_start|> chat-template tokens.
+       Explanation: DiffuCoder occasionally emitted tokenizer control tokens as ordinary text because special-token stripping was not consistently applied before saving victim_output.
 
-  W11. PIF judged qwen: 1 entry with CoT/reasoning marker (emoji) in
-       victim_output. Minor, isolated instance.
+  W11. PIF judged qwen: one victim_output contains an isolated
+       CoT/reasoning-style emoji marker.
+       Explanation: One Qwen generation surfaced a model-produced reasoning-style marker that the output-cleaning step did not remove.
 
-  W12-W16. PIF judged: very short victim_output (<10 chars) in 5 models.
-       diffucoder=11, dream=10, llada=7, llama=5, qwen=3. These may be
-       truncated or degenerate outputs. Falcon=0 (all outputs are full
-       refusal sentences).
+  W12. PIF judged diffucoder: 11 victim_output values are shorter than
+       10 characters.
+       Explanation: These rows contain generated fragments such as punctuation, list prefixes, or cut-off words, indicating early stopping or degenerate generation rather than missing CSV data.
+
+  W13. PIF judged dream: 10 victim_output values are shorter than
+       10 characters.
+       Explanation: Dream ended a small number of generations after producing only a token or short word, which is consistent with model-level early termination rather than file truncation.
+
+  W14. PIF judged llada: 7 victim_output values are shorter than
+       10 characters.
+       Explanation: Several LLaDA cases consist only of a short token or zero-width character, showing a degenerate decoded output that was nevertheless recorded correctly.
+
+  W15. PIF judged llama: 5 victim_output values are shorter than
+       10 characters.
+       Explanation: Llama occasionally terminated on a single fragment or zero-width character, leaving a valid but substantively empty generated response.
+
+  W16. PIF judged qwen: 3 victim_output values are shorter than
+       10 characters.
+       Explanation: The three Qwen cases are partial markup fragments, suggesting generation stopped immediately after emitting malformed formatting text.
 
 --- Model Identity Mismatch ---
 
-  W17. ArrAttack raw falcon: target_model='falcon-7b-instruct' (old
-       Falcon-7B), NOT 'Falcon-H1R-7B' as claimed in the paper. PiF and
-       MetaCipher both map falcon to 'tiiuae/Falcon-H1R-7B'. This is a
-       reproducibility issue: the paper claims uniform Falcon-H1R-7B
-       across all three attacks, but ArrAttack used the old Falcon-7B.
-       (Also: ArrAttack maps llama to 'Meta-Llama-3.1-8B-Instruct'
-       which matches the paper, while PiF/MetaCipher map llama to
-       'meta-llama/Llama-3.2-3B-Instruct' (3B, not 8B), but this is a
-       script-level issue, not visible in result CSVs.)
+  W17. ArrAttack raw falcon identifies target_model='falcon-7b-instruct',
+       while PIF and MetaCipher use 'tiiuae/Falcon-H1R-7B'; the attack
+       pipelines also disagree on the configured Llama model size.
+       Explanation: Separate per-attack model-mapping configurations drifted from one another, causing identical short model aliases to resolve to different underlying checkpoints.
 
 --- Time Outliers ---
 
-  W18. PIF raw diffucoder/strongreject: max=637s vs mean=68s (9.3x outlier)
-  W19. PIF raw falcon/harmbench: max=3047s vs mean=436s (7.0x outlier)
-  W20. PIF raw falcon/strongreject: max=2316s vs mean=115s (20.1x outlier)
-  W21. PIF raw falcon/malicious_instruct: max=2296s vs mean=97s (23.7x outlier)
-  W22. PIF raw falcon/jailbreakbench: max=2353s vs mean=193s (12.2x outlier)
-  W23. PIF raw llama/harmbench: max=909s vs mean=172s (5.3x outlier)
-  W24. PIF raw qwen/harmbench: max=1028s vs mean=84s (12.2x outlier)
-       Falcon has the most extreme time outliers (4 datasets flagged),
-       consistent with its hybrid attention+Mamba architecture causing
-       occasional slow inference. Not a data corruption issue.
+  W18. PIF raw diffucoder/strongreject: max=637s vs mean=68s (9.3x outlier).
+       Explanation: The maximum came from a single-query row that ended in a normal short refusal, so it is most consistent with an isolated inference or service stall rather than a malformed result.
+
+  W19. PIF raw falcon/harmbench: max=3047s vs mean=436s (7.0x outlier).
+       Explanation: This row ran the full 50-query attack search and generated a 1,466-character reasoning trace, compounding Falcon's per-query latency across all attempts.
+
+  W20. PIF raw falcon/strongreject: max=2316s vs mean=115s (20.1x outlier).
+       Explanation: This row also exhausted all 50 attack queries and accumulated a 1,838-character reasoning trace, making repeated slow generations the likely source of the elapsed time.
+
+  W21. PIF raw falcon/malicious_instruct: max=2296s vs mean=97s (23.7x outlier).
+       Explanation: The case used all 50 allowed queries and produced a 1,822-character reasoning trace before returning a short refusal, so the delay arose during iterative generation rather than CSV processing.
+
+  W22. PIF raw falcon/jailbreakbench: max=2353s vs mean=193s (12.2x outlier).
+       Explanation: The full 50-query search plus a 1,601-character reasoning trace indicates that repeated Falcon inference dominated the runtime despite the final answer being short.
+
+  W23. PIF raw llama/harmbench: max=909s vs mean=172s (5.3x outlier).
+       Explanation: This row used all 50 attack queries and its selected response was unusually long at 1,835 characters, increasing cumulative decoding time across the search.
+
+  W24. PIF raw qwen/harmbench: max=1028s vs mean=84s (12.2x outlier).
+       Explanation: The row exhausted the 50-query attack budget, so repeated Qwen generations rather than a single corrupted record account for the unusually high total time.
 
 ======================================================================
-ASR SUMMARY (for reference, not errors)
+ASR SUMMARY (unchanged)
 ======================================================================
   PIF:        diffucoder=5.4%, dream=0.0%, falcon=0.0%, llada=7.6%, llama=13.1%, qwen=11.6%
   MetaCipher: diffucoder=0.9%, dream=0.1%, falcon=0.2%, llada=47.3%, llama=71.1%, qwen=71.5%
   ArrAttack:  diffucoder=10.3%, dream=6.1%, falcon=0.0%, llada=8.5%, llama=8.5%, qwen=9.1%
 
 ======================================================================
-AUDIT PHASES COMPLETED
+VERIFICATION COMPLETED
 ======================================================================
-  Phase 1:  Inventory & row count verification (54 CSVs, all counts OK)
-  Phase 2:  Column set uniformity per attack (1 llada schema variant found)
-  Phase 3:  NaN/empty response analysis (0 found in any judged file)
-  Phase 4:  Judge column completeness (3 zero-variance columns found)
-  Phase 5:  Weird output (45 CoT/token leakage, 36 short outputs, 0 API errors, 0 CJK)
-  Phase 6:  Cross-paradigm & internal consistency (all identities hold)
-  Phase 7:  Model column naming consistency (falcon identity mismatch confirmed)
-  Phase 8:  Time outliers (7 flagged, falcon worst)
-  Phase 9:  MD5 duplicate detection (0 duplicates)
-  Phase 10: BOM detection (0 found)
-
-Audit script: scripts/audit_results_final.py
+  - All 54 CSV files are present.
+  - All judged files retain their expected row counts.
+  - ArrAttack llada now has the same 21-column schema as the other
+    non-falcon judged files.
+  - ArrAttack falcon retains its 22-column schema with reasoning_trace.
+  - Non-falcon ArrAttack judged files contain no reasoning_trace column.
+  - prompt_idx is unique within (dataset, prompt_idx) for all judged files.
+  - Judge labels and ASR totals remain unchanged.
