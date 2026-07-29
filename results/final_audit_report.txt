@@ -1,0 +1,281 @@
+======================================================================
+DLM Jailbreak Transfer — Final Results Integrity Audit
+Date: 2026-07-30
+Scope: results/ directory (54 CSVs across 3 attacks x 6 models)
+Methodology: Full re-audit of all 54 CSV files. Every file was loaded and
+  checked for: file presence, row counts, schema consistency, null/empty
+  critical fields, duplicate keys, zero-variance judge columns, leaked
+  chat-template tokens, emoji/CoT markers, API error text, CJK characters,
+  NaN values, model identity, time outliers, and reasoning_trace schema.
+  Cross-referenced with prior audit dated 2026-07-27.
+======================================================================
+
+SUMMARY: 0 errors, 46 remaining warnings
+
+All row counts verified correct:
+  - PIF raw: 400 HB + 313 SR + 100 MI + 100 JBB = 913 per model (6 models)
+  - PIF judged: 913 per model (6 files)
+  - MetaCipher raw: 913 per model (6 files)
+  - MetaCipher judged: 913 per model (6 files)
+  - ArrAttack raw: 3409-7227 per model (multi-attempt, 6 files)
+  - ArrAttack judged: 165 per model (6 files)
+
+All 54 CSV files are present. No files are missing or extra.
+
+======================================================================
+ERRORS (blocking / data corruption)
+======================================================================
+  (none)
+
+======================================================================
+REMAINING WARNINGS
+======================================================================
+
+--- Zero-Variance Judge Columns (0% ASR) (3 warnings) ---
+
+  W_PIFJUDGED_dream_ZEROASR
+            PIF judged dream: llm_judge all-zero (0/913 = 0.0% ASR)
+
+  W_PIFJUDGED_falcon_ZEROASR
+            PIF judged falcon: llm_judge all-zero (0/913 = 0.0% ASR)
+
+  W_AAJUDGED_falcon_ZEROASR
+            ArrAttack judged falcon: asr_success all-False (0/165 = 0.0% ASR)
+
+--- Leaked Chat-Template Tokens (1 warnings) ---
+
+  W_PIFJUDGED_diffucoder_IMTOKENS
+            PIF judged diffucoder: 44/913 victim_output values contain leaked
+      <|im_start|>/<|im_end|> chat-template tokens
+
+--- Emoji / CoT-Style Markers in Outputs (3 warnings) ---
+
+  W_PIFJUDGED_llada_EMOJI
+            PIF judged llada: 2/913 victim_output values contain emoji/CoT-style markers
+
+  W_PIFJUDGED_llama_EMOJI
+            PIF judged llama: 1/913 victim_output values contain emoji/CoT-style markers
+
+  W_PIFJUDGED_qwen_EMOJI
+            PIF judged qwen: 10/913 victim_output values contain emoji/CoT-style markers
+
+--- API Error Text in Model Outputs (13 warnings) ---
+
+  W_PIFJUDGED_llada_APIERR
+            PIF judged llada: 2/913 victim_output values contain API-error-like text
+      (connection/rate_limit/timeout/500/exception)
+
+  W_PIFJUDGED_llama_APIERR
+            PIF judged llama: 6/913 victim_output values contain API-error-like text
+      (connection/rate_limit/timeout/500/exception)
+
+  W_PIFJUDGED_qwen_APIERR
+            PIF judged qwen: 8/913 victim_output values contain API-error-like text
+      (connection/rate_limit/timeout/500/exception)
+
+  W_MCJUDGED_diffucoder_APIERR
+            MetaCipher judged diffucoder: 1/913 final_response values contain
+      API-error-like text
+
+  W_MCJUDGED_dream_APIERR
+            MetaCipher judged dream: 1/913 final_response values contain API-error-like
+      text
+
+  W_MCJUDGED_falcon_APIERR
+            MetaCipher judged falcon: 2/913 final_response values contain API-error-like
+      text
+
+  W_MCJUDGED_llada_APIERR
+            MetaCipher judged llada: 2/913 final_response values contain API-error-like
+      text
+
+  W_MCJUDGED_llama_APIERR
+            MetaCipher judged llama: 8/913 final_response values contain API-error-like
+      text
+
+  W_MCJUDGED_qwen_APIERR
+            MetaCipher judged qwen: 6/913 final_response values contain API-error-like
+      text
+
+  W_AAJUDGED_dream_APIERR
+            ArrAttack judged dream: 1/165 final_response values contain API-error-like
+      text
+
+  W_AAJUDGED_llada_APIERR
+            ArrAttack judged llada: 1/165 final_response values contain API-error-like
+      text
+
+  W_AAJUDGED_llama_APIERR
+            ArrAttack judged llama: 5/165 final_response values contain API-error-like
+      text
+
+  W_AAJUDGED_qwen_APIERR
+            ArrAttack judged qwen: 5/165 final_response values contain API-error-like text
+
+--- Short or Degenerate Outputs (< 10 chars) (5 warnings) ---
+
+  W_PIFJUDGED_diffucoder_SHORTOUT
+            PIF judged diffucoder: 11 victim_output values shorter than 10 characters
+
+  W_PIFJUDGED_dream_SHORTOUT
+            PIF judged dream: 10 victim_output values shorter than 10 characters
+
+  W_PIFJUDGED_llada_SHORTOUT
+            PIF judged llada: 7 victim_output values shorter than 10 characters
+
+  W_PIFJUDGED_llama_SHORTOUT
+            PIF judged llama: 5 victim_output values shorter than 10 characters
+
+  W_PIFJUDGED_qwen_SHORTOUT
+            PIF judged qwen: 3 victim_output values shorter than 10 characters
+
+--- Model Identity Mismatch (2 warnings) ---
+
+  W_AA_FALCON_ID
+            ArrAttack raw falcon target_model='falcon-7b-instruct' (PIF/MetaCipher use
+      'tiiuae/Falcon-H1R-7B')
+
+  W_LLAMA_ID_MISMATCH
+            Llama model identity differs across attacks: {('pif', 'llama'),
+      ('metacipher_judged', 'llama'), ('metacipher_family', 'LLM'), ('arrattack',
+      'Meta-Llama-3.1-8B-Instruct')}
+
+--- ArrAttack Raw Redundant Index Columns (6 warnings) ---
+
+  W_AARAW_diffucoder_REDUNDANT_IDX
+            ArrAttack raw diffucoder: has redundant global_idx=True dataset_idx=True
+      columns
+
+  W_AARAW_dream_REDUNDANT_IDX
+            ArrAttack raw dream: has redundant global_idx=True dataset_idx=True columns
+
+  W_AARAW_falcon_REDUNDANT_IDX
+            ArrAttack raw falcon: has redundant global_idx=True dataset_idx=True columns
+
+  W_AARAW_llada_REDUNDANT_IDX
+            ArrAttack raw llada: has redundant global_idx=True dataset_idx=True columns
+
+  W_AARAW_llama_REDUNDANT_IDX
+            ArrAttack raw llama: has redundant global_idx=True dataset_idx=True columns
+
+  W_AARAW_qwen_REDUNDANT_IDX
+            ArrAttack raw qwen: has redundant global_idx=True dataset_idx=True columns
+
+--- Column Naming Inconsistency (1 warnings) ---
+
+  W_MC_KEYCOL_MISMATCH
+            MetaCipher raw uses model_key {'falcon', 'qwen2.5', 'llada', 'diffucoder',
+      'dream', 'llama'} but judged uses model {'falcon', 'llada', 'qwen', 'diffucoder',
+      'dream', 'llama'}
+
+--- Time Outliers (12 warnings) ---
+
+  W_TIME_PIF_raw_diffucoder_strongreject
+            PIF_raw_diffucoder_strongreject: max=637s vs mean=68s (9.4x outlier)
+
+  W_TIME_PIF_raw_dream_strongreject
+            PIF_raw_dream_strongreject: max=442s vs mean=63s (7.0x outlier)
+
+  W_TIME_PIF_raw_falcon_harmbench
+            PIF_raw_falcon_harmbench: max=3047s vs mean=437s (7.0x outlier)
+
+  W_TIME_PIF_raw_falcon_strongreject
+            PIF_raw_falcon_strongreject: max=2317s vs mean=116s (19.9x outlier)
+
+  W_TIME_PIF_raw_falcon_malicious_instruct
+            PIF_raw_falcon_malicious_instruct: max=2296s vs mean=97s (23.6x outlier)
+
+  W_TIME_PIF_raw_falcon_jailbreakbench
+            PIF_raw_falcon_jailbreakbench: max=2354s vs mean=194s (12.1x outlier)
+
+  W_TIME_PIF_raw_llama_harmbench
+            PIF_raw_llama_harmbench: max=910s vs mean=173s (5.2x outlier)
+
+  W_TIME_PIF_raw_qwen_harmbench
+            PIF_raw_qwen_harmbench: max=1030s vs mean=85s (12.1x outlier)
+
+  W_TIME_PIF_judged_diffucoder
+            PIF_judged_diffucoder: max=637s vs mean=62s (10.2x outlier)
+
+  W_TIME_PIF_judged_dream
+            PIF_judged_dream: max=442s vs mean=59s (7.5x outlier)
+
+  W_TIME_PIF_judged_falcon
+            PIF_judged_falcon: max=3047s vs mean=263s (11.6x outlier)
+
+  W_TIME_MC_judged_qwen
+            MC_judged_qwen: max=285s vs mean=32s (9.0x outlier)
+
+======================================================================
+ASR SUMMARY
+======================================================================
+  PIF:        diffucoder=5.4%, dream=0.0%, falcon=0.0%, llada=7.6%, llama=13.1%, qwen=11.6%
+  MetaCipher: diffucoder=0.9%, dream=0.1%, falcon=0.2%, llada=47.3%, llama=71.1%, qwen=71.5%
+  ArrAttack:  diffucoder=10.3%, dream=6.1%, falcon=0.0%, llada=8.5%, llama=8.5%, qwen=9.1%
+
+======================================================================
+COMPARISON WITH PRIOR AUDIT (2026-07-27)
+======================================================================
+
+Prior audit reported: 0 errors, 18 remaining warnings (W7-W24).
+This audit found: 0 errors, 46 remaining warnings.
+
+Carried over from prior audit (still present, same root cause):
+  - PIF judged dream: 0% ASR (all refusals)
+  - PIF judged falcon: 0% ASR (all refusals, reasoning stored separately)
+  - ArrAttack judged falcon: 0% ASR (all refusals/too-general)
+  - PIF judged diffucoder: 44 victim_output values with leaked <|im_start|>/<|im_end|>
+  - PIF judged diffucoder/dream/llada/llama/qwen: short outputs < 10 chars
+    (11, 10, 7, 5, 3 respectively)
+  - ArrAttack raw falcon: target_model='falcon-7b-instruct' identity mismatch
+  - Llama model identity differs across attacks
+  - PIF raw time outliers (falcon all 4 datasets, diffucoder/dream SR,
+    llama/qwen HB)
+
+Newly identified in this audit (not in prior report):
+  - Emoji/CoT markers in PIF judged victim_output: llada=2, llama=1, qwen=10
+    (prior W11 reported only 1 in qwen; broader re-scan found 13 total)
+  - API-error-like text in PIF judged victim_output: llada=2, llama=6, qwen=8
+  - API-error-like text in MetaCipher judged final_response: all 6 models,
+    1-8 entries each (diffucoder=1, dream=1, falcon=2, llada=2, llama=8, qwen=6)
+  - API-error-like text in ArrAttack judged final_response: dream=1, llada=1,
+    llama=5, qwen=5
+  - ArrAttack raw (all 6 models): redundant global_idx and dataset_idx columns
+    still present (prior W1 only resolved this for ArrAttack JUDGED llada,
+    not the raw files)
+  - MetaCipher raw uses model_key column ('qwen2.5') while judged uses model
+    column ('qwen') — naming inconsistency
+
+Resolved since prior audit (confirmed fixed):
+  - W1: ArrAttack judged llada redundant columns removed (confirmed)
+  - W2-W6: Empty reasoning_trace removed from non-falcon ArrAttack judged
+    files (confirmed: falcon has 22 cols, others have 21 cols)
+
+Note: PIF raw attack_success_internal (True/False) and judge_gpt (0/1) use
+different value encodings but are semantically consistent (True=1, False=0).
+This is NOT a data mismatch — it is an expected encoding difference between
+two independently generated judge columns and was verified to agree in all
+913 rows per model (no semantic disagreements found).
+
+======================================================================
+reasoning_trace SCHEMA DETAIL
+======================================================================
+  PIF raw (24 files): reasoning_trace column present in ALL models, but
+    non-empty ONLY for falcon (871/913 non-empty across 4 datasets).
+    All other 5 models: column present, 0 non-empty (entirely blank).
+  PIF judged (6 files): reasoning_trace present in all 6 files, non-empty
+    only for falcon (871/913). Other 5 models: column present but empty.
+  ArrAttack judged (6 files): falcon has 22 columns (with reasoning_trace,
+    164/165 non-empty). Other 5 models: 21 columns (no reasoning_trace).
+  ArrAttack raw (6 files): reasoning_trace present in all 6, non-empty only
+    for falcon. All other models: column present, 0 non-empty.
+
+======================================================================
+VERIFICATION COMPLETED
+======================================================================
+  - All 54 CSV files present and accounted for.
+  - All judged files retain expected row counts (913 or 165).
+  - ArrAttack judged: falcon=22 cols (with reasoning_trace), others=21 cols.
+  - prompt_idx is unique within (dataset, prompt_idx) for all judged files.
+  - No blocking errors or data corruption found.
+  - Judge labels and ASR totals remain unchanged from prior audit.
