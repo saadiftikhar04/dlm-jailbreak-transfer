@@ -1,0 +1,8 @@
+============================================================
+ PiF DLM batch runner
+ host    : dn011
+ gpu     : 0
+ python  : /scratch/si2356/conda-envs/dlm_attack/bin/python
+ models  : llada diffucoder dream
+ time    : Sun Jun 14 17:19:28 +04 2026
+============================================================

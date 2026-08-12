@@ -1,0 +1,6 @@
+=== Job 16163351 started at Tue Jun  2 14:00:33 +04 2026 ===
+Node: cn270
+GPU: NVIDIA H100 NVL
+
+=== Applying DLM fix patch ===
+ERROR: patch failed (exit 1). Aborting.

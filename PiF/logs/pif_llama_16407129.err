@@ -1,0 +1,23 @@
+2026-06-24 00:42:29,623 - INFO - PiF | target=llama | dataset=strongreject
+2026-06-24 00:42:29,623 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-06-24 00:42:29,624 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-06-24 00:42:29,677 - INFO - Loading BERT-Large (source)...
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-06-24 00:42:35,130 - INFO - Loading target: llama
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-06-24 00:42:35,661 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:04<00:04,  4.75s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  2.83s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.12s/it]
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 576, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 448, in main
+    raw_prompts = load_dataset(ds_name)[:ds_limit]
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 291, in load_dataset
+    return {
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 297, in <lambda>
+    lambda: csv_col(base+"/harmbench/text_all.csv", "Behavior"),
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 285, in csv_col
+    with open(path) as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/scratch/si2356/dlm-jailbreak-transfer/dataset/harmbench/text_all.csv'

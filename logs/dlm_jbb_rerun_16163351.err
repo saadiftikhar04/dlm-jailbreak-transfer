@@ -1,0 +1,7 @@
+
+CondaError: Run 'conda init' before 'conda activate'
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/apply_dlm_fix.py", line 45, in <module>
+    assert OLD_SIG in src, "PATCH 1 FAILED: signature anchor not found"
+AssertionError: PATCH 1 FAILED: signature anchor not found

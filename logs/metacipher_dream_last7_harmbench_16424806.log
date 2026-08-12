@@ -1,0 +1,28 @@
+2026-06-25 17:10:03,575 - INFO - 
+====================================================================================================
+2026-06-25 17:10:03,575 - INFO - 📂 LOADING DATASETS  (executed in this order)
+2026-06-25 17:10:03,575 - INFO - ====================================================================================================
+2026-06-25 17:10:03,575 - INFO -   • harmbench                 → /scratch/si2356/dlm-jailbreak-transfer/dataset/harmbench/text_all.csv
+2026-06-25 17:10:03,575 - INFO -   • malicious_instruct        → /scratch/si2356/dlm-jailbreak-transfer/dataset/malicious_instruct/malicious_instruct.txt
+2026-06-25 17:10:03,575 - INFO -   • strongreject              → /scratch/si2356/dlm-jailbreak-transfer/dataset/strongreject/strongreject.csv
+2026-06-25 17:10:03,575 - INFO -   • jailbreakbench            → /scratch/si2356/dlm-jailbreak-transfer/dataset/jailbreakbench/jailbreakbench.csv
+2026-06-25 17:10:03,582 - INFO -   → Selected final 7 of 400 prompts from dataset 'harmbench'
+2026-06-25 17:10:03,582 - INFO - ✓ Loaded 7 prompts from dataset 'harmbench'
+2026-06-25 17:10:03,582 - INFO - 
+2026-06-25 17:10:03,582 - INFO - Datasets to process (in order): ['harmbench']
+2026-06-25 17:10:03,583 - INFO - Total prompts across all datasets: 7
+2026-06-25 17:10:03,583 - INFO - Target model  : Dream-org/Dream-v0-Instruct-7B
+2026-06-25 17:10:03,583 - INFO - Model type    : DLM (masked diffusion LM)
+2026-06-25 17:10:03,899 - INFO - Device        : cuda
+`torch_dtype` is deprecated! Use `dtype` instead!
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1561, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1435, in main
+    framework = MetaCipherFramework(
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1000, in __init__
+    self.target_model = AutoModelForCausalLM.from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 607, in from_pretrained
+    raise ValueError(
+ValueError: Unrecognized configuration class <class 'transformers_modules.Dream-org.Dream-v0-Instruct-7B.05334cb9faaf763692dcf9d8737c642be2b2a6ae.configuration_dream.DreamConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+Model type should be one of ApertusConfig, ArceeConfig, AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BitNetConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DeepseekV2Config, DeepseekV3Config, DiffLlamaConfig, DogeConfig, Dots1Config, ElectraConfig, Emu3Config, ErnieConfig, Ernie4_5Config, Ernie4_5_MoeConfig, Exaone4Config, FalconConfig, FalconH1Config, FalconMambaConfig, FuyuConfig, GemmaConfig, Gemma2Config, Gemma3Config, Gemma3TextConfig, Gemma3nConfig, Gemma3nTextConfig, GitConfig, GlmConfig, Glm4Config, Glm4MoeConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GptOssConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeHybridConfig, GraniteMoeSharedConfig, HeliumConfig, HunYuanDenseV1Config, HunYuanMoEV1Config, JambaConfig, JetMoeConfig, Lfm2Config, LlamaConfig, Llama4Config, Llama4TextConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MiniMaxConfig, MistralConfig, MixtralConfig, MllamaConfig, ModernBertDecoderConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, Phi4MultimodalConfig, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, Qwen3Config, Qwen3MoeConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, SeedOssConfig, SmolLM3Config, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, xLSTMConfig, XmodConfig, ZambaConfig, Zamba2Config.

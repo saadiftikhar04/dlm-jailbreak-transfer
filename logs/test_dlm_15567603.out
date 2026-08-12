@@ -1,0 +1,30 @@
+
+============================================================
+Testing llada...
+  Formatted prompt: <|startoftext|><|start_header_id|>user<|end_header_id|>
+
+Please answer the following questions one b...
+  OUTPUT (2.1s): 1. The Declaration of Independence was adopted on July 4,, 177.
+
+ son is is. a..............................
+5. Dynasty.
+  ✓ llada OK
+
+============================================================
+Testing dream...
+  Formatted prompt: <|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Please answer the followi...
+  OUTPUT (1.6s): . The Declaration of Independence was adopted on  4,  1772.
+net son son sonnet son son. the Xin dynasty.
+  ✓ dream OK
+
+============================================================
+Testing diffucoder...
+  Formatted prompt: <|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Please answer the followi...
+  OUTPUT (1.4s): . The Declaration of Independence adopted adopted on July July 7,, 7772.. a is a a a a a a a a a a a a a,,,,,,,,,, three, three, three three three three three three three three three three three three three three
+  ✓ diffucoder OK

@@ -1,0 +1,143 @@
+2026-05-04 23:59:36,084 - INFO - PiF | target=dream | dataset=advbench
+2026-05-04 23:59:36,085 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-05-04 23:59:36,085 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-05-04 23:59:36,546 - INFO - Loading BERT-Large (source)...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:777: UserWarning: `return_dict_in_generate` is NOT set to `True`, but `output_hidden_states` is. When `return_dict_in_generate` is not `True`, `output_hidden_states` is ignored.
+  warnings.warn(
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-05-04 23:59:38,369 - INFO - Loading target: dream
+A new version of the following files was downloaded from https://huggingface.co/Dream-org/Dream-v0-Instruct-7B:
+- generation_utils.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 529, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 379, in main
+    tgt_model_raw, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'
+2026-05-04 23:59:42,772 - INFO - PiF | target=dream | dataset=malicious_instruct
+2026-05-04 23:59:42,772 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-05-04 23:59:42,773 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-05-04 23:59:43,219 - INFO - Loading BERT-Large (source)...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:777: UserWarning: `return_dict_in_generate` is NOT set to `True`, but `output_hidden_states` is. When `return_dict_in_generate` is not `True`, `output_hidden_states` is ignored.
+  warnings.warn(
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-05-04 23:59:44,122 - INFO - Loading target: dream
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 529, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 379, in main
+    tgt_model_raw, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'
+2026-05-04 23:59:47,529 - INFO - PiF | target=dream | dataset=harmbench
+2026-05-04 23:59:47,529 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-05-04 23:59:47,529 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-05-04 23:59:47,996 - INFO - Loading BERT-Large (source)...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:777: UserWarning: `return_dict_in_generate` is NOT set to `True`, but `output_hidden_states` is. When `return_dict_in_generate` is not `True`, `output_hidden_states` is ignored.
+  warnings.warn(
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-05-04 23:59:48,869 - INFO - Loading target: dream
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 529, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 379, in main
+    tgt_model_raw, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'
+2026-05-04 23:59:52,247 - INFO - PiF | target=dream | dataset=jailbreakbench
+2026-05-04 23:59:52,247 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-05-04 23:59:52,247 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-05-04 23:59:52,727 - INFO - Loading BERT-Large (source)...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:777: UserWarning: `return_dict_in_generate` is NOT set to `True`, but `output_hidden_states` is. When `return_dict_in_generate` is not `True`, `output_hidden_states` is ignored.
+  warnings.warn(
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-05-04 23:59:53,600 - INFO - Loading target: dream
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 529, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 379, in main
+    tgt_model_raw, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'
+2026-05-04 23:59:56,965 - INFO - PiF | target=dream | dataset=strongreject
+2026-05-04 23:59:56,965 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-05-04 23:59:56,965 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-05-04 23:59:57,428 - INFO - Loading BERT-Large (source)...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:777: UserWarning: `return_dict_in_generate` is NOT set to `True`, but `output_hidden_states` is. When `return_dict_in_generate` is not `True`, `output_hidden_states` is ignored.
+  warnings.warn(
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-05-04 23:59:58,295 - INFO - Loading target: dream
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 529, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 379, in main
+    tgt_model_raw, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'

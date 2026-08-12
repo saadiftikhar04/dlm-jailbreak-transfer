@@ -1,0 +1,27 @@
+2026-05-07 19:39:28,885 - INFO - ✓ Loaded 400 prompts from harmbench (col=Behavior)
+2026-05-07 19:39:28,887 - INFO - ✓ Loaded 100 prompts from malicious_instruct
+2026-05-07 19:39:28,893 - INFO - ✓ Loaded 313 prompts from strongreject (col=forbidden_prompt)
+2026-05-07 19:39:28,896 - INFO - ✓ Loaded 100 prompts from jailbreakbench (col=Behavior)
+2026-05-07 19:39:28,896 - INFO - Total prompts loaded: 913
+2026-05-07 19:39:28,896 - INFO - Loading falcon (tiiuae/Falcon-H1R-7B, type=ar) …
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 1023, in from_pretrained
+    config_class = CONFIG_MAPPING[config_dict["model_type"]]
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 725, in __getitem__
+    raise KeyError(key)
+KeyError: 'falcon_h1'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1650, in <module>
+    run_metacipher(
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1481, in run_metacipher
+    model, tokenizer, model_type = load_victim_model(model_key)
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1361, in load_victim_model
+    model = AutoModelForCausalLM.from_pretrained(hf_id, **load_kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 526, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 1025, in from_pretrained
+    raise ValueError(
+ValueError: The checkpoint you are trying to load has model type `falcon_h1` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.

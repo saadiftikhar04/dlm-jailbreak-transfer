@@ -1,0 +1,67 @@
+==================================================================
+Job ID         : 16175875
+Node           : cn004
+Started        : Wed Jun  3 16:10:49 +04 2026
+Working dir    : /scratch/si2356/dlm-jailbreak-transfer
+Python         : /scratch/si2356/conda-envs/dlm_attack/bin/python
+Conda env      : /scratch/si2356/conda-envs/dlm_attack
+index, name, memory.total [MiB]
+0, NVIDIA A100-PCIE-40GB, 40960 MiB
+==================================================================
+
+==================================================================
+>>> [2026-06-03 16:10:49]  STARTING model: dream
+==================================================================
+2026-06-03 16:11:30,314 - INFO - ✓ Loaded 100 prompts from jailbreakbench (col=Goal)
+2026-06-03 16:11:30,314 - INFO - Total prompts loaded: 100
+2026-06-03 16:11:30,314 - INFO - Loading dream (Dream-org/Dream-v0-Instruct-7B, type=dlm) …
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-06-03 16:11:32,757 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:07,  2.64s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.62s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.49s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  1.76s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.06s/it]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+2026-06-03 16:11:41,089 - INFO - Model loaded on cuda:0
+2026-06-03 16:11:41,094 - INFO - Resuming from checkpoint: checkpoints/metacipher_dream_jbb_ckpt_100.json
+2026-06-03 16:11:41,099 - INFO - Starting from prompt index 100 / 100
+2026-06-03 16:11:41,131 - INFO - 
+Saved 100 results to metacipher_dream_jbb_results_FINAL.csv
+2026-06-03 16:11:41,131 - INFO - Final ASR for dream: 0/100 = 0.000
+>>> [2026-06-03 16:11:42]  FINISHED dream  (rc=0, elapsed 0h0m53s)
+
+==================================================================
+>>> [2026-06-03 16:11:50]  STARTING model: diffucoder
+==================================================================
+2026-06-03 16:11:59,952 - INFO - ✓ Loaded 100 prompts from jailbreakbench (col=Goal)
+2026-06-03 16:11:59,952 - INFO - Total prompts loaded: 100
+2026-06-03 16:11:59,952 - INFO - Loading diffucoder (apple/DiffuCoder-7B-Instruct, type=dlm) …
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-06-03 16:12:01,323 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.04s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.78s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  1.80s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.14s/it]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+2026-06-03 16:12:09,985 - INFO - Model loaded on cuda:0
+2026-06-03 16:12:09,987 - INFO - Resuming from checkpoint: checkpoints/metacipher_diffucoder_jbb_ckpt_100.json
+2026-06-03 16:12:09,993 - INFO - Starting from prompt index 100 / 100
+2026-06-03 16:12:10,028 - INFO - 
+Saved 100 results to metacipher_diffucoder_jbb_results_FINAL.csv
+2026-06-03 16:12:10,029 - INFO - Final ASR for diffucoder: 0/100 = 0.000
+>>> [2026-06-03 16:12:11]  FINISHED diffucoder  (rc=0, elapsed 0h0m21s)
+
+==================================================================
+ALL MODELS DONE
+Total wall time : 0h1m29s
+Finished        : Wed Jun  3 16:12:18 +04 2026
+==================================================================
+
+Final CSVs in /scratch/si2356/dlm-jailbreak-transfer:
+-rw-r--r-- 1 si2356 users 608K Jun  3 16:12 metacipher_diffucoder_jbb_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 5.7M May 19 08:34 metacipher_diffucoder_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 380K Jun  3 16:11 metacipher_dream_jbb_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 3.4M May 18 17:04 metacipher_dream_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 792K May 31 20:08 metacipher_falcon_jbb_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 7.1M May 16 23:21 metacipher_falcon_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 768K May 15 07:04 metacipher_harmbench_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 606K Jun  1 00:48 metacipher_llada_jbb_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 5.4M May 17 16:35 metacipher_llada_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 821K May 31 22:47 metacipher_llama_jbb_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 7.5M May 16 23:32 metacipher_llama_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 832K May 30 23:34 metacipher_qwen2.5_jbb_results_FINAL.csv
+-rw-r--r-- 1 si2356 users 7.4M May 16 01:21 metacipher_qwen2.5_results_FINAL.csv

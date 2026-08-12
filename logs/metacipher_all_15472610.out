@@ -1,0 +1,36 @@
+==================================================================
+Job ID         : 15472610
+Node           : cn008
+Started        : Wed May  6 00:33:10 +04 2026
+Working dir    : /scratch/si2356/dlm-jailbreak-transfer
+Python         : /scratch/si2356/conda-envs/dlm_attack/bin/python
+Conda env      : /scratch/si2356/conda-envs/dlm_attack
+index, name, memory.total [MiB]
+0, NVIDIA A100-PCIE-40GB, 40960 MiB
+==================================================================
+
+==================================================================
+>>> [2026-05-06 00:33:10]  STARTING model: qwen2.5
+==================================================================
+2026-05-06 00:33:33,942 - INFO - 
+====================================================================================================
+2026-05-06 00:33:33,943 - INFO - 📂 LOADING DATASETS  (executed in this order)
+2026-05-06 00:33:33,943 - INFO - ====================================================================================================
+2026-05-06 00:33:33,943 - INFO -   • harmbench                 → /scratch/si2356/dlm-jailbreak-transfer/dataset/harmbench/text_all.csv
+2026-05-06 00:33:33,943 - INFO -   • malicious_instruct        → /scratch/si2356/dlm-jailbreak-transfer/dataset/malicious_instruct/malicious_instruct.txt
+2026-05-06 00:33:33,943 - INFO -   • strongreject              → /scratch/si2356/dlm-jailbreak-transfer/dataset/strongreject/strongreject.csv
+2026-05-06 00:33:33,943 - INFO -   • jailbreakbench            → /scratch/si2356/dlm-jailbreak-transfer/dataset/jailbreakbench/jailbreakbench.csv
+2026-05-06 00:33:33,967 - INFO - ✓ Loaded 400 prompts from dataset 'harmbench'
+2026-05-06 00:33:33,968 - INFO - ✓ Loaded 100 prompts from dataset 'malicious_instruct'
+2026-05-06 00:33:33,973 - INFO -   → Using column 'forbidden_prompt' for dataset 'strongreject'
+2026-05-06 00:33:33,973 - INFO - ✓ Loaded 313 prompts from dataset 'strongreject'
+2026-05-06 00:33:33,977 - INFO -   → Using column 'Behavior' for dataset 'jailbreakbench'
+2026-05-06 00:33:33,977 - INFO - ✓ Loaded 100 prompts from dataset 'jailbreakbench'
+2026-05-06 00:33:33,977 - INFO - 
+2026-05-06 00:33:33,977 - INFO - Datasets to process (in order): ['harmbench', 'malicious_instruct', 'strongreject', 'jailbreakbench']
+2026-05-06 00:33:33,977 - INFO - Total prompts across all datasets: 913
+2026-05-06 00:33:33,977 - INFO - Target model  : Qwen/Qwen2.5-7B-Instruct
+2026-05-06 00:33:33,977 - INFO - Model type    : AR (autoregressive)
+2026-05-06 00:33:34,351 - INFO - Device        : cuda
+2026-05-06 00:33:35,590 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:01, 20.39s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:39<00:39, 19.85s/it]
