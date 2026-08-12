@@ -1,7 +1,0 @@
-{
-  "target": "qwen2.5",
-  "dataset": "harmbench",
-  "total_prompts": 400,
-  "judge_gpt": "3.50%",
-  "total_time_h": 0.0
-}

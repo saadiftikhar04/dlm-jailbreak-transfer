@@ -1,7 +1,0 @@
-{
-  "target": "diffucoder",
-  "dataset": "harmbench",
-  "total_prompts": 400,
-  "judge_gpt": "2.75%",
-  "total_time_h": 6.75
-}

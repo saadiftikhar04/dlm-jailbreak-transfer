@@ -1,7 +1,0 @@
-{
-  "target": "dream",
-  "dataset": "strongreject",
-  "total_prompts": 313,
-  "judge_gpt": "0.00%",
-  "total_time_h": 5.51
-}

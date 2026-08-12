@@ -1,7 +1,0 @@
-{
-  "target": "llama",
-  "dataset": "jailbreakbench",
-  "total_prompts": 100,
-  "judge_gpt": "11.00%",
-  "total_time_h": 0.0
-}
