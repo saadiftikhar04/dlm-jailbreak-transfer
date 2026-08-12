@@ -1,0 +1,62 @@
+======================================================================
+DLM Jailbreak Transfer - Results Integrity Audit (WARNINGS ONLY)
+Date: 2026-08-05 (second pass, 21:30 GST)
+Scope: 54 CSVs (3 attacks x 6 models). 0 blocking errors, 5 warning
+categories (13 files). Bottom line: two categories matter (llada/llama
+cross-labeling and falcon time outliers); the rest are cosmetic.
+Data note: result CSVs were REGENERATED after the committed report
+(commit 65df60a, 2026-08-05 21:30). Every number below is re-derived
+from current on-disk data; the committed report described an older
+snapshot and its counts no longer hold.
+Path prefix: all paths below are relative to
+  /home/bc3194/Desktop/dlm-jailbreak-transfer/results/
+======================================================================
+
+--- 1. PIF llada/llama CROSS-LABELED results (NEW, most serious) ---
+  The `victim` column disagrees with the file/directory it lives under
+  for the PIF jailbreakbench subset (both models) and llama's
+  malicious_instruct. A reader trusting the file NAME to mean "this
+  model's results" will assign these 300 rows to the wrong model.
+
+  Judged files (victim col not constant within file):
+  * pif/PIF_JUDGED/llada_pif_final_judged.csv
+      100/913 rows have victim='llama' (all jailbreakbench).
+  * pif/PIF_JUDGED/llama_pif_final_judged.csv
+      200/913 rows have victim='llada' (jailbreakbench 100,
+      malicious_instruct 100).
+
+  Raw files (file location vs victim col mismatch):
+  * pif/llada/jailbreakbench/results.csv  -> victim=['llama'] for all 100
+      (llama's jailbreakbench data sits in the llada dir)
+  * pif/llama/jailbreakbench/results.csv  -> victim=['llada'] for all 100
+      (llada's jailbreakbench data sits in the llama dir)
+  * pif/llama/malicious_instruct/results.csv -> victim=['llada'] for all 100
+      (llama dir holds llada-labeled MI)
+  Consistent (for contrast): pif/llada/malicious_instruct/results.csv
+      victim=['llada'] (correct).
+
+  Cross-check (not a copy artifact):
+  * llada and llama judged files share 913/913 (dataset,prompt_idx) keys
+    but have identical response text for only 2 of them, and 0 identical
+    on jailbreakbench -> the two models' jailbreakbench (and llama MI)
+    outputs are genuinely SWAPPED between the result sets, not merely
+    relabeled copies.
+  * ASR of the mislabeled subsets (llm_judge): llada-file's 100
+    llama-labeled rows -> 8 True / 92 False; llama-file's 200 llada-
+    labeled rows -> 9 True / 191 False.
+
+  Impact: per-model PIF ASR for jailbreakbench (llada and llama) and for
+  llama/MI is computed from the wrong model's responses unless the reader
+  keys on the `victim` column instead of the file name. Recommended
+  before publication: regenerate or re-verify the llada/llama
+  jailbreakbench and llama/MI runs.
+
+
+--- 2. Model-key spelling inconsistency (qwen) ---
+  The same qwen model is written differently in the three attacks' judged
+  files:
+  * metacipher/Metacipher_Judged/qwen.csv  -> model='qwen2.5'
+  * pif/PIF_JUDGED/qwen_pif_final_judged.csv -> victim='qwen2.5'
+  * arrattack/Arrattack_Judged/arrattack_qwen_judged.csv -> model='qwen'
+  Any downstream join/group by model key must normalize these.
+
