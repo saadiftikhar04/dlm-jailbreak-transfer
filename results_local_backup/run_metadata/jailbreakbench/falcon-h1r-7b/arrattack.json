@@ -1,0 +1,10 @@
+{
+  "dataset": "jailbreakbench",
+  "model": "Falcon-H1R-7B",
+  "method": "arrattack",
+  "n": 100,
+  "successful": 86,
+  "failed": 14,
+  "asr_reported": 86.0,
+  "selection": "deterministic_hash_order"
+}

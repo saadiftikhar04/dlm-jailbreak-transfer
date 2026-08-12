@@ -1,0 +1,7 @@
+{
+  "target": "falcon",
+  "dataset": "malicious_instruct",
+  "total_prompts": 100,
+  "judge_gpt": "98.00%",
+  "total_time_h": 0.0
+}

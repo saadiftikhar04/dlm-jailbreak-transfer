@@ -1,0 +1,10 @@
+{
+  "dataset": "harmbench",
+  "model": "LLaDA-1.5 (~8B, dLLM)",
+  "method": "arrattack",
+  "n": 400,
+  "successful": 13,
+  "failed": 387,
+  "asr_reported": 3.2,
+  "selection": "deterministic_hash_order"
+}

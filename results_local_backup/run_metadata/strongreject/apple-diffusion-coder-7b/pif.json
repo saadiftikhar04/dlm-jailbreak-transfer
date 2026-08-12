@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "Apple-Diffusion-Coder-7B",
+  "method": "pif",
+  "n": 313,
+  "successful": 5,
+  "failed": 308,
+  "asr_reported": 1.6,
+  "selection": "deterministic_hash_order"
+}

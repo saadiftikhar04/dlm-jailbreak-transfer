@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "LLaDA-1.5 (~8B, dLLM)",
+  "method": "arrattack",
+  "n": 313,
+  "successful": 10,
+  "failed": 303,
+  "asr_reported": 3.2,
+  "selection": "deterministic_hash_order"
+}

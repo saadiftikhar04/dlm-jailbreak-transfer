@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "Qwen3-8B-Instruct",
+  "method": "metacipher",
+  "n": 313,
+  "successful": 261,
+  "failed": 52,
+  "asr_reported": 83.4,
+  "selection": "deterministic_hash_order"
+}

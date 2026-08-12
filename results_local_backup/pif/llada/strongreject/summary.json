@@ -1,0 +1,7 @@
+{
+  "target": "llada",
+  "dataset": "strongreject",
+  "total_prompts": 313,
+  "judge_gpt": "1.92%",
+  "total_time_h": 50.72
+}

@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "Qwen2.5-7B-Instruct",
+  "method": "arrattack",
+  "n": 313,
+  "successful": 236,
+  "failed": 77,
+  "asr_reported": 75.4,
+  "selection": "deterministic_hash_order"
+}

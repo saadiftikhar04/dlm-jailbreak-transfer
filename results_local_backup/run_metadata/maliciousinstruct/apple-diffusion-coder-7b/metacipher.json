@@ -1,0 +1,10 @@
+{
+  "dataset": "maliciousinstruct",
+  "model": "Apple-Diffusion-Coder-7B",
+  "method": "metacipher",
+  "n": 100,
+  "successful": 3,
+  "failed": 97,
+  "asr_reported": 3.0,
+  "selection": "deterministic_hash_order"
+}

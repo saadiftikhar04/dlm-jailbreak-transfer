@@ -1,0 +1,10 @@
+{
+  "dataset": "maliciousinstruct",
+  "model": "Qwen2.5-7B-Instruct",
+  "method": "arrattack",
+  "n": 100,
+  "successful": 76,
+  "failed": 24,
+  "asr_reported": 76.0,
+  "selection": "deterministic_hash_order"
+}

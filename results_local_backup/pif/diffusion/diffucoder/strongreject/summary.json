@@ -1,0 +1,7 @@
+{
+  "target": "diffucoder",
+  "dataset": "strongreject",
+  "total_prompts": 313,
+  "judge_gpt": "3.51%",
+  "total_time_h": 5.92
+}

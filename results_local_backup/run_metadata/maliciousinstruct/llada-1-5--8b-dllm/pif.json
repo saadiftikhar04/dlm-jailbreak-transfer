@@ -1,0 +1,10 @@
+{
+  "dataset": "maliciousinstruct",
+  "model": "LLaDA-1.5 (~8B, dLLM)",
+  "method": "pif",
+  "n": 100,
+  "successful": 2,
+  "failed": 98,
+  "asr_reported": 2.0,
+  "selection": "deterministic_hash_order"
+}

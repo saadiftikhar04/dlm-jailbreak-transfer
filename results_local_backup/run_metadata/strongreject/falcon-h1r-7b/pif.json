@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "Falcon-H1R-7B",
+  "method": "pif",
+  "n": 313,
+  "successful": 286,
+  "failed": 27,
+  "asr_reported": 91.4,
+  "selection": "deterministic_hash_order"
+}

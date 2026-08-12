@@ -1,0 +1,14 @@
+### Major machine learning libraries
+torch==2.10.0
+transformers==5.0.0
+ollama==0.6.1
+qwen_vl_utils==0.0.14
+
+### Commercial LLM apis
+openai
+anthropic
+google-generativeai
+
+### Other useful libraries
+pandas
+tqdm

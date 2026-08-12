@@ -1,0 +1,10 @@
+{
+  "dataset": "strongreject",
+  "model": "Falcon-H1R-7B",
+  "method": "metacipher",
+  "n": 313,
+  "successful": 279,
+  "failed": 34,
+  "asr_reported": 89.1,
+  "selection": "deterministic_hash_order"
+}

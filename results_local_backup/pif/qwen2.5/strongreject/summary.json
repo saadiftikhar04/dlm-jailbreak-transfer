@@ -1,0 +1,7 @@
+{
+  "target": "qwen2.5",
+  "dataset": "strongreject",
+  "total_prompts": 313,
+  "judge_gpt": "38.98%",
+  "total_time_h": 0.0
+}
