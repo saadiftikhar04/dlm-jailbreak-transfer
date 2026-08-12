@@ -72,6 +72,11 @@ results/
 
 `results/` is also `.gitignore`d — see §9 on why result CSVs aren't published.
 
+For the concrete, cluster-side view of everything above that's *not* tracked
+in git (actual dataset file sizes, model weight paths, and HF cache
+locations as they exist on Jubail today), see **§8 Cluster deployment
+reference**.
+
 ---
 
 ## 2. Victim models (6)
@@ -95,6 +100,8 @@ silently change results.
 HarmBench · JailbreakBench · MaliciousInstruct · StrongREJECT — loaded from
 `dataset/<name>/` in that fixed order in the multi-model sweep scripts, so run
 logs and partial-completion checkpoints are directly comparable across attacks.
+Actual on-disk sizes for these directories as populated on Jubail are listed
+in §8.1.
 
 ---
 
@@ -335,7 +342,108 @@ SLURM users: each `run_*.sh` follows the same template (single A100/H100 GPU,
 64–80 GB host memory); adjust `--account`/`--partition`/`--qos` for your
 cluster.
 
-## 8. Citing the underlying methods
+---
+
+## 8. Cluster deployment reference (Jubail)
+
+This section documents the **uncommitted, cluster-local state** of a live
+deployment — `dataset/` contents, resolved model weight paths, and HF cache
+locations as they actually exist on disk, rather than as declared in code.
+None of this is tracked in git; it's here purely so the repo can be
+reproduced against a fresh environment without re-deriving these paths by
+hand.
+
+- **Cluster:** Jubail (`jubail.abudhabi.nyu.edu`) · **User:** `si2356`
+- **Repo root:** `/scratch/si2356/dlm-jailbreak-transfer`
+
+### 8.1 `dataset/` — on-disk sizes
+
+| Directory | Size |
+|---|---|
+| `dataset/advbench` | — |
+| `dataset/harmbench` | 200K |
+| `dataset/jailbreakbench` | 28K |
+| `dataset/malicious_instruct` | 12K |
+| `dataset/strongreject` | 60K |
+
+### 8.2 Model weights
+
+**Model registry — `ArrAttack/utils/model_utils.py`**
+
+| Key | Path / HF Hub ID |
+|---|---|
+| `qwen2.5` | `Qwen/Qwen2.5-7B-Instruct` (HF hub id) |
+| `falcon` | `tiiuae/Falcon-H1R-7B` (HF hub id) |
+| `llama` | `/scratch/si2356/hf_models/Llama-3.2-3B-Instruct` |
+| `llada` | `/scratch/si2356/models/llada-1.5-8b` |
+| `dream` | `/home/si2356/.cache/huggingface/hub/models--Dream-org--Dream-v0-Instruct-7B/snapshots/05334cb9faaf763692dcf9d8737c642be2b2a6ae` |
+| `diffucoder` | `/scratch/si2356/.cache/huggingface/hub/models--apple--DiffuCoder-7B-Instruct/snapshots/4fdd4580064ca5d11808069ce78f88d068753c96` |
+
+Note: `llama`, `llada`, `dream`, and `diffucoder` are baked-in **local
+filesystem paths**, not HF hub ids — these are the four that need updating
+when replicating on a different machine (see §8.4).
+
+**Additional model refs — `ArrAttack/utils/qwen_utils.py`**
+
+| Key | HF Hub ID |
+|---|---|
+| `qwen_instruct` | `Qwen/Qwen2.5-7B-Instruct` |
+| `qwen_base` | `Qwen/Qwen2.5-7B` |
+| `gptfuzz` | `hubert233/GPTFuzz` |
+| `paraphraser` | `humarin/chatgpt_paraphraser_on_T5_base` |
+| `mpnet` | `sentence-transformers/all-mpnet-base-v2` |
+| `llama3` | `meta-llama/Llama-3-8B-Instruct` |
+| `mistral` | `mistralai/Mistral-7B-Instruct-v0.3` |
+| `vicuna` | `lmsys/vicuna-7b-v1.5` |
+
+Also referenced in `PiF/attack_mlm.py`: `Llama-Guard-3-8B`, at the relative
+path `../Llama-Guard-3-8B`.
+
+**Snapshots actually downloaded — `~/.cache/huggingface/hub`**
+
+| Snapshot directory | Size |
+|---|---|
+| `models--Dream-org--Dream-v0-Instruct-7B` | 15G |
+| `models--GSAI-ML--LLaDA-1.5` | 15G |
+| `models--Qwen--Qwen2.5-7B` | 15G |
+| `models--Qwen--Qwen2.5-7B-Instruct` | 15G |
+| `models--apple--DiffuCoder-7B-Instruct` | 15G |
+| `models--cais--HarmBench-Llama-2-13b-cls` | 25G |
+| `models--google-bert--bert-large-uncased` | 5.1G |
+| `models--hubert233--GPTFuzz` | 1.4G |
+| `models--humarin--chatgpt_paraphraser_on_T5_base` | 854M |
+| `models--meta-llama--Llama-3.2-3B-Instruct` | 12G |
+| `models--sentence-transformers--all-mpnet-base-v2` | 419M |
+| `models--tiiuae--Falcon-H1R-7B` | 15G |
+
+### 8.3 HF cache — locations referenced
+
+```
+~/.cache/huggingface/hub               (default; actually populated, see §8.2)
+/scratch/si2356/hf_cache                (current shell $HF_HOME)
+/scratch/si2356/.cache/huggingface      (exported by run_*.sh scripts)
+```
+
+Three different `HF_HOME`/cache locations are referenced across the shell
+environment and the `run_*.sh` launchers; only `~/.cache/huggingface/hub`
+(the default) is actually populated with the snapshots in §8.2. Reconcile
+this to a single `$HF_HOME` before running jobs to avoid a silent re-download.
+
+### 8.4 To replicate on a different machine
+
+1. Pull the model IDs in §8.2 via `huggingface-cli download <id>`.
+2. Point `HF_HOME` / `HF_HUB_CACHE` at wherever the cache should live on your
+   end (see §7 for the export).
+3. Update the hardcoded absolute paths in `MODEL_REGISTRY` (`llama`, `llada`,
+   `dream`, `diffucoder`) to match your own filesystem — those four are
+   baked-in local paths, not HF hub ids.
+
+*Compiled from cluster shell output (`find`, `du`, `cat`, `grep`) on
+`/scratch/si2356/dlm-jailbreak-transfer`.*
+
+---
+
+## 9. Citing the underlying methods
 
 ```bibtex
 @inproceedings{lin2025understanding,
@@ -360,7 +468,7 @@ cluster.
 }
 ```
 
-## 9. Ethics statement
+## 10. Ethics statement
 
 This framework is built for defensive red-teaming research: identifying
 which attack–architecture combinations succeed so that targeted defenses can
