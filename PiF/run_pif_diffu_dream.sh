@@ -18,7 +18,6 @@ conda activate /scratch/si2356/conda-envs/dlm_attack
 PYTHON=/scratch/si2356/conda-envs/dlm_attack/bin/python
 export PYTHONNOUSERSITE=1
 
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 export HF_HOME=/scratch/si2356/.cache/huggingface
 export HUGGINGFACE_HUB_CACHE=/scratch/si2356/.cache/huggingface/hub
 export HF_HUB_CACHE=/scratch/si2356/.cache/huggingface/hub

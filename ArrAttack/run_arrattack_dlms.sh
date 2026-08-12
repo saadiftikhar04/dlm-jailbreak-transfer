@@ -46,7 +46,7 @@ export TOKENIZERS_PARALLELISM=false
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 # DeepSeek API key (secondary judge)
-export DEEPSEEK_API_KEY="${DEEPSEEK_API_KEY:-sk-80b9c3e36a374e7489c5ac4438139fdb}"
+export DEEPSEEK_API_KEY="${DEEPSEEK_API_KEY:-${DEEPSEEK_API_KEY}}"
 
 # ── Pre-flight ───────────────────────────────────────────────────────────────
 echo "=========================================================="

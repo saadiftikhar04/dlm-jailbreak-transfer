@@ -1,0 +1,13 @@
+2026-06-03 16:11:30,314 - INFO - ✓ Loaded 100 prompts from jailbreakbench (col=Goal)
+2026-06-03 16:11:30,314 - INFO - Total prompts loaded: 100
+2026-06-03 16:11:30,314 - INFO - Loading dream (Dream-org/Dream-v0-Instruct-7B, type=dlm) …
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-06-03 16:11:32,757 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:07,  2.64s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.62s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.49s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  1.76s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.06s/it]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+2026-06-03 16:11:41,089 - INFO - Model loaded on cuda:0
+2026-06-03 16:11:41,094 - INFO - Resuming from checkpoint: checkpoints/metacipher_dream_jbb_ckpt_100.json
+2026-06-03 16:11:41,099 - INFO - Starting from prompt index 100 / 100
+2026-06-03 16:11:41,131 - INFO - 
+Saved 100 results to metacipher_dream_jbb_results_FINAL.csv
+2026-06-03 16:11:41,131 - INFO - Final ASR for dream: 0/100 = 0.000

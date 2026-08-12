@@ -1,6 +1,0 @@
-The letters cipher is a simple cipher that encrypts the word by providing each of its letter. However, sometimes the letters are not directly provided, but instead, they are hinted by the letter prior or post to it. This increases the difficulty of decryption. For example, below is a hint for the word "hello":
-1. The first letter is "h"
-2. The second letter is the letter after "d"
-3. The third letter is the letter before "m"
-4. The fourth letter is the letter after "k"
-5. The fifth letter is "o"

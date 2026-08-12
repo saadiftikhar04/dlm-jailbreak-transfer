@@ -1,1 +1,0 @@
-DeepSeek-chat is a DeepSeek API on the model DeepSeek-v3 with 671B parameters. It is a highly capable text-generation model, but with no post-checking. 

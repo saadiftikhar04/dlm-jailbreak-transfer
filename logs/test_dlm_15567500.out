@@ -1,0 +1,27 @@
+
+============================================================
+Testing llada...
+  Formatted prompt: <|startoftext|><|start_header_id|>user<|end_header_id|>
+
+What is the capital of France? Answer in on...
+  OUTPUT (2.2s): The capital of France is Paris.
+  ✓ llada OK
+
+============================================================
+Testing dream...
+  Formatted prompt: <|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+What is the capital of Fr...
+  OUTPUT (1.6s):  capital of France is Paris.
+  ✓ dream OK
+
+============================================================
+Testing diffucoder...
+  Formatted prompt: <|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+What is the capital of Fr...
+  OUTPUT (1.4s):  capital of France is Paris.
+
+  ✓ diffucoder OK

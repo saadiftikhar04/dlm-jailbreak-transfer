@@ -15,17 +15,17 @@ conda activate /scratch/si2356/conda-envs/dlm_attack
 PYTHON=/scratch/si2356/conda-envs/dlm_attack/bin/python
 
 export TARGET=llama
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 export HF_HOME=/scratch/si2356/.cache/huggingface
 export HUGGINGFACE_HUB_CACHE=/scratch/si2356/.cache/huggingface/hub
 export HF_HUB_CACHE=/scratch/si2356/.cache/huggingface/hub
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false
+export DEEPSEEK_API_KEY=sk-28b099947e1d4690b93914ad9ccafcdf
 
 PIF_DIR=/scratch/si2356/dlm-jailbreak-transfer/PiF
 mkdir -p $PIF_DIR/logs
 
-for DATASET in advbench malicious_instruct harmbench jailbreakbench strongreject; do
+for DATASET in strongreject; do
     echo "=== PiF: target=llama dataset=$DATASET ==="
     cd $PIF_DIR
     $PYTHON run_pif.py \

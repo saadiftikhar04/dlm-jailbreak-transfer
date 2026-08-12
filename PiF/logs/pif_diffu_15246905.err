@@ -1,0 +1,30 @@
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH] [--opt_objective OPT_OBJECTIVE]
+run_pif.py: error: argument --dataset: invalid choice: 'advbench' (choose from 'harmbench')
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH] [--opt_objective OPT_OBJECTIVE]
+run_pif.py: error: argument --dataset: invalid choice: 'malicious_instruct' (choose from 'harmbench')
+2026-04-29 22:59:42,479 - INFO - PiF | target=diffucoder | dataset=harmbench
+2026-04-29 22:59:42,480 - INFO -   eval_template (BERT loop): This intent is [MASK]
+2026-04-29 22:59:42,480 - INFO -   prompt_template (log only): Human: {}. Assistant: Sure, here is
+2026-04-29 22:59:42,538 - INFO - Loading BERT-Large (source)...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:777: UserWarning: `return_dict_in_generate` is NOT set to `True`, but `output_hidden_states` is. When `return_dict_in_generate` is not `True`, `output_hidden_states` is ignored.
+  warnings.warn(
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-04-29 22:59:46,230 - INFO - Loading target: diffucoder
+A new version of the following files was downloaded from https://huggingface.co/apple/DiffuCoder-7B-Instruct:
+- generation_utils.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+2026-04-29 22:59:47,003 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:13,  4.63s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:09<00:09,  4.67s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:13<00:04,  4.43s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.14s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.66s/it]
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:601: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`. This was detected when initializing the generation config instance, which means the corresponding file may hold incorrect parameterization and should be fixed.
+  warnings.warn(
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:601: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+slurmstepd: error: *** JOB 15246905 ON dn003 CANCELLED AT 2026-04-29T23:00:02 ***

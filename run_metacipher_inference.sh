@@ -32,7 +32,6 @@ if [ ! -f "$PYTHON" ]; then
 fi
 
 # Set API key
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 
 # Point HF cache explicitly to scratch (belt-and-suspenders alongside local_files_only)
 export HF_HOME=/scratch/si2356/.cache/huggingface

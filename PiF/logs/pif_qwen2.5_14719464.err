@@ -1,0 +1,20 @@
+usage: run_pif.py [-h] [--target TARGET]
+                  [--dataset {advbench,malicious_instruct,harmbench,jailbreakbench,strongreject}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: unrecognized arguments: --opt_objective ASR+GPT
+usage: run_pif.py [-h] [--target TARGET]
+                  [--dataset {advbench,malicious_instruct,harmbench,jailbreakbench,strongreject}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: unrecognized arguments: --opt_objective ASR+GPT
+usage: run_pif.py [-h] [--target TARGET]
+                  [--dataset {advbench,malicious_instruct,harmbench,jailbreakbench,strongreject}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: unrecognized arguments: --opt_objective ASR+GPT
+usage: run_pif.py [-h] [--target TARGET]
+                  [--dataset {advbench,malicious_instruct,harmbench,jailbreakbench,strongreject}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: unrecognized arguments: --opt_objective ASR+GPT
+usage: run_pif.py [-h] [--target TARGET]
+                  [--dataset {advbench,malicious_instruct,harmbench,jailbreakbench,strongreject}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: unrecognized arguments: --opt_objective ASR+GPT

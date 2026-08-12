@@ -47,7 +47,7 @@ INPUT_CSV   = RESULTS_DIR + "/arrattack_results.csv"
 OUTPUT_CSV  = RESULTS_DIR + "/arrattack_judged.csv"
 
 # ── DeepSeek judge — verbatim Table 8 system prompt from paper ────────────────
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-80b9c3e36a374e7489c5ac4438139fdb")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
 
 

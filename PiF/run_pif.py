@@ -429,6 +429,15 @@ def main():
             ("malicious_instruct", 100),
             ("strongreject",       313),
         ]
+    elif target == "llama":
+        DATASET_PLAN = [
+            ("harmbench",          400),
+        ]
+    elif target == "llada":
+        DATASET_PLAN = [
+            ("malicious_instruct", 100),
+            ("strongreject",       313),
+        ]
     else:
         DATASET_PLAN = [
             ("harmbench",          400),

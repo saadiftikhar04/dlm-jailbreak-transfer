@@ -86,7 +86,7 @@ _DIFFUSION_STEPS_MAP = {k: DLM_STEPS for k in DLM_KEYS}
 TARGET_DIFFUSION_STEPS = _DIFFUSION_STEPS_MAP.get(TARGET_KEY, None)
 DIFFUSION_STEPS_VAL = TARGET_DIFFUSION_STEPS if TARGET_DIFFUSION_STEPS is not None else "N/A"
 
-GEN_MODEL_DIR = PROJECT_DIR + "/generation_model"
+GEN_MODEL_DIR = "humarin/chatgpt_paraphraser_on_T5_base"
 RESULTS_DIR   = PROJECT_DIR + f"/results/{TARGET_KEY}"
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
@@ -383,6 +383,14 @@ def dlm_generate(prompt: str, max_new_tokens: int = 512) -> str:
             mask_id=126336,
         )
         generated_ids = out[0, prompt_len:]
+        # Truncate at first EOS to drop post-answer diffusion filler/repetition
+        eos_id = tokenizer_target.eos_token_id
+        if eos_id is not None:
+            eos_pos = (generated_ids == eos_id).nonzero(as_tuple=True)[0]
+            if len(eos_pos) > 0:
+                generated_ids = generated_ids[:eos_pos[0]]
+        response = tokenizer_target.decode(generated_ids.tolist(), skip_special_tokens=True)
+        response = response.replace("<|im_end|>", "").strip()
     elif TARGET_KEY == "dream":
         # Dream: origin algorithm, greedy (temp=0), steps proportional to gen_length
         _available = 2048 - prompt_len

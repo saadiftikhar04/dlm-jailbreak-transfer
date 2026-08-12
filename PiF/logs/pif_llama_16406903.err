@@ -1,0 +1,50 @@
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 20, in <module>
+    import deepseek_patch
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/deepseek_patch.py", line 27, in <module>
+    os.environ["OPENAI_API_KEY"]  = DEEPSEEK_KEY
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 685, in __setitem__
+    value = self.encodevalue(value)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 757, in encode
+    raise TypeError("str expected, not %s" % type(value).__name__)
+TypeError: str expected, not NoneType
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 20, in <module>
+    import deepseek_patch
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/deepseek_patch.py", line 27, in <module>
+    os.environ["OPENAI_API_KEY"]  = DEEPSEEK_KEY
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 685, in __setitem__
+    value = self.encodevalue(value)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 757, in encode
+    raise TypeError("str expected, not %s" % type(value).__name__)
+TypeError: str expected, not NoneType
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 20, in <module>
+    import deepseek_patch
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/deepseek_patch.py", line 27, in <module>
+    os.environ["OPENAI_API_KEY"]  = DEEPSEEK_KEY
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 685, in __setitem__
+    value = self.encodevalue(value)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 757, in encode
+    raise TypeError("str expected, not %s" % type(value).__name__)
+TypeError: str expected, not NoneType
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 20, in <module>
+    import deepseek_patch
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/deepseek_patch.py", line 27, in <module>
+    os.environ["OPENAI_API_KEY"]  = DEEPSEEK_KEY
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 685, in __setitem__
+    value = self.encodevalue(value)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 757, in encode
+    raise TypeError("str expected, not %s" % type(value).__name__)
+TypeError: str expected, not NoneType
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 20, in <module>
+    import deepseek_patch
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/deepseek_patch.py", line 27, in <module>
+    os.environ["OPENAI_API_KEY"]  = DEEPSEEK_KEY
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 685, in __setitem__
+    value = self.encodevalue(value)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/os.py", line 757, in encode
+    raise TypeError("str expected, not %s" % type(value).__name__)
+TypeError: str expected, not NoneType

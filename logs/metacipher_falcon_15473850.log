@@ -1,0 +1,41 @@
+2026-05-06 13:42:22,483 - INFO - 
+====================================================================================================
+2026-05-06 13:42:22,483 - INFO - 📂 LOADING DATASETS  (executed in this order)
+2026-05-06 13:42:22,483 - INFO - ====================================================================================================
+2026-05-06 13:42:22,483 - INFO -   • harmbench                 → /scratch/si2356/dlm-jailbreak-transfer/dataset/harmbench/text_all.csv
+2026-05-06 13:42:22,483 - INFO -   • malicious_instruct        → /scratch/si2356/dlm-jailbreak-transfer/dataset/malicious_instruct/malicious_instruct.txt
+2026-05-06 13:42:22,483 - INFO -   • strongreject              → /scratch/si2356/dlm-jailbreak-transfer/dataset/strongreject/strongreject.csv
+2026-05-06 13:42:22,483 - INFO -   • jailbreakbench            → /scratch/si2356/dlm-jailbreak-transfer/dataset/jailbreakbench/jailbreakbench.csv
+2026-05-06 13:42:22,497 - INFO - ✓ Loaded 400 prompts from dataset 'harmbench'
+2026-05-06 13:42:22,499 - INFO - ✓ Loaded 100 prompts from dataset 'malicious_instruct'
+2026-05-06 13:42:22,504 - INFO -   → Using column 'forbidden_prompt' for dataset 'strongreject'
+2026-05-06 13:42:22,504 - INFO - ✓ Loaded 313 prompts from dataset 'strongreject'
+2026-05-06 13:42:22,508 - INFO -   → Using column 'Behavior' for dataset 'jailbreakbench'
+2026-05-06 13:42:22,508 - INFO - ✓ Loaded 100 prompts from dataset 'jailbreakbench'
+2026-05-06 13:42:22,508 - INFO - 
+2026-05-06 13:42:22,508 - INFO - Datasets to process (in order): ['harmbench', 'malicious_instruct', 'strongreject', 'jailbreakbench']
+2026-05-06 13:42:22,508 - INFO - Total prompts across all datasets: 913
+2026-05-06 13:42:22,508 - INFO - Target model  : tiiuae/Falcon-H1R-7B
+2026-05-06 13:42:22,508 - INFO - Model type    : AR (autoregressive)
+2026-05-06 13:42:22,875 - INFO - Device        : cuda
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 1023, in from_pretrained
+    config_class = CONFIG_MAPPING[config_dict["model_type"]]
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 725, in __getitem__
+    raise KeyError(key)
+KeyError: 'falcon_h1'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1448, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1323, in main
+    framework = MetaCipherFramework(
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 931, in __init__
+    self.target_model = AutoModelForCausalLM.from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 526, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/configuration_auto.py", line 1025, in from_pretrained
+    raise ValueError(
+ValueError: The checkpoint you are trying to load has model type `falcon_h1` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.

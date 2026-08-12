@@ -31,7 +31,6 @@ if [ ! -f "$PYTHON" ]; then
 fi
 
 # ── API key ───────────────────────────────────────────────────────────────────
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 
 # ── HuggingFace cache (offline — all models pre-downloaded) ──────────────────
 export HF_HOME=/scratch/si2356/.cache/huggingface

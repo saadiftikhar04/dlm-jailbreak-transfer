@@ -8,7 +8,7 @@ Three-layer guarantee that every OpenAI() call hits DeepSeek:
 """
 import os, sys
 
-DEEPSEEK_KEY  = os.getenv("DEEPSEEK_API_KEY", "sk-80b9c3e36a374e7489c5ac4438139fdb")
+DEEPSEEK_KEY  = os.getenv("DEEPSEEK_API_KEY")
 DEEPSEEK_BASE = "https://api.deepseek.com"
 
 # Layer 1: replace the class

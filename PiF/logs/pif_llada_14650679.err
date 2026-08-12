@@ -1,0 +1,215 @@
+2026-04-07 06:57:05,606 - INFO - PiF | target=llada | dataset=advbench | obj=ASR+GPT
+2026-04-07 06:57:05,898 - INFO - Loading BERT-Large source model...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-04-07 06:57:09,077 - INFO - Loading target: llada
+Could not locate the modeling_llada.py inside GSAI-ML/LLaDA-1.5.
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1653, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 238, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 142, in main
+    tgt_model, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 553, in from_pretrained
+    model_class = get_class_from_dynamic_module(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 540, in get_class_from_dynamic_module
+    final_module = get_cached_module_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 344, in get_cached_module_file
+    resolved_module_file = cached_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 446, in cached_file
+    raise EnvironmentError(
+OSError: We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like GSAI-ML/LLaDA-1.5 is not the path to a directory containing a file named modeling_llada.py.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+2026-04-07 06:57:15,561 - INFO - PiF | target=llada | dataset=malicious_instruct | obj=ASR+GPT
+2026-04-07 06:57:15,799 - INFO - Loading BERT-Large source model...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-04-07 06:57:17,227 - INFO - Loading target: llada
+Could not locate the modeling_llada.py inside GSAI-ML/LLaDA-1.5.
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1653, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 238, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 142, in main
+    tgt_model, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 553, in from_pretrained
+    model_class = get_class_from_dynamic_module(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 540, in get_class_from_dynamic_module
+    final_module = get_cached_module_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 344, in get_cached_module_file
+    resolved_module_file = cached_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 446, in cached_file
+    raise EnvironmentError(
+OSError: We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like GSAI-ML/LLaDA-1.5 is not the path to a directory containing a file named modeling_llada.py.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+2026-04-07 06:57:22,280 - INFO - PiF | target=llada | dataset=harmbench | obj=ASR+GPT
+2026-04-07 06:57:22,503 - INFO - Loading BERT-Large source model...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-04-07 06:57:23,870 - INFO - Loading target: llada
+Could not locate the modeling_llada.py inside GSAI-ML/LLaDA-1.5.
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1653, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 238, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 142, in main
+    tgt_model, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 553, in from_pretrained
+    model_class = get_class_from_dynamic_module(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 540, in get_class_from_dynamic_module
+    final_module = get_cached_module_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 344, in get_cached_module_file
+    resolved_module_file = cached_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 446, in cached_file
+    raise EnvironmentError(
+OSError: We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like GSAI-ML/LLaDA-1.5 is not the path to a directory containing a file named modeling_llada.py.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+2026-04-07 06:57:28,909 - INFO - PiF | target=llada | dataset=jailbreakbench | obj=ASR+GPT
+2026-04-07 06:57:29,130 - INFO - Loading BERT-Large source model...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-04-07 06:57:30,496 - INFO - Loading target: llada
+Could not locate the modeling_llada.py inside GSAI-ML/LLaDA-1.5.
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1653, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 238, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 142, in main
+    tgt_model, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 553, in from_pretrained
+    model_class = get_class_from_dynamic_module(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 540, in get_class_from_dynamic_module
+    final_module = get_cached_module_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 344, in get_cached_module_file
+    resolved_module_file = cached_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 446, in cached_file
+    raise EnvironmentError(
+OSError: We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like GSAI-ML/LLaDA-1.5 is not the path to a directory containing a file named modeling_llada.py.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+2026-04-07 06:57:35,517 - INFO - PiF | target=llada | dataset=strongreject | obj=ASR+GPT
+2026-04-07 06:57:35,753 - INFO - Loading BERT-Large source model...
+BertForMaskedLM has generative capabilities, as `prepare_inputs_for_generation` is explicitly overwritten. However, it doesn't directly inherit from `GenerationMixin`. From 👉v4.50👈 onwards, `PreTrainedModel` will NOT inherit from `GenerationMixin`, and this model will lose the ability to call `generate` and other related functions.
+  - If you're using `trust_remote_code=True`, you can get rid of this warning by loading the model with an auto class. See https://huggingface.co/docs/transformers/en/model_doc/auto#auto-classes
+  - If you are the owner of the model architecture code, please modify your model class such that it inherits from `GenerationMixin` (after `PreTrainedModel`, otherwise you'll get an exception).
+  - If you are not the owner of the model architecture class, please contact the model code owner to update it.
+Some weights of the model checkpoint at /scratch/si2356/.cache/huggingface/hub/models--google-bert--bert-large-uncased/snapshots/6da4b6a26a1877e173fca3225479512db81a5e5b were not used when initializing BertForMaskedLM: ['bert.pooler.dense.bias', 'bert.pooler.dense.weight', 'cls.seq_relationship.bias', 'cls.seq_relationship.weight']
+- This IS expected if you are initializing BertForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+2026-04-07 06:57:37,115 - INFO - Loading target: llada
+Could not locate the modeling_llada.py inside GSAI-ML/LLaDA-1.5.
+Traceback (most recent call last):
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1653, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 238, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 142, in main
+    tgt_model, tgt_tok = load_target(target, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/pif_target_models.py", line 74, in load_target
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 553, in from_pretrained
+    model_class = get_class_from_dynamic_module(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 540, in get_class_from_dynamic_module
+    final_module = get_cached_module_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/dynamic_module_utils.py", line 344, in get_cached_module_file
+    resolved_module_file = cached_file(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/utils/hub.py", line 446, in cached_file
+    raise EnvironmentError(
+OSError: We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like GSAI-ML/LLaDA-1.5 is not the path to a directory containing a file named modeling_llada.py.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.

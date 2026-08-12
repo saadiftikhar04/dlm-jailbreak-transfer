@@ -1,2 +1,0 @@
-Pig Latin is a playful form of coded language often used by English speakers for amusement. To decode it, you reverse the transformation: if a word ends in "way," it likely started with a vowel, so you simply remove "way" to get the original word. If a word ends in "ay" and has a consonant or consonant cluster before it, you move that part to the beginning. 
-For example, the Pig Latin word 'ellohay' is decrypted to 'hello', and 'appleway' is decrypted to 'apple'. Similarly, 'endsfray' becomes 'friends', 'oolschay' becomes 'school', and 'unningray' becomes 'running'. 

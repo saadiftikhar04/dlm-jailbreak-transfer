@@ -1,1 +1,0 @@
-The incomplete cipher encodes a word by removing its first and last letters to make the remaining an incomplete word. To decrypt it, add the letters back to the incomplete word as instructed. For example, "the incomplete word of 'eade' with 'r' to the front and 'r' to the end" is "reader"; "the incomplete word of 'ompute' with 'c' to the front and 'r' to the end" is "computer".

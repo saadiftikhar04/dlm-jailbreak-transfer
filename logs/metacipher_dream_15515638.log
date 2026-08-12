@@ -1,0 +1,20 @@
+2026-05-09 06:32:31,812 - INFO - ✓ Loaded 400 prompts from harmbench (col=Behavior)
+2026-05-09 06:32:31,814 - INFO - ✓ Loaded 100 prompts from malicious_instruct
+2026-05-09 06:32:31,818 - INFO - ✓ Loaded 313 prompts from strongreject (col=forbidden_prompt)
+2026-05-09 06:32:31,821 - INFO - ✓ Loaded 100 prompts from jailbreakbench (col=Behavior)
+2026-05-09 06:32:31,821 - INFO - Total prompts loaded: 913
+2026-05-09 06:32:31,822 - INFO - Loading dream (Dream-org/Dream-v0-Instruct-7B, type=dlm) …
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1650, in <module>
+    run_metacipher(
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1481, in run_metacipher
+    model, tokenizer, model_type = load_victim_model(model_key)
+  File "/scratch/si2356/dlm-jailbreak-transfer/metacipher_multi.py", line 1363, in load_victim_model
+    model = AutoModel.from_pretrained(hf_id, **load_kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'

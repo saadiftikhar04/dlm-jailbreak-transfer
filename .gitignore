@@ -1,15 +1,29 @@
-*.err
-*.out
-*.log
-__pycache__/
-*.pyc
+# Ignore all CSV files
+*.csv
 
-logs/
+# Ignore JSONL log/checkpoint files
+*.jsonl
+
+# Excluded directories
+metacipher_runs/
+playground/
+plots/
+prompts/
 results/
-robustness_judgment_model/
 
-*.pth
-*.pt
+# Excluded specific files
+qwen_arrattack.py
+run_dlm_jbb_rerun.sh
+run_metacipher_ar_rerun.sh
+run_metacipher_jbb.sh
+run_metacipher_last7.sh
+uncommitted_structure_manifest.txt
+
+# Common large file models/weights extensions
 *.bin
+*.pt
+*.pth
 *.safetensors
-*.ckpt
+*.onnx
+*.tar.gz
+*.zip

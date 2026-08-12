@@ -1,0 +1,13 @@
+2026-06-03 16:11:59,952 - INFO - ✓ Loaded 100 prompts from jailbreakbench (col=Goal)
+2026-06-03 16:11:59,952 - INFO - Total prompts loaded: 100
+2026-06-03 16:11:59,952 - INFO - Loading diffucoder (apple/DiffuCoder-7B-Instruct, type=dlm) …
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-06-03 16:12:01,323 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.04s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.78s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  1.80s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.14s/it]
+The following generation flags are not valid and may be ignored: ['temperature']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+2026-06-03 16:12:09,985 - INFO - Model loaded on cuda:0
+2026-06-03 16:12:09,987 - INFO - Resuming from checkpoint: checkpoints/metacipher_diffucoder_jbb_ckpt_100.json
+2026-06-03 16:12:09,993 - INFO - Starting from prompt index 100 / 100
+2026-06-03 16:12:10,028 - INFO - 
+Saved 100 results to metacipher_diffucoder_jbb_results_FINAL.csv
+2026-06-03 16:12:10,029 - INFO - Final ASR for diffucoder: 0/100 = 0.000

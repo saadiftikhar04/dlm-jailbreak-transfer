@@ -1,0 +1,15 @@
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: argument --dataset: invalid choice: 'advbench' (choose from 'harmbench')
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: argument --dataset: invalid choice: 'malicious_instruct' (choose from 'harmbench')
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: unrecognized arguments: --opt_objective ASR+GPT
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: argument --dataset: invalid choice: 'jailbreakbench' (choose from 'harmbench')
+usage: run_pif.py [-h] [--target TARGET] [--dataset {harmbench}]
+                  [--bert_path BERT_PATH]
+run_pif.py: error: argument --dataset: invalid choice: 'strongreject' (choose from 'harmbench')

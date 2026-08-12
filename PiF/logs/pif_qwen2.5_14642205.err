@@ -1,0 +1,24 @@
+2026-04-06 16:29:09,006 - INFO - PiF — target=qwen2.5 dataset=advbench objective=ASR+GPT
+2026-04-06 16:29:09,007 - INFO - Results  → /scratch/si2356/dlm-jailbreak-transfer/results/pif/qwen2.5/advbench/results.csv
+2026-04-06 16:29:09,007 - INFO - Steps    → /scratch/si2356/dlm-jailbreak-transfer/results/pif/qwen2.5/advbench/steps.csv
+2026-04-06 16:29:09,007 - INFO - Loading BERT-Large source model: google-bert/bert-large-uncased
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 601, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 440, in main
+    bert_tok   = BertTokenizer.from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2192, in from_pretrained
+    raise EnvironmentError(
+OSError: Can't load tokenizer for 'google-bert/bert-large-uncased'. If you were trying to load it from 'https://huggingface.co/models', make sure you don't have a local directory with the same name. Otherwise, make sure 'google-bert/bert-large-uncased' is the correct path to a directory containing all relevant files for a BertTokenizer tokenizer.
+2026-04-06 16:29:16,678 - INFO - PiF — target=qwen2.5 dataset=malicious_instruct objective=ASR+GPT
+2026-04-06 16:29:16,678 - INFO - Results  → /scratch/si2356/dlm-jailbreak-transfer/results/pif/qwen2.5/malicious_instruct/results.csv
+2026-04-06 16:29:16,678 - INFO - Steps    → /scratch/si2356/dlm-jailbreak-transfer/results/pif/qwen2.5/malicious_instruct/steps.csv
+2026-04-06 16:29:16,678 - INFO - Loading BERT-Large source model: google-bert/bert-large-uncased
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 601, in <module>
+    main()
+  File "/scratch/si2356/dlm-jailbreak-transfer/PiF/run_pif.py", line 440, in main
+    bert_tok   = BertTokenizer.from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2192, in from_pretrained
+    raise EnvironmentError(
+OSError: Can't load tokenizer for 'google-bert/bert-large-uncased'. If you were trying to load it from 'https://huggingface.co/models', make sure you don't have a local directory with the same name. Otherwise, make sure 'google-bert/bert-large-uncased' is the correct path to a directory containing all relevant files for a BertTokenizer tokenizer.

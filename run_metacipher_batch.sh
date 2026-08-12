@@ -16,7 +16,6 @@ echo "Python path: $(which python)"
 python --version
 
 # Set DeepSeek API key
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 
 # Set CUDA environment
 export CUDA_LAUNCH_BLOCKING=1

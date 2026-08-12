@@ -1,0 +1,6 @@
+=== Job 16161025 started at Tue Jun  2 01:35:37 +04 2026 ===
+Node: cn003
+GPU: NVIDIA A100-PCIE-40GB
+
+=== Applying DLM fix patch ===
+ERROR: patch failed (exit 1). Aborting.

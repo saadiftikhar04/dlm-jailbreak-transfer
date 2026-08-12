@@ -1,3 +1,0 @@
-The Atbash cipher is an ancient encryption method that replaces each letter with its reverse-position counterpart in the alphabet: A is substituted by Z, B by Y, C by X, and so on. Here is the mapping for each letter:
-['A':'Z', 'B':'Y', 'C':'X', 'D':'W', 'E':'V', 'F':'U', 'G':'T', 'H':'S', 'I':'R', 'J':'Q', 'K':'P', 'L':'O', 'M':'N', 'N':'M', 'O':'L', 'P':'K', 'Q':'J', 'R':'I', 'S':'H', 'T':'G', 'U':'F', 'V':'E', 'W':'D', 'X':'C', 'Y':'B', 'Z':'A'].
-For example, "SVOOL" is decoded to "HELLO"; "KBGSLM" is decrypted to "PYTHON"; and "ZMW" is decrypted to "AND".

@@ -1,0 +1,5 @@
+=== PiF: target=diffucoder dataset=advbench ===
+=== PiF: target=diffucoder dataset=malicious_instruct ===
+=== PiF: target=diffucoder dataset=harmbench ===
+=== PiF: target=diffucoder dataset=jailbreakbench ===
+=== PiF: target=diffucoder dataset=strongreject ===

@@ -1,3 +1,0 @@
-The Keyboard Cipher is a playful substitution method where each letter in a word is replaced by the one directly to its right on a standard QWERTY keyboard. To decrypt it, you shift each letter to the left on the keyboard. Below is the mapping of the full alphabet based on a QWERTY keyboard layout:
-{'a': 's', 'b': 'n', 'c': 'v', 'd': 'f', 'e': 'r', 'f': 'g', 'g': 'h', 'h': 'j', 'i': 'o', 'j': 'k', 'k': 'l', 'l': ';', 'm': ',', 'n': 'm', 'o': 'p', 'p': '[', 'q': 'w', 'r': 't', 's': 'd', 't': 'y', 'u': 'i', 'v': 'b', 'w': 'e', 'x': 'c', 'y': 'u', 'z': 'x'}
-For example, the cipher "jr;;p" is decrypted to "hello", the cipher "yermyu" is decrypted to "twenty", and the cipher "[uyjpm" is decrypted to "python". 

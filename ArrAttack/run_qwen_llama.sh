@@ -17,7 +17,6 @@ source /share/apps/NYUAD5/miniconda/3-4.11.0/etc/profile.d/conda.sh
 conda activate /scratch/si2356/conda-envs/dlm_attack
 PYTHON=/scratch/si2356/conda-envs/dlm_attack/bin/python
 
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 export HF_HOME=/scratch/si2356/.cache/huggingface
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false

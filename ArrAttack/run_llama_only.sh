@@ -16,7 +16,6 @@ PYTHON=/scratch/si2356/conda-envs/dlm_attack/bin/python
 
 export TARGET=llama
 export DATASET_SPLIT=combined
-export DEEPSEEK_API_KEY="sk-80b9c3e36a374e7489c5ac4438139fdb"
 export HF_HOME=/scratch/si2356/.cache/huggingface
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false

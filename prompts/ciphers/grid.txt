@@ -1,4 +1,0 @@
-The grid encoding is a method of encoding each letter into a 5x5 grid, where each letter is represented by its coordinates in the grid. The only letter, 'z', is not encoded, and thus is given directly. 
-Below is the mapping of the full alphabet:
-{'a': 'a1', 'b': 'b1', 'c': 'c1', 'd': 'd1', 'e': 'e1', 'f': 'a2', 'g': 'b2', 'h': 'c2', 'i': 'd2', 'j': 'e2', 'k': 'a3', 'l': 'b3', 'm': 'c3', 'n': 'd3', 'o': 'e3', 'p': 'a4', 'q': 'b4', 'r': 'c4', 's': 'd4', 't': 'e4', 'u': 'a5', 'v': 'b5', 'w': 'c5', 'x': 'd5', 'y': 'e5', 'z': 'z'}
-The decrypted text will connect each letter by '-'. For example, 'c2-e1-b3-b3-e3' is decrypted to 'hello', 'a1-c3-d3-e1-d4' is decrypted to 'amend', and 'z-e1-a1-b3-e3-a5-d4' is decrypted to 'zealous'. 

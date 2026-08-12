@@ -1,4 +1,0 @@
-LeetSpeak is a form of stylized writing that replaces letters with numbers or special characters that resemble those letters visually. Originally popular in online communities and hacker culture, it was used to evade simple filters or just for fun. 
-Below is the mapping of the special characters in LeetSpeak:
-{'a': '4', 'b': '8', 'c': '<', 'e': '3', 'g': '9', 'i': '1', 'l': '|', 'o': '0', 's': '$', 't': '7', 'z': '2'}
-To decode it, you substitute the numbers and symbols back with their original letters. For example, 'h4<k3r' is decrypted to 'hacker', '1337' is decrypted to 'leet', and '$k1llz' is decrypted to 'skills'. 
