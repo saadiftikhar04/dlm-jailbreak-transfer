@@ -84,7 +84,7 @@ reference**.
 | Family | Model |
 |---|---|
 | AR-LM | Qwen2.5-7B-Instruct |
-| AR-LM | Llama-3.1-Instruct |
+| AR-LM | Llama-3.2-Instruct |
 | AR-LM | Falcon-H1R-7B |
 | DLM | LLaDA-1.5 |
 | DLM | Dream-v0-7B |
