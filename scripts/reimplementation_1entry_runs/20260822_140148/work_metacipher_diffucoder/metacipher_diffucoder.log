@@ -1,0 +1,40 @@
+COMMAND: /home/bc3194/miniconda3/envs/raven_rag/bin/python -u /home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/metacipher_multi.py --model diffucoder --datasets malicious_instruct --last-n 1 --max-attempts 5 --run-suffix _1entry
+CWD: /home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder
+START: 2026-08-22T14:02:02
+
+2026-08-22 14:02:06,634 - INFO - 
+====================================================================================================
+2026-08-22 14:02:06,634 - INFO - 📂 LOADING DATASETS  (executed in this order)
+2026-08-22 14:02:06,634 - INFO - ====================================================================================================
+2026-08-22 14:02:06,634 - INFO -   • harmbench                 → /home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/slim_repo/dataset/harmbench/text_all.csv
+2026-08-22 14:02:06,634 - INFO -   • malicious_instruct        → /home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/slim_repo/dataset/malicious_instruct/malicious_instruct.txt
+2026-08-22 14:02:06,634 - INFO -   • strongreject              → /home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/slim_repo/dataset/strongreject/strongreject.csv
+2026-08-22 14:02:06,634 - INFO -   • jailbreakbench            → /home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/slim_repo/dataset/jailbreakbench/jailbreakbench.csv
+2026-08-22 14:02:06,634 - INFO -   → Selected final 1 of 1 prompts from dataset 'malicious_instruct'
+2026-08-22 14:02:06,634 - INFO - ✓ Loaded 1 prompts from dataset 'malicious_instruct'
+2026-08-22 14:02:06,634 - INFO - 
+2026-08-22 14:02:06,634 - INFO - Datasets to process (in order): ['malicious_instruct']
+2026-08-22 14:02:06,634 - INFO - Total prompts across all datasets: 1
+2026-08-22 14:02:06,634 - INFO - Target model  : apple/DiffuCoder-7B-Instruct
+2026-08-22 14:02:06,634 - INFO - Model type    : DLM (masked diffusion LM)
+2026-08-22 14:02:06,808 - INFO - Device        : cuda
+A new version of the following files was downloaded from https://huggingface.co/apple/DiffuCoder-7B-Instruct:
+- tokenization_dream.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+A new version of the following files was downloaded from https://huggingface.co/apple/DiffuCoder-7B-Instruct:
+- configuration_dream.py
+. Make sure to double-check they do not contain any added malicious code. To avoid downloading new versions of the code file, you can pin a revision.
+`torch_dtype` is deprecated! Use `dtype` instead!
+Traceback (most recent call last):
+  File "/home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/metacipher_multi.py", line 1561, in <module>
+    main()
+  File "/home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/metacipher_multi.py", line 1435, in main
+    framework = MetaCipherFramework(
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/reimplementation_1entry_runs/20260822_140148/work_metacipher_diffucoder/metacipher_multi.py", line 1000, in __init__
+    self.target_model = AutoModelForCausalLM.from_pretrained(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bc3194/miniconda3/envs/raven_rag/lib/python3.11/site-packages/transformers/models/auto/auto_factory.py", line 607, in from_pretrained
+    raise ValueError(
+ValueError: Unrecognized configuration class <class 'transformers_modules.apple.DiffuCoder_hyphen_7B_hyphen_Instruct.4fdd4580064ca5d11808069ce78f88d068753c96.configuration_dream.DreamConfig'> for this kind of AutoModel: AutoModelForCausalLM.
+Model type should be one of ApertusConfig, ArceeConfig, AriaTextConfig, BambaConfig, BartConfig, BertConfig, BertGenerationConfig, BigBirdConfig, BigBirdPegasusConfig, BioGptConfig, BitNetConfig, BlenderbotConfig, BlenderbotSmallConfig, BloomConfig, BltConfig, CamembertConfig, LlamaConfig, CodeGenConfig, CohereConfig, Cohere2Config, CpmAntConfig, CTRLConfig, Data2VecTextConfig, DbrxConfig, DeepseekV2Config, DeepseekV3Config, DiffLlamaConfig, DogeConfig, Dots1Config, ElectraConfig, Emu3Config, ErnieConfig, Ernie4_5Config, Ernie4_5_MoeConfig, Exaone4Config, FalconConfig, FalconH1Config, FalconMambaConfig, FlexOlmoConfig, FuyuConfig, GemmaConfig, Gemma2Config, Gemma3Config, Gemma3TextConfig, Gemma3nConfig, Gemma3nTextConfig, GitConfig, GlmConfig, Glm4Config, Glm4MoeConfig, GotOcr2Config, GPT2Config, GPT2Config, GPTBigCodeConfig, GPTNeoConfig, GPTNeoXConfig, GPTNeoXJapaneseConfig, GptOssConfig, GPTJConfig, GraniteConfig, GraniteMoeConfig, GraniteMoeHybridConfig, GraniteMoeSharedConfig, HeliumConfig, HunYuanDenseV1Config, HunYuanMoEV1Config, JambaConfig, JetMoeConfig, Lfm2Config, LlamaConfig, Llama4Config, Llama4TextConfig, LongcatFlashConfig, MambaConfig, Mamba2Config, MarianConfig, MBartConfig, MegaConfig, MegatronBertConfig, MiniMaxConfig, MinistralConfig, MistralConfig, MixtralConfig, MllamaConfig, ModernBertDecoderConfig, MoshiConfig, MptConfig, MusicgenConfig, MusicgenMelodyConfig, MvpConfig, NemotronConfig, OlmoConfig, Olmo2Config, Olmo3Config, OlmoeConfig, OpenLlamaConfig, OpenAIGPTConfig, OPTConfig, PegasusConfig, PersimmonConfig, PhiConfig, Phi3Config, Phi4MultimodalConfig, PhimoeConfig, PLBartConfig, ProphetNetConfig, QDQBertConfig, Qwen2Config, Qwen2MoeConfig, Qwen3Config, Qwen3MoeConfig, Qwen3NextConfig, RecurrentGemmaConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, RwkvConfig, SeedOssConfig, SmolLM3Config, Speech2Text2Config, StableLmConfig, Starcoder2Config, TransfoXLConfig, TrOCRConfig, VaultGemmaConfig, WhisperConfig, XGLMConfig, XLMConfig, XLMProphetNetConfig, XLMRobertaConfig, XLMRobertaXLConfig, XLNetConfig, xLSTMConfig, XmodConfig, ZambaConfig, Zamba2Config.

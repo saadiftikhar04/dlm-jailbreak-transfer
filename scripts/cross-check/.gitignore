@@ -1,0 +1,3 @@
+# cross-check generated reports — never commit
+outputs/
+.sample_list.tsv

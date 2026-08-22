@@ -1,0 +1,40 @@
+==========================================================
+ArrAttack Stage 5 — DLM sweep
+Job ID  : 15618611
+Node    : cn268
+Started : 2026-05-14 10:59:39
+==========================================================
+0, NVIDIA A100-SXM4-80GB, 81920 MiB
+1, NVIDIA A100-SXM4-80GB, 81920 MiB
+==========================================================
+
+##########################################################
+##  TARGET = llada
+##  Started: 2026-05-14 10:59:39
+##########################################################
+##  llada FINISHED OK at 2026-05-14 21:52:52
+
+##########################################################
+##  TARGET = dream
+##  Started: 2026-05-14 21:53:12
+##########################################################
+##  dream FAILED (exit 1) at 2026-05-14 21:53:40
+##  Continuing to next DLM...
+
+##########################################################
+##  TARGET = diffucoder
+##  Started: 2026-05-14 21:53:47
+##########################################################
+##  diffucoder FINISHED OK at 2026-05-15 09:32:20
+
+==========================================================
+All DLM runs finished at 2026-05-15 09:32:39
+Results dirs:
+  /scratch/si2356/dlm-jailbreak-transfer/results/llada
+    /scratch/si2356/dlm-jailbreak-transfer/results/llada/arrattack_progress.csv (26K)
+    /scratch/si2356/dlm-jailbreak-transfer/results/llada/arrattack_results.csv (2.9M)
+  /scratch/si2356/dlm-jailbreak-transfer/results/dream
+  /scratch/si2356/dlm-jailbreak-transfer/results/diffucoder
+    /scratch/si2356/dlm-jailbreak-transfer/results/diffucoder/arrattack_progress.csv (28K)
+    /scratch/si2356/dlm-jailbreak-transfer/results/diffucoder/arrattack_results.csv (2.3M)
+==========================================================

@@ -1,0 +1,9 @@
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:06,  2.19s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.26s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.28s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.19s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.21s/it]
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/torch/backends/__init__.py:46: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  self.setter(val)
+/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/trl/trainer/sft_trainer.py:292: UserWarning: You didn't pass a `max_seq_length` argument to the SFTTrainer, this will default to 1024
+  warnings.warn(
+Map:   0%|          | 0/627 [00:00<?, ? examples/s]Map: 100%|██████████| 627/627 [00:00<00:00, 3132.49 examples/s]Map: 100%|██████████| 627/627 [00:00<00:00, 3064.44 examples/s]
+Map:   0%|          | 0/157 [00:00<?, ? examples/s]Map: 100%|██████████| 157/157 [00:00<00:00, 3251.14 examples/s]
+Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+slurmstepd: error: *** JOB 14809170 ON cn009 CANCELLED AT 2026-04-14T17:31:11 ***

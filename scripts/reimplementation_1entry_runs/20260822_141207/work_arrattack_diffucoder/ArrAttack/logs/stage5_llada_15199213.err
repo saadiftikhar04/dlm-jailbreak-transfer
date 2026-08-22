@@ -1,0 +1,16 @@
+2026-04-28 16:47:03,723 - INFO - Target model: diffucoder
+2026-04-28 16:47:03,724 - INFO - Loading shared models (similarity, GPTFuzz, generation)...
+2026-04-28 16:47:09,130 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2026-04-28 16:47:15,681 - INFO - Loading target model: diffucoder
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 137, in <module>
+    model_target, tokenizer_target = load_model(TARGET_KEY, offline=True)
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/utils/model_utils.py", line 58, in load_model
+    model = AutoModel.from_pretrained(hf_id, **kwargs)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 559, in from_pretrained
+    return model_class.from_pretrained(
+  File "/scratch/si2356/.cache/huggingface/modules/transformers_modules/4fdd4580064ca5d11808069ce78f88d068753c96/modeling_dream.py", line 565, in from_pretrained
+    _model = super().from_pretrained(
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/transformers/modeling_utils.py", line 3886, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+TypeError: DreamModel.__init__() got an unexpected keyword argument 'weights_only'

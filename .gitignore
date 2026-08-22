@@ -1,3 +1,4 @@
+**__pycache__
 *.csv
 *.jsonl
 metacipher_runs/
@@ -18,3 +19,5 @@ uncommitted_structure_manifest.txt
 *.onnx
 *.tar.gz
 *.zip
+paths.txt
+**Overleaf
