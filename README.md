@@ -42,9 +42,11 @@ dlm-jailbreak-transfer/
 │   ├── stage5_attack.py            # Stage 5 — final attack vs. all 6 victims (DLM-aware decoding)
 │   └── run_arrattack_<model>.sh    # per-model launcher
 │
-├── metacipher/
+├── scripts/
 │   ├── metacipher_multi.py         # sequential 6-model sweep, RL cipher selection
-│   └── run_metacipher_all.sh       # launcher (qwen2.5 → falcon → llama → llada → dream → diffucoder)
+│   ├── run_metacipher_all.sh       # launcher (qwen2.5 -> falcon -> llama -> llada -> dream -> diffucoder)
+│   ├── run_arrattack.sh            # ArrAttack launcher
+│   └── qwen_metacipher_*.py        # split inference / judging helpers
 │
 ├── dataset/
 │   ├── harmbench/  jailbreakbench/  malicious_instruct/  strongreject/
@@ -262,10 +264,10 @@ sequentially, with:
 
 **Run:**
 ```bash
-cd MetaCipher
-sbatch run_metacipher_all.sh
+cd /scratch/si2356/dlm-jailbreak-transfer
+sbatch scripts/run_metacipher_all.sh
 # equivalent direct call, single model:
-python metacipher_multi.py --victim qwen2.5 --dataset harmbench \
+python scripts/metacipher_multi.py --victim qwen2.5 --dataset harmbench \
     --keyword_agent deepseek-chat --cipher_agent deepseek-chat \
     --category_agent deepseek-chat --judge_agent deepseek-chat
 ```

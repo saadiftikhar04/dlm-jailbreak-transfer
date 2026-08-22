@@ -1,0 +1,15 @@
+
+CondaError: Run 'conda init' before 'conda activate'
+
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 47, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 47, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 47, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'

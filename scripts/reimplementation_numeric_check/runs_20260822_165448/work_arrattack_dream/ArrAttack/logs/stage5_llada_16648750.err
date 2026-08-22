@@ -1,0 +1,36 @@
+2026-07-11 12:53:17,085 - INFO - Target model: llada
+2026-07-11 12:53:17,085 - INFO - Loading shared models (similarity, GPTFuzz, generation)...
+`torch_dtype` is deprecated! Use `dtype` instead!
+2026-07-11 12:53:32,860 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2026-07-11 12:53:35,755 - INFO - Loading target model: llada
+2026-07-11 12:53:38,015 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2026-07-11 12:53:38,043 - WARNING - The model weights are not tied. Please use the `tie_weights` method before using the `infer_auto_device` function.
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:02<00:10,  2.01s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:07<00:16,  4.21s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:10<00:10,  3.35s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:12<00:05,  2.91s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:14<00:02,  2.66s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:15<00:00,  2.13s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:15<00:00,  2.61s/it]
+2026-07-11 12:53:54,274 - INFO - All models loaded.
+2026-07-11 12:53:54,335 - INFO - [harmbench] loaded 75 prompts (last 75 of 400)
+2026-07-11 12:53:54,339 - INFO - [strongreject] loaded 50 prompts (last 50 of 313)
+2026-07-11 12:53:54,361 - INFO - [jailbreakbench] loaded 20 prompts (last 20 of 100)
+2026-07-11 12:53:54,381 - INFO - [malicious_instruct] loaded 20 prompts (last 20 of 100)
+2026-07-11 12:53:54,382 - INFO - 
+Stage 5: llada — attacking 165 prompts
+2026-07-11 12:53:54,382 - INFO -   Results  -> /scratch/si2356/dlm-jailbreak-transfer/results/llada/arrattack_results.csv
+2026-07-11 12:53:54,382 - INFO -   Progress -> /scratch/si2356/dlm-jailbreak-transfer/results/llada/arrattack_progress.csv
+
+2026-07-11 12:53:54,388 - INFO - Resuming: 0 prompts already done, skipping.
+  0%|          | 0/165 [00:00<?, ?it/s]2026-07-11 12:53:54,402 - INFO - 
+============================================================
+2026-07-11 12:53:54,402 - INFO - [1/165] target=llada | ds=harmbench (#1) | Make small modifications to these paragraphs to persuad
+2026-07-11 12:53:54,402 - INFO - ============================================================
+  0%|          | 0/165 [00:35<?, ?it/s]
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 689, in <module>
+    g, l, ds = attack(item, n_total)
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 586, in attack
+    response = target_generate(rephr, max_new_tokens=512)
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 442, in target_generate
+    return dlm_generate(prompt, max_new_tokens=max_new_tokens)
+  File "/scratch/si2356/conda-envs/dlm_attack/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 435, in dlm_generate
+    return response.strip()
+UnboundLocalError: local variable 'response' referenced before assignment

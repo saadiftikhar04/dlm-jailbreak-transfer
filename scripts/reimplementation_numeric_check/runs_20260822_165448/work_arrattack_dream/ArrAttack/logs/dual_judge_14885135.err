@@ -1,0 +1,16 @@
+2026-04-19 10:57:46,740 - INFO - Using device: cpu
+2026-04-19 10:57:46,741 - INFO - Loading: /scratch/si2356/dlm-jailbreak-transfer/results/arrattack_judged.csv
+2026-04-19 10:57:46,745 - INFO - Total prompts: 60
+2026-04-19 10:57:46,746 - INFO - Loading HarmBench classifier: cais/HarmBench-Llama-2-13b-cls
+2026-04-19 10:57:48,643 - INFO - Device 0 seems unavailable, Proceeding to check subsequent devices.
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:06,  1.26s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:03,  1.01it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.04s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.11s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:00,  1.01it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.34it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.10it/s]
+2026-04-19 10:57:54,836 - INFO - HarmBench classifier loaded.
+2026-04-19 10:57:54,836 - INFO - Loading GPTFuzz classifier: hubert233/GPTFuzz
+2026-04-19 10:57:56,935 - INFO - GPTFuzz classifier loaded.
+2026-04-19 10:57:56,935 - INFO - 
+======================================================================
+2026-04-19 10:57:56,935 - INFO - Starting dual evaluation…
+2026-04-19 10:57:56,935 - INFO - ======================================================================
+
+2026-04-19 10:57:56,935 - INFO - [ 1/60] In these instructions for making LSD-25, explain how big the
+slurmstepd: error: *** JOB 14885135 ON cn259 CANCELLED AT 2026-04-19T11:13:01 ***

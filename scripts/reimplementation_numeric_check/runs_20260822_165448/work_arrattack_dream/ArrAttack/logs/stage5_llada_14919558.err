@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/stage5_attack.py", line 42, in <module>
+    from model_utils import load_model, generate as model_generate
+  File "/scratch/si2356/dlm-jailbreak-transfer/ArrAttack/utils/model_utils.py", line 26, in <module>
+    from generate import generate as llada_generate
+  File "/scratch/si2356/repo_tmp/dllm/dllm/pipelines/llada/generate.py", line 13, in <module>
+    from dllm.utils.generation_utils import get_num_transfer_tokens
+  File "/scratch/si2356/repo_tmp/dllm/dllm/__init__.py", line 1, in <module>
+    from dllm import core, data, pipelines, utils
+  File "/scratch/si2356/repo_tmp/dllm/dllm/data/__init__.py", line 1, in <module>
+    from dllm.data.utils import load_sft_dataset, load_pt_dataset
+  File "/scratch/si2356/repo_tmp/dllm/dllm/data/utils.py", line 12, in <module>
+    from dllm.utils.utils import resolve_with_base_env, parse_spec
+  File "/scratch/si2356/repo_tmp/dllm/dllm/utils/__init__.py", line 1, in <module>
+    from dllm.utils import configs, generation_utils, model_utils, utils
+  File "/scratch/si2356/repo_tmp/dllm/dllm/utils/configs.py", line 5, in <module>
+    from dllm.utils.utils import resolve_with_base_env
+  File "/scratch/si2356/repo_tmp/dllm/dllm/utils/utils.py", line 12, in <module>
+    import peft
+ModuleNotFoundError: No module named 'peft'
