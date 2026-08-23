@@ -32,7 +32,7 @@ CVE, incorrect VX chemistry), so they sit on the compliance/too_general boundary
 the strict binary judge accepts them, the original categorical judge called them
 too_general.
 
-## Corrected interpretation (C2, not C4)
+## Corrected interpretation
 - This is a **judge-boundary** finding, not a stripping artifact. The harmful text is
   present in the final answer and WAS judged; stripping did not delete it. Whether
   these four count depends on the compliance threshold, which the paper must state,
