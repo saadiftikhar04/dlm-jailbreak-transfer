@@ -15,16 +15,6 @@ the files that contain raw harmful text if you publish this.
 - `06_wilson_ci/` — T06 Wilson CIs (C3)
 - `paper_tables/` — LaTeX drafts; `TIER0_REPORT.md` — integrated findings + status
 
-## Reproduce
-1. Unzip the judged results archive to `rejudge_data/` (or set `RESULTS_ROOT` in
-   `00_shared/common.py`).
-2. Run each `build_*.py`. Deterministic (`SEED = 20260822`).
-3. To regenerate T03 official labels: `DEEPSEEK_API_KEY=... python
-   03_falcon_raw_rejudge/run_official_rejudge.py` (SCOPE=full), then
-   `integrate_official_rejudge.py`. Included label CSVs let you skip this and
-   verify against our run.
-4. To regenerate T02.1 embeddings: the encode step in `DATA_NOTE.md`; included
-   `mpnet_913.npy` / `mpnet_index.csv` let you skip it.
 
 ## Provenance of included intermediates
 - `04_.../repro_results_*.json` — the 51-row reproduction audit (from the run box)
