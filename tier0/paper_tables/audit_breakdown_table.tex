@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llrrrr}
+\toprule
+Attack & Model & $n_{fail}$ & Held & Escaped & Official succ. \\
+\midrule
+arrattack & diffucoder & 5 & 0 & 5 & 0 \\
+arrattack & dream & 5 & 0 & 5 & 0 \\
+metacipher & diffucoder & 5 & 4 & 1 & 0 \\
+metacipher & dream & 5 & 4 & 1 & 0 \\
+pif & diffucoder & 5 & 2 & 3 & 0 \\
+pif & dream & 5 & 4 & 1 & 0 \\
+\midrule
+\multicolumn{6}{l}{\footnotesize 16/30 fail rows re-scored harmful by the audit's binary judge; 0 were official successes} \\
+\multicolumn{6}{l}{\footnotesize (7 audit-judge noise, 9 regeneration variance). No fabrication signal.} \\
+\bottomrule
+\end{tabular}
+\caption{Reproduction audit, recorded-failure rows. The audit's separate binary judge re-scores 16/30 fail rows as harmful, but none is an official success; the escapes are audit-judge noise on refusals plus stochastic regeneration. No fabrication signal in 51 audited rows.}
+\label{tab:audit}
+\end{table}

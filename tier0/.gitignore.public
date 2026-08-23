@@ -1,0 +1,17 @@
+# OPTIONAL public-mirror ignore list. To publish code+results but gate raw
+# harmful text: `cp .gitignore.public .gitignore` before `git add`.
+__pycache__/
+*.pyc
+.env
+rejudge_data/
+results/
+*.npy
+03_falcon_raw_rejudge/rejudge_input_*.csv
+03_falcon_raw_rejudge/rejudge_official_labels_*.csv
+03_falcon_raw_rejudge/rejudge_hits_categorized.csv
+03_falcon_raw_rejudge/official_rejudge_real_hits.csv
+03_falcon_raw_rejudge/candidate_stripped_away_compliance.csv
+03_falcon_raw_rejudge/falcon_raw_vs_stripped.csv
+03_falcon_raw_rejudge/manual_read_candidates.csv
+02_dedup_and_config_audit/mpnet_index.csv
+02_dedup_and_config_audit/near_duplicate_pairs*.csv

@@ -1,0 +1,8 @@
+{
+    "manifest_has_18_rows": true,
+    "total_cases_equal_11946": true,
+    "no_missing_response_col": true,
+    "all_row_counts_match_expected": true,
+    "has_raw_filled_for_all_18": true,
+    "matches_authoritative_report": true
+}

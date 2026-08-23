@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Dropped & Causal & Diffusion & Gap & FSR \\
+\midrule
+NONE & 0.262 & 0.100 & 0.162 & 0.380 \\
+qwen & 0.198 & 0.100 & 0.099 & 0.502 \\
+llama & 0.195 & 0.100 & 0.095 & 0.511 \\
+falcon & 0.392 & 0.100 & 0.293 & 0.254 \\
+llada & 0.262 & 0.021 & 0.240 & 0.082 \\
+dream & 0.262 & 0.147 & 0.115 & 0.560 \\
+diffucoder & 0.262 & 0.131 & 0.131 & 0.500 \\
+\bottomrule
+\end{tabular}
+\caption{Leave-one-model-out sensitivity. FSR ranges 0.08--0.56 and the family gap 0.10--0.29 depending on which single victim is removed: FSR$<$1 is near-forced by model selection, so RQ2 must be stated as conditional on these six models.}
+\label{tab:lomo}
+\end{table}

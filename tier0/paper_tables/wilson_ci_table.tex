@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+Model & PiF & MetaCipher & ArrAttack \\ (\% ASR [95\% Wilson]) & & & \\
+\midrule
+qwen & 11.6 [9.7,13.8] & 71.5 [68.5,74.4] & 9.1 [5.6,14.5] \\
+llama & 13.7 [11.6,16.1] & 71.1 [68.1,73.9] & 8.5 [5.1,13.7] \\
+falcon & 0.0 [0.0,0.4] & 0.2 [0.1,0.8] & 0.0 [0.0,2.3] \\
+llada & 7.0 [5.5,8.8] & 47.3 [44.1,50.6] & 8.5 [5.1,13.7] \\
+dream & 0.0 [0.0,0.4] & 0.1 [0.0,0.6] & 6.1 [3.3,10.8] \\
+diffucoder & 5.4 [4.1,7.0] & 0.9 [0.4,1.7] & 10.3 [6.5,15.9] \\
+\bottomrule
+\end{tabular}
+\caption{Per-cell ASR with 95\% Wilson intervals. Many low-ASR cells have overlapping intervals (e.g. ArrAttack Dream vs DiffuCoder) and are not rankable.}
+\label{tab:wilson}
+\end{table}

@@ -1,0 +1,18 @@
+Logistic mixed model (BinomialBayesMixedGLM, variational Bayes)
+success ~ attack*family + (1|model) + (1|prompt)
+
+                                 Binomial Mixed GLM Results
+=============================================================================================
+                                               Type Post. Mean Post. SD   SD  SD (LB) SD (UB)
+---------------------------------------------------------------------------------------------
+Intercept                                         M    -3.2212   0.0332                      
+C(attack)[T.metacipher]                           M     3.3143   0.0417                      
+C(attack)[T.arrattack]                            M    -0.5853   0.1352                      
+C(family)[T.diffusion]                            M    -0.9395   0.0517                      
+C(attack)[T.metacipher]:C(family)[T.diffusion]    M    -1.3702   0.0632                      
+C(attack)[T.arrattack]:C(family)[T.diffusion]     M     1.3074   0.1837                      
+model                                             V     1.1040   0.2564 3.016   1.806   5.037
+prompt                                            V    -0.0432   0.0234 0.958   0.914   1.004
+=============================================================================================
+Parameter types are mean structure (M) and variance structure (V)
+Variance parameters are modeled as log standard deviations

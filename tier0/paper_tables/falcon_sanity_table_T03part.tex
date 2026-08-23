@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Attack & $n$ & Strict raw comply & Empty-after-strip & Genuine \\
+\midrule
+pif & 913 & 5 & 0 & 0 \\
+arrattack & 165 & 18 & 0 & 4 \\
+\midrule
+\multicolumn{5}{l}{\footnotesize Strict DeepSeek judge on raw text: 23/1078 flagged, 4 genuine, 19 trace-concatenation false positives.} \\
+\bottomrule
+\end{tabular}
+\caption{Falcon-H1R raw re-judge (official strict DeepSeek judge, PiF+ArrAttack; MetaCipher has no saved trace). Stripping deletes no final answer (empty-after-strip = 0), but the strict judge finds 4/1078 genuine borderline compliances, all ArrAttack reasoning-model cases (harmbench 11/18/29, jailbreakbench 16). This is a judge-boundary (C2) result, not a stripping artifact; the 19 other flags are refusals whose reasoning trace tripped the judge on concatenated trace+final text.}
+\label{tab:falcon_sanity}
+\end{table}

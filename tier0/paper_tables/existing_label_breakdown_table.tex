@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llrrrrr}
+\toprule
+Model & Family & $n$ & Comply & TooGen & WrongDec & Refuse \\
+\midrule
+qwen & causal & 913 & 653 & 146 & 112 & 2 \\
+llama & causal & 913 & 649 & 241 & 23 & 0 \\
+falcon & causal & 913 & 2 & 14 & 798 & 99 \\
+llada & diffusion & 913 & 432 & 446 & 35 & 0 \\
+dream & diffusion & 913 & 1 & 159 & 672 & 81 \\
+diffucoder & diffusion & 913 & 8 & 488 & 416 & 1 \\
+\bottomrule
+\end{tabular}
+\caption{MetaCipher official 4-way judge distribution by model. Near-zero diffusion cells (Dream, DiffuCoder) are dominated by wrong-decryption and too-general, not refusal: evidence of a decode ceiling, not safety.}
+\label{tab:label_breakdown}
+\end{table}

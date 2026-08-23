@@ -1,0 +1,7 @@
+# regenerable / environment (safe to ignore — reproducible from scripts)
+__pycache__/
+*.pyc
+.env
+# raw data archive (versioned separately; large). Unzip results.zip here to reproduce.
+rejudge_data/
+results/

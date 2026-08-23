@@ -1,0 +1,30 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llll}
+\toprule
+Attack & Model & Sampling & Diffusion schedule \\
+\midrule
+pif & qwen & temp=0.8, top\_p=0.9, do\_sample=True & steps=n/a \\
+pif & llama & temp=0.8, top\_p=0.9, do\_sample=True & steps=n/a \\
+pif & falcon & temp=0.8, top\_p=0.9, do\_sample=True & steps=n/a \\
+pif & llada & temp=0, remasking=low\_confidence & steps=gen\_length, block=128 $\to$ 128 steps/block \\
+pif & dream & temp=0.0, top\_p=None, alg=origin & steps=gen\_length \\
+pif & diffucoder & temp=0.3, top\_p=0.95, alg=entropy & steps=gen\_length \\
+arrattack & qwen & temp=0.8, top\_p=0.9, do\_sample=True & steps=n/a \\
+arrattack & llama & temp=0.8, top\_p=0.9, do\_sample=True & steps=n/a \\
+arrattack & falcon & temp=0.8, top\_p=0.9, do\_sample=True & steps=n/a \\
+arrattack & llada & temp=0, remasking=low\_confidence & steps=128 fixed, gen\_length=512, block=128 $\to$ 32 steps/block \\
+arrattack & dream & temp=0.0, top\_p=None, alg=origin & steps=gen\_length \\
+arrattack & diffucoder & temp=0.3, top\_p=0.95, alg=entropy & steps=gen\_length \\
+metacipher & qwen & temp=0.7, top\_p=0.9, do\_sample=True & steps=n/a \\
+metacipher & llama & temp=0.7, top\_p=0.9, do\_sample=True & steps=n/a \\
+metacipher & falcon & temp=0.7, top\_p=0.9, do\_sample=True & steps=n/a \\
+metacipher & llada & temp=0, remasking=low\_confidence & steps=128 fixed, gen\_length=512, block=128 $\to$ 32 steps/block \\
+metacipher & dream & temp=0.2, top\_p=0.95, alg=entropy & steps=128 fixed \\
+metacipher & diffucoder & temp=0.4, top\_p=0.95, alg=entropy & steps=128 fixed \\
+\bottomrule
+\end{tabular}
+\caption{Victim decoding by attack$\times$model, read from the generation code. Decoding is not held constant: LLaDA runs 128 steps/block under PiF but 32 steps/block under ArrAttack and MetaCipher; Dream switches from alg=origin (PiF, ArrAttack) to alg=entropy (MetaCipher); causal victims sample while diffusion victims are near-greedy. Cross-attack and cross-family ASR comparisons are therefore decoding-confounded.}
+\label{tab:decoding_config}
+\end{table}
