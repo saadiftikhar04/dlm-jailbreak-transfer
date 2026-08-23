@@ -1,4 +1,4 @@
-# T03 step 4 — official DeepSeek re-judge (CORRECTED conclusion)
+# T03 step 4 — official DeepSeek re-judge
 
 The official strict binary DeepSeek judge was run on the full raw (pre-stripping)
 Falcon text for all 1078 PiF+ArrAttack cases, on the HPC. This SUPERSEDES the
