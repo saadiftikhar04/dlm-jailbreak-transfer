@@ -38,10 +38,13 @@ for m in C.MODELS:
 
 t_model = contingency(mc_by_model, MC_CATS, ["model"])
 t_model.insert(1, "family", t_model["model"].map(C.FAMILY))
-t_model.to_csv(os.path.join(OUT, "metacipher_category_by_model.csv"), index=False)
+# float_format keeps every *_pct at a fixed 2 decimals (0.0 -> 0.00, 73.6 -> 73.60)
+t_model.to_csv(os.path.join(OUT, "metacipher_category_by_model.csv"),
+               index=False, float_format="%.2f")
 
 t_mb = contingency(mc_by_mb, MC_CATS, ["model", "benchmark"])
-t_mb.to_csv(os.path.join(OUT, "metacipher_category_by_model_benchmark.csv"), index=False)
+t_mb.to_csv(os.path.join(OUT, "metacipher_category_by_model_benchmark.csv"),
+            index=False, float_format="%.2f")
 
 # ---- failure-mode by attack x model (all three attacks) ----------------
 # MetaCipher: llm_judge (4-way). ArrAttack: gpt_fuzz (3-way categorizer).

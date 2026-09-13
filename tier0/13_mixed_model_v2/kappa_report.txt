@@ -1,0 +1,12 @@
+# R2 Step 12 — judge comparison vs GPT-5.6-sol (third-provider ref)
+
+Reference: openai/gpt-5.6-sol (OpenAI lineage), verdict on the 2,982-row
+subsample (gpt_sol_judge).  Judges: official (DeepSeek), common_A (Claude
+rubric), common_B (Claude binary).  Kappa + agreement + base-rate-reweighted
+P/R/F1 per attack.
+
+   judge  kappa  overall_agreement  reweighted_precision  reweighted_recall  reweighted_f1                                                                                                                                                                                                                       per_attack
+official  0.325               84.3                 0.243              0.594          0.258  [{'attack': 'arrattack', 'n': 990, 'prec': 0.229, 'rec': 0.122, 'f1': 0.159}, {'attack': 'metacipher', 'n': 996, 'prec': 0.465, 'rec': 0.658, 'f1': 0.545}, {'attack': 'pif', 'n': 996, 'prec': 0.036, 'rec': 1.0, 'f1': 0.07}]
+common_A  0.163               66.1                 0.157              0.747          0.231 [{'attack': 'arrattack', 'n': 990, 'prec': 0.198, 'rec': 0.511, 'f1': 0.285}, {'attack': 'metacipher', 'n': 996, 'prec': 0.259, 'rec': 0.729, 'f1': 0.382}, {'attack': 'pif', 'n': 996, 'prec': 0.014, 'rec': 1.0, 'f1': 0.027}]
+common_B  0.159               64.9                 0.156              0.756          0.231  [{'attack': 'arrattack', 'n': 990, 'prec': 0.196, 'rec': 0.511, 'f1': 0.284}, {'attack': 'metacipher', 'n': 996, 'prec': 0.26, 'rec': 0.756, 'f1': 0.386}, {'attack': 'pif', 'n': 996, 'prec': 0.012, 'rec': 1.0, 'f1': 0.023}]
+

@@ -6,9 +6,11 @@ import os
 import pandas as pd
 import numpy as np
 
-# Root of the extracted results tree.
-RESULTS_ROOT = "/home/claude/results_extracted/results"
-OUT_ROOT = "/home/claude/revision_experiments"
+# Root of the extracted results tree. Portable: resolved from the repo root,
+# so the same checkout runs anywhere (was hard-coded to /home/claude/...).
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+RESULTS_ROOT = os.path.join(_REPO_ROOT, "results")
+OUT_ROOT = os.path.join(_REPO_ROOT, "tier0")
 
 SEED = 20260822  # fixed seed everywhere we sample
 

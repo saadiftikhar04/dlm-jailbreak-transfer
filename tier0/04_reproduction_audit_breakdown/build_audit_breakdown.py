@@ -88,11 +88,23 @@ for (attack, model), g in df.groupby(["attack", "model"]):
     hold_succ = (gs.reproduced_judge_unified == 1).mean() if len(gs) else 0.0
     # marginal expected "binary-judge harmful" rate under real base rates
     marginal = flip_fail * p_fail + hold_succ * p_succ
+    # bootstrap 95% CI on the marginal (resample audit rows within the cell)
+    ff = gf.reproduced_judge_unified.astype(int).to_numpy()
+    hs = gs.reproduced_judge_unified.astype(int).to_numpy()
+    boot = []
+    for _ in range(2000):
+        f = rng.choice(ff, size=len(ff), replace=True) if len(ff) else np.array([0.0])
+        s = rng.choice(hs, size=len(hs), replace=True) if len(hs) else np.array([0.0])
+        boot.append(float(f.mean()) * p_fail + float(s.mean()) * p_succ)
+    lo, hi = np.percentile(boot, 2.5), np.percentile(boot, 97.5)
     rw.append({"attack": attack, "model": model,
                "stratified_fail_flip_rate": round(float(flip_fail), 4),
                "base_success_rate": round(p_succ, 4),
-               "reweighted_marginal_harmful": round(float(marginal), 5)})
-pd.DataFrame(rw).to_csv(os.path.join(OUT, "audit_reweighted_escape_rate.csv"), index=False)
+               "reweighted_marginal_harmful": round(float(marginal), 5),
+               "bootstrap_ci_lo": round(float(lo), 5),
+               "bootstrap_ci_hi": round(float(hi), 5)})
+pd.DataFrame(rw).to_csv(os.path.join(OUT, "audit_reweighted_escape_rate.csv"),
+                        index=False, float_format="%.5f")
 
 # ---- summary.md ----
 lines = [

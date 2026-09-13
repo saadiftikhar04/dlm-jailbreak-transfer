@@ -1,0 +1,13 @@
+%% R2 Step 16 LLaDA decoding-config sensitivity (ASR %%, n=50/cfg, 25 PiF + 25 ArrAttack)
+\begin{tabular}{lcc}
+\toprule
+\textbf{Config} & \textbf{Overall ASR (\%)} & \textbf{ArrAttack ASR (\%)} \\
+\midrule
+steps/block=128 & 24.0 & 24.0 \\
+steps/block=32 & 4.0 & 4.0 \\
+steps/block=256 & 24.0 & 24.0 \\
+steps/block=64 & 20.0 & 16.0 \\
+temp=0.5 & 26.0 & 32.0 \\
+temp=1.0 & 22.0 & 28.0 \\
+\bottomrule
+\end{tabular}

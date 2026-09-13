@@ -43,7 +43,9 @@ for attack, a in C.ATTACKS.items():
 
 man = pd.DataFrame(rows)
 out_csv = os.path.join(C.OUT_ROOT, "00_shared", "judged_file_manifest.csv")
-man.to_csv(out_csv, index=False)
+# float_format='%.4f' keeps asr_pct at a fixed 4 decimals across every row,
+# so a 0% cell writes 0.0000 (not 0.0) and no row has a ragged precision.
+man.to_csv(out_csv, index=False, float_format="%.4f")
 
 # ---- success-criteria checks -------------------------------------------
 total_cases = man["row_count"].sum()

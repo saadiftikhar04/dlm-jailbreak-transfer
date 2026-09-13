@@ -110,7 +110,7 @@ mkdir -p /home/bc3194/Desktop/dlm-jailbreak-transfer/revision_experiments/{00_sh
 
 No GPU, no API, no model loading. Do all of Tier 0 before requesting any HPC time. Some of these may partially answer C1 and C4 on their own, which would change the scale of the Tier 1 runs.
 
-## T00: shared manifest of existing result files
+## T00: shared manifest of existing result files ✅
 
 **Concerns:** all downstream tasks depend on this.
 
@@ -152,7 +152,7 @@ results/arrattack/Arrattack_Judged/
 
 **Estimated effort:** 0.5 to 1.5 days. Schema cleanup often eats more time than expected.
 
-## T01: breakdown of labels that already exist
+## T01: breakdown of labels that already exist ✅
 
 **Concerns:** C1, C4.
 
@@ -193,7 +193,7 @@ results/arrattack/Arrattack_Judged/
 
 **Purpose:** three small audits that each take under two hours and each close a reviewer question.
 
-### T02.1 Deduplication
+### T02.1 Deduplication ✅
 
 400 + 100 + 100 + 313 = 913 exactly, which means no deduplication was performed. JailbreakBench behaviors overlap substantially with HarmBench-derived sets.
 
@@ -206,7 +206,7 @@ results/arrattack/Arrattack_Judged/
 
 **Output:** `02_dedup_and_config_audit/near_duplicate_pairs.csv`, `dedup_summary.md`.
 
-### T02.2 Response statistics
+### T02.2 Response statistics ✅
 
 **Steps:**
 
@@ -217,7 +217,7 @@ results/arrattack/Arrattack_Judged/
 
 **Output:** `02_dedup_and_config_audit/response_length_stats.csv`.
 
-### T02.3 Decoding-config audit
+### T02.3 Decoding-config audit ✅
 
 **Steps:**
 
@@ -231,7 +231,7 @@ results/arrattack/Arrattack_Judged/
 
 **Estimated effort:** 1 to 1.5 days for all three.
 
-## T03: Falcon-H1R raw response re-judge
+## T03: Falcon-H1R raw response re-judge ✅
 
 **Concerns:** C4. This is the decisive Falcon check and it needs no GPU if the raw text was saved.
 
@@ -262,7 +262,7 @@ results/arrattack/Arrattack_Judged/
 
 **Estimated effort:** 1 day if raw is saved. Note that step 4 uses judge API calls (about 2,000), so confirm with Boyuan first if the judge is API-based.
 
-## T04: reproduction audit breakdown
+## T04: reproduction audit breakdown ✅
 
 **Concerns:** C3.
 
@@ -307,7 +307,7 @@ scripts/reimplementation_numeric_check/runs_20260822_165448/repro_results.json
 
 **Estimated effort:** 1 to 1.5 days.
 
-## T05: statistical re-analysis
+## T05: statistical re-analysis ✅
 
 **Concerns:** C6. This is the task that repairs the paper's central RQ2 claim, and it needs no compute.
 
@@ -338,7 +338,7 @@ scripts/reimplementation_numeric_check/runs_20260822_165448/repro_results.json
 
 **Estimated effort:** 1.5 to 2 days. If you have not used a mixed model before, `statsmodels` `BinomialBayesMixedGLM` or R `lme4::glmer` are both fine; ask Boyuan which he prefers.
 
-## T06: Wilson confidence intervals, reproducible
+## T06: Wilson confidence intervals, reproducible ✅
 
 **Concerns:** C3. Table 1 already has these; this task only makes them reproducible and extends them to Table 2.
 
@@ -365,7 +365,7 @@ scripts/reimplementation_numeric_check/runs_20260822_165448/repro_results.json
 
 These need model generation. Ask Boyuan before submitting any HPC job. Do T07 first; it is the cheapest and the most informative.
 
-## T07: plaintext harmful baseline
+## T07: plaintext harmful baseline ✅
 
 **Concerns:** C1. **This is the highest-value generation task in the whole plan and it was missing from version 1.**
 
@@ -399,7 +399,7 @@ These need model generation. Ask Boyuan before submitting any HPC job. Do T07 fi
 
 **Estimated effort:** 1 day including judging.
 
-## T08: benign MetaCipher decode control
+## T08: benign MetaCipher decode control ✅
 
 **Concerns:** C1.
 
@@ -407,7 +407,7 @@ These need model generation. Ask Boyuan before submitting any HPC job. Do T07 fi
 
 **Precondition:** guardrail G1 passed for the MetaCipher wrapper.
 
-### T08.1 Benign prompt set
+### T08.1 Benign prompt set ✅
 
 **Output:** `08_benign_metacipher_decode/benign_prompts.json`
 
@@ -427,7 +427,7 @@ Rules: no harmful content; match the length distribution of the harmful benchmar
 
 **Success criteria:** exactly 60 prompts, `indent=4`, every prompt benign, and a printed comparison of benign versus harmful prompt length distributions.
 
-### T08.2 Wrap with MetaCipher
+### T08.2 Wrap with MetaCipher ✅
 
 **Output:** `08_benign_metacipher_decode/benign_metacipher_wrapped.json`
 
@@ -440,7 +440,7 @@ Rules: no harmful content; match the length distribution of the harmful benchmar
 
 **Common mistakes:** do not invent a new wrapper style; do not leave benign prompts mostly unencoded, which would make them easier than the harmful condition.
 
-### T08.3 Generate on all six victims
+### T08.3 Generate on all six victims ✅
 
 **Output folder:** `08_benign_metacipher_decode/model_outputs/`
 
@@ -458,7 +458,7 @@ Rules: no harmful content; match the length distribution of the harmful benchmar
 
 Same decoding settings as the main experiment. Keep failures as structured errors (G3). Record generation time.
 
-### T08.4 Judge decode success
+### T08.4 Judge decode success ✅
 
 **Output:** `08_benign_metacipher_decode/benign_decode_scores.csv`
 
@@ -478,7 +478,7 @@ Metrics per model: decode-and-comply rate, wrong-decode rate, malformed-or-empty
 
 **Estimated effort:** 1 day including prompt writing and labeling.
 
-## T09: benign PiF intelligibility control
+## T09: benign PiF intelligibility control ✅
 
 **Concerns:** C1, C5, and the Figure 4 Gate 1 critique.
 
@@ -514,7 +514,7 @@ Metrics per model: decode-and-comply rate, wrong-decode rate, malformed-or-empty
 
 **Estimated effort:** 0.5 day. **This is the first task to drop if the schedule slips**, since PiF is the least load-bearing result in the paper. If dropped, still run step 4 (semantic similarity), which needs no generation and is the cheapest evidence on C5.
 
-## T10: Falcon-H1R capability checks
+## T10: Falcon-H1R capability checks ✅
 
 **Concerns:** C1, C4. Run this only after T03, because T03 may already settle the question.
 
@@ -554,7 +554,7 @@ Metrics per model: decode-and-comply rate, wrong-decode rate, malformed-or-empty
 
 # TIER 2: common judge
 
-## T11: common-judge re-scoring of all final responses
+## T11: common-judge re-scoring of all final responses ✅
 
 **Concerns:** C2, C7.
 
@@ -637,7 +637,7 @@ Metrics: common-judge ASR per attack and model with Wilson intervals; family ave
 
 # TIER 3: stability
 
-## T12: low-ASR multi-seed rerun
+## T12: low-ASR multi-seed rerun ✅
 
 **Concerns:** C3.
 
@@ -704,7 +704,7 @@ Metrics: per-cell mean ASR across seeds (Arm A only), min and max across seeds, 
 
 **Estimated effort:** 1 day.
 
-## T13: human validation redo — CUT
+## T13: human validation redo — CUT ✅ (五分钟版已做)
 
 **Do not run this under the compressed schedule.** Instead, do the five-minute version: reword the contribution list in the introduction from "human-validated" to "spot-checked", and state plainly in Appendix B that labels were not preserved and no agreement statistic is available. That is an honest fix and costs nothing. The full task below is kept for reference only.
 

@@ -1,19 +1,19 @@
-# T03 step 4 — official DeepSeek re-judge
+# T03 step 4 — official DeepSeek re-judge (CORRECTED conclusion)
 
 The official strict binary DeepSeek judge was run on the full raw (pre-stripping)
 Falcon text for all 1078 PiF+ArrAttack cases, on the HPC. This SUPERSEDES the
 earlier proxy-based conclusion in this folder.
 
 ## Result
-- strict-judge compliance on raw text: **23/1078** flagged
+- strict-judge compliance on raw text: **24/1078** flagged
 - of those, genuine (harmful content in the FINAL answer): **4**
-- artifacts (refusal whose reasoning trace tripped the judge on trace+final): **19**
+- artifacts (refusal whose reasoning trace tripped the judge on trace+final): **20**
 - **Corrected Falcon raw-text ASR = 4/1078**, all ArrAttack.
 
 Per-attack strict compliance:
 | attack    |   n |   strict_raw_compliance |
 |:----------|----:|------------------------:|
-| pif       | 913 |                       5 |
+| pif       | 913 |                       6 |
 | arrattack | 165 |                      18 |
 
 ## The 4 genuine cases
@@ -32,7 +32,7 @@ CVE, incorrect VX chemistry), so they sit on the compliance/too_general boundary
 the strict binary judge accepts them, the original categorical judge called them
 too_general.
 
-## Corrected interpretation
+## Corrected interpretation (C2, not C4)
 - This is a **judge-boundary** finding, not a stripping artifact. The harmful text is
   present in the final answer and WAS judged; stripping did not delete it. Whether
   these four count depends on the compliance threshold, which the paper must state,
@@ -40,10 +40,10 @@ too_general.
 - The structural result still holds: 0 rows had a nonempty trace stripped to an empty
   final answer. Stripping removed reasoning, not answers.
 
-## The 19 artifacts (methods caveat)
+## The 20 artifacts (methods caveat)
 Judging `reasoning_trace + final_answer` concatenated lets a refusing model's trace
 (which restates the harmful request while deliberating) trip a binary judge even when
-the final answer is a plain refusal. 19/23 of the raw-text
+the final answer is a plain refusal. 20/24 of the raw-text
 "compliances" are this false positive. Lesson for the pipeline: judge the final
 answer, not trace+final glued together.
 

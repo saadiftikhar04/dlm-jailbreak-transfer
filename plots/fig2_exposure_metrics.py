@@ -81,7 +81,7 @@ def exposure_metrics(asr: pd.DataFrame) -> pd.DataFrame:
 def make_figure(metrics: pd.DataFrame, asr: pd.DataFrame, outstem: Path):
     plt.rcParams.update({
         "font.family": "DejaVu Sans",
-        "font.size": 11,
+        "font.size": 12,
         "axes.spines.top": False,
         "axes.spines.right": False,
         "axes.edgecolor": "#444444",
@@ -95,7 +95,7 @@ def make_figure(metrics: pd.DataFrame, asr: pd.DataFrame, outstem: Path):
 
     fig, (axL, axR) = plt.subplots(
         1, 2, figsize=(11, 4.2), sharey=True,
-        gridspec_kw={"wspace": 0.08},
+        gridspec_kw={"wspace": 0.22},
         constrained_layout=True,
     )
 
@@ -105,14 +105,14 @@ def make_figure(metrics: pd.DataFrame, asr: pd.DataFrame, outstem: Path):
         for b, h, c in zip(bars, hatches, colors):
             if h:
                 b.set_hatch(h)
-                b.set_edgecolor(c)          # hatch lines in bar colour
+                b.set_edgecolor(c)  # hatch lines in bar colour
                 b.set_linewidth(0.0)
         for yi, v in zip(y, values):
             ax.text(v + xmax * 0.012, yi, f"{v:.1f}",
-                    va="center", ha="left", fontsize=10, fontweight="bold",
+                    va="center", ha="left", fontsize=11, fontweight="bold",
                     color="#222222")
         ax.set_xlim(0, xmax)
-        ax.set_xlabel(xlabel, fontsize=10.5)
+        ax.set_xlabel(xlabel, fontsize=13.5)
         ax.grid(axis="x", color="#DDDDDD", linewidth=0.7, zorder=0)
         ax.set_axisbelow(True)
         ax.tick_params(length=0)
@@ -122,12 +122,12 @@ def make_figure(metrics: pd.DataFrame, asr: pd.DataFrame, outstem: Path):
          "Max \u2212 min ASR (percentage points)", 82)
 
     axL.set_yticks(list(y))
-    axL.set_yticklabels(models, fontsize=11)
+    axL.set_yticklabels(models, fontsize=12)
 
     axL.set_title("(a)  Mechanism exposure envelope (MEE)",
-                  fontsize=11.5, fontweight="bold", loc="left", pad=10)
+                  fontsize=12.5, fontweight="bold", loc="left", pad=10)
     axR.set_title("(b)  Attack-dependence gap (MDG)",
-                  fontsize=11.5, fontweight="bold", loc="left", pad=10)
+                  fontsize=12.5, fontweight="bold", loc="left", pad=10)
 
     legend = [
         Patch(facecolor=C_CAUSAL, edgecolor="white", label="Causal LLMs"),
@@ -135,7 +135,7 @@ def make_figure(metrics: pd.DataFrame, asr: pd.DataFrame, outstem: Path):
               label="Diffusion-family"),
     ]
     fig.legend(handles=legend, loc="outside upper center", ncol=2,
-               frameon=False, fontsize=10.5)
+               frameon=False, fontsize=13.5)
 
     for ext in ("pdf", "png"):
         fig.savefig(f"{outstem}.{ext}", dpi=300, bbox_inches="tight")

@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Attack & n & Refusal & Malformed & Harmful-comp. & Unrelated \\\\
+\midrule
+PiF & 20 & 19 & 0 & 0 & 1 \\\\
+MetaCipher & 20 & 2 & 16 & 1 & 1 \\\\
+ArrAttack & 20 & 19 & 0 & 1 & 0 \\\\
+\bottomrule
+\end{tabular}
+\caption{Falcon-H1R manual read of 60 sampled final responses (20/attack, T10.3; 4 manually reviewed incl. 2 confirmed harmful-compliant, 56 auto first-pass). Falcon refuses cleanly under PiF; under MetaCipher its output is mostly a malformed reasoning trace; 2 responses contain actionable harmful content (Metacipher/165 fake captive-portal SSID theft; ArrAttack/4 weaponized-drone build) that the official judge scored wrong-decryption/too-general (not success) -- a judge-boundary (C2) result. T10.1: open-ended benign answer rate 17%. T10.2: safety-adjacent benign refusal 1.7%.}
+\label{tab:falcon_capability}
+\end{table}

@@ -163,7 +163,10 @@ def make_figure(asr, sup, mode, min_support, outstem: Path):
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=9.5)
     ax.set_ylabel("Observed ASR (%)", fontsize=11)
-    ax.set_ylim(0, max(80, np.nanmax(asr.values) + 10))
+    # M8: y-axis should be sized to the data, not forced up to 80.
+    # tallest bar here is MetaCipher cyber at ~44.5, so cap at ~55.
+    ymax = max(55.0, np.nanmax(asr.values) + 10)
+    ax.set_ylim(0, ymax)
     ax.grid(axis="y", color="#DDDDDD", linewidth=0.7, zorder=0)
     ax.set_axisbelow(True)
     ax.tick_params(length=0)

@@ -1,0 +1,7 @@
+{
+    "harmbench": 400,
+    "strongreject": 313,
+    "jailbreakbench": 100,
+    "malicious_instruct": 100,
+    "out_base": "/home/bc3194/Desktop/dlm-jailbreak-transfer/tier0/13_mixed_model_v2/step13_dataset"
+}

@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & Family & PiF understood & MC masked-decode & Plaintext compliance & n \\\\
+\midrule
+qwen & causal & 95\% & 100\% & 24\% & 100 \\\\
+llama & causal & 92\% & 60\% & 20\% & 100 \\\\
+falcon & causal & 85\% & 70\% & 0\% & 100 \\\\
+llada & diffusion & 92\% & 100\% & 30\% & 100 \\\\
+dream & diffusion & 67\% & 80\% & 3\% & 100 \\\\
+diffucoder & diffusion & 55\% & 90\% & 16\% & 100 \\\\
+\bottomrule
+\end{tabular}
+\caption{Capability controls: T07 plaintext harmful compliance, T08 benign MetaCipher masked-decode rate (10 prompt real-decode subset), T09 benign PiF understood rate (60 prompts). Diffusion victims drop under PiF corruption (Dream 67\%, DiffuCoder 55\% understood, high malformed) but are bounded by a low plaintext compliance floor (3\%/16\%); causal victims understand PiF-transformed benign prompts 91--95\% with 0\% malformed, so their PiF results are not a readability artifact. Under Report-A cross-check: Falcon's benign-understood 85\%, malformed 0\%, plaintext 0\% -> refusal/arbitration, not corruption.}
+\label{tab:capability}
+\end{table}

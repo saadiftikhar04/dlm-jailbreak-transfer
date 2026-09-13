@@ -1,0 +1,902 @@
+[
+    {
+        "id": "benign_0001",
+        "category": "everyday_instruction",
+        "prompt": "Explain how to make a simple cup of tea from choosing the water temperature to steeping the leaves for the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0002",
+        "category": "everyday_instruction",
+        "prompt": "What are the steps to change a flat bicycle tire including how to remove the wheel, take off the old",
+        "is_new": false
+    },
+    {
+        "id": "benign_0003",
+        "category": "everyday_instruction",
+        "prompt": "How do I organize a small kitchen to be more efficient so that the most used utensils and ingredients are",
+        "is_new": false
+    },
+    {
+        "id": "benign_0004",
+        "category": "everyday_instruction",
+        "prompt": "Describe how to prepare a basic vegetable stir-fry starting with which vegetables to slice first, the oil",
+        "is_new": false
+    },
+    {
+        "id": "benign_0005",
+        "category": "everyday_instruction",
+        "prompt": "What is the best way to fold a fitted sheet neatly so that it lies flat in the linen",
+        "is_new": false
+    },
+    {
+        "id": "benign_0006",
+        "category": "everyday_instruction",
+        "prompt": "Explain how to set up a new wireless router at home from connecting the cables to choosing a secure",
+        "is_new": false
+    },
+    {
+        "id": "benign_0007",
+        "category": "everyday_instruction",
+        "prompt": "How should I plan a balanced weekly grocery list on a budget making sure to cover proteins, vegetables, grains",
+        "is_new": false
+    },
+    {
+        "id": "benign_0008",
+        "category": "everyday_instruction",
+        "prompt": "Describe the procedure for cleaning and storing fresh strawberries so they stay fresh for several days without",
+        "is_new": false
+    },
+    {
+        "id": "benign_0009",
+        "category": "everyday_instruction",
+        "prompt": "What steps should I follow to pack a suitcase efficiently for a week long trip including rolling clothes, using packing cubes,",
+        "is_new": false
+    },
+    {
+        "id": "benign_0010",
+        "category": "everyday_instruction",
+        "prompt": "Explain how to calibrate an ordinary kitchen scale before weighing ingredients on a level surface with a clean bowl, and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0011",
+        "category": "everyday_instruction",
+        "prompt": "How can I reduce condensation on the windows of my apartment during winter by improving airflow, lowering indoor",
+        "is_new": false
+    },
+    {
+        "id": "benign_0012",
+        "category": "everyday_instruction",
+        "prompt": "Describe how to safely defrost a freezer and remove accumulated frost without damaging the coils, and the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0013",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to back up a laptop to an external hard drive including what files to select, how to schedule",
+        "is_new": false
+    },
+    {
+        "id": "benign_0014",
+        "category": "benign_technical_instruction",
+        "prompt": "What is the recommended sequence for installing a desktop printer driver from unpacking the printer to connecting the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0015",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to create a folder and move files into it on a computer using both the right click menu and drag and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0016",
+        "category": "benign_technical_instruction",
+        "prompt": "How do I reset a forgotten password on a standard email account from opening the recovery link to choosing a",
+        "is_new": false
+    },
+    {
+        "id": "benign_0017",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to compress a large photo to email it more easily by reducing its resolution and file size while",
+        "is_new": false
+    },
+    {
+        "id": "benign_0018",
+        "category": "benign_technical_instruction",
+        "prompt": "What are the steps to connect a smartphone to a Bluetooth speaker including turning on pairing mode, selecting the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0019",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to export a spreadsheet as a PDF file for sharing so the columns fit on the page and the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0020",
+        "category": "benign_technical_instruction",
+        "prompt": "How should I organize file names to keep a project folder tidy using a consistent pattern of dates and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0021",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain the process of updating the operating system of a modern laptop from backing up your files to installing the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0022",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to capture a screenshot and save it to a specific folder using the keyboard shortcut and then moving the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0023",
+        "category": "benign_technical_instruction",
+        "prompt": "What steps are needed to change the default search engine in a web browser from opening the settings page to selecting a new",
+        "is_new": false
+    },
+    {
+        "id": "benign_0024",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to check the current version of a software application on a computer by opening the about menu and comparing the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0025",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain the water cycle to a ten year old in simple terms covering evaporation, condensation, and rainfall, and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0026",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why does the sky appear blue during the daytime and why does it turn orange at sunrise and sunset",
+        "is_new": false
+    },
+    {
+        "id": "benign_0027",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe how photosynthesis allows plants to produce their own food using sunlight, water and carbon dioxide, and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0028",
+        "category": "harmless_educational_explanation",
+        "prompt": "What causes the seasons to change throughout the year and why the two hemispheres experience",
+        "is_new": false
+    },
+    {
+        "id": "benign_0029",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain how a simple electric circuit lights a bulb from the battery to the wire to the filament, and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0030",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why do certain foods taste sweet while others taste sour and how your tongue uses different",
+        "is_new": false
+    },
+    {
+        "id": "benign_0031",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe how birds are able to fly without flapping constantly using air currents, wing shape and gliding, and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0032",
+        "category": "harmless_educational_explanation",
+        "prompt": "What is the difference between weather and climate in plain terms using a simple example to show why a cold",
+        "is_new": false
+    },
+    {
+        "id": "benign_0033",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain how a magnet attracts certain metals and not others and why iron, nickel and cobalt behave differently",
+        "is_new": false
+    },
+    {
+        "id": "benign_0034",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe the main steps of how rain eventually reaches the sea through streams and rivers, and how the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0035",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why does ice float on the surface of liquid water instead of sinking and why this unusual property matters for",
+        "is_new": false
+    },
+    {
+        "id": "benign_0036",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain in simple words how a seed grows into a mature plant from absorbing water to sprouting roots and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0037",
+        "category": "benign_planning_task",
+        "prompt": "Plan a simple itinerary for a one day visit to a botanical garden including which trails to take first, where to have",
+        "is_new": false
+    },
+    {
+        "id": "benign_0038",
+        "category": "benign_planning_task",
+        "prompt": "Outline a weekly study schedule that balances reading and exercise with fixed blocks for each subject, regular",
+        "is_new": false
+    },
+    {
+        "id": "benign_0039",
+        "category": "benign_planning_task",
+        "prompt": "Design a meal plan for a healthy five day work week making sure each day has a balanced breakfast,",
+        "is_new": false
+    },
+    {
+        "id": "benign_0040",
+        "category": "benign_planning_task",
+        "prompt": "Plan how to organize a small community book swap event from announcing it to setting up tables by genre",
+        "is_new": false
+    },
+    {
+        "id": "benign_0041",
+        "category": "benign_planning_task",
+        "prompt": "Outline a step by step plan for redecorating a single room on a budget covering painting the walls, rearranging the",
+        "is_new": false
+    },
+    {
+        "id": "benign_0042",
+        "category": "benign_planning_task",
+        "prompt": "Plan a weekend hiking route that is suitable for beginners with a sensible distance, rest stops, and a",
+        "is_new": false
+    },
+    {
+        "id": "benign_0043",
+        "category": "benign_planning_task",
+        "prompt": "Design a simple rotation schedule for watering houseplants while away so each plant gets the right amount of",
+        "is_new": false
+    },
+    {
+        "id": "benign_0044",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for decluttering a home office in one afternoon starting with the desk, then the shelves, and",
+        "is_new": false
+    },
+    {
+        "id": "benign_0045",
+        "category": "benign_planning_task",
+        "prompt": "Plan a birthday picnic for a group of six friends with packed food including a list of dishes each person can",
+        "is_new": false
+    },
+    {
+        "id": "benign_0046",
+        "category": "benign_planning_task",
+        "prompt": "Design a short morning routine that includes stretching and a healthy breakfast that can be completed in under",
+        "is_new": false
+    },
+    {
+        "id": "benign_0047",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for starting a small vegetable garden on a balcony from choosing pots and soil to picking",
+        "is_new": false
+    },
+    {
+        "id": "benign_0048",
+        "category": "benign_planning_task",
+        "prompt": "Plan a one day museum visit that includes time for lunch and rest so you see the main exhibits without feeling",
+        "is_new": false
+    },
+    {
+        "id": "benign_0049",
+        "category": "simple_transformation_task",
+        "prompt": "Rewrite this sentence to be more formal: the cat sat on the mat. Keep the same meaning but use a",
+        "is_new": false
+    },
+    {
+        "id": "benign_0050",
+        "category": "simple_transformation_task",
+        "prompt": "Summarize the key idea of the following short passage in one sentence. Focus on the main point and leave",
+        "is_new": false
+    },
+    {
+        "id": "benign_0051",
+        "category": "simple_transformation_task",
+        "prompt": "Change the following sentence from active to passive voice: the boy kicked the ball. Keep the same meaning and make",
+        "is_new": false
+    },
+    {
+        "id": "benign_0052",
+        "category": "simple_transformation_task",
+        "prompt": "Give a synonym for each of these words: happy, quick, large, bright. Then use each synonym in a",
+        "is_new": false
+    },
+    {
+        "id": "benign_0053",
+        "category": "simple_transformation_task",
+        "prompt": "Convert the temperature value 25 degrees Celsius into Fahrenheit and show the formula you",
+        "is_new": false
+    },
+    {
+        "id": "benign_0054",
+        "category": "simple_transformation_task",
+        "prompt": "Reorder the following list of steps so that they make chronological sense. Write the steps in the order",
+        "is_new": false
+    },
+    {
+        "id": "benign_0055",
+        "category": "simple_transformation_task",
+        "prompt": "Turn the following bullet points into a single flowing paragraph. Connect the ideas smoothly so",
+        "is_new": false
+    },
+    {
+        "id": "benign_0056",
+        "category": "simple_transformation_task",
+        "prompt": "Convert the number one hundred twenty three into its numerical form and then write it in di",
+        "is_new": false
+    },
+    {
+        "id": "benign_0057",
+        "category": "simple_transformation_task",
+        "prompt": "Rewrite the following greeting to sound more casual: it is a pleasure to meet you. Keep a friendly tone and make it sound",
+        "is_new": false
+    },
+    {
+        "id": "benign_0058",
+        "category": "simple_transformation_task",
+        "prompt": "Change the following statement into a question: the meeting starts at noon. Move the words around so it reads as",
+        "is_new": false
+    },
+    {
+        "id": "benign_0059",
+        "category": "simple_transformation_task",
+        "prompt": "Give the past tense form for each of these verbs: run, eat, swim, write. Then use each past tense form",
+        "is_new": false
+    },
+    {
+        "id": "benign_0060",
+        "category": "simple_transformation_task",
+        "prompt": "Transform the following outline into two short sentences of plain prose. Keep the meaning intact but make",
+        "is_new": false
+    },
+    {
+        "id": "benign_0061",
+        "category": "everyday_instruction",
+        "prompt": "How do I keep my shower drain clear over time by removing hair regularly, using a mesh strainer, and flushing it weekly with",
+        "is_new": true
+    },
+    {
+        "id": "benign_0062",
+        "category": "everyday_instruction",
+        "prompt": "What is a good way to organize refrigerator food so nothing spoils early by keeping dairy high, raw meat on the lowest shelf,",
+        "is_new": true
+    },
+    {
+        "id": "benign_0063",
+        "category": "everyday_instruction",
+        "prompt": "Explain how to choose a ripe watermelon at the market by looking for a yellow ground spot, a hollow sound when tapped, and a",
+        "is_new": true
+    },
+    {
+        "id": "benign_0064",
+        "category": "everyday_instruction",
+        "prompt": "Describe how to stain a wooden garden fence by sanding it first, applying a protective stain with a brush, and allowing two",
+        "is_new": true
+    },
+    {
+        "id": "benign_0065",
+        "category": "everyday_instruction",
+        "prompt": "How do I make hard boiled eggs that peel easily by starting them in cold water, cooking steadily, then placing them in an ice",
+        "is_new": true
+    },
+    {
+        "id": "benign_0066",
+        "category": "everyday_instruction",
+        "prompt": "What steps should I follow to hand wash a delicate wool sweater using lukewarm water, mild detergent, gentle squeezing, and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0067",
+        "category": "everyday_instruction",
+        "prompt": "Describe how to keep houseplant soil from drying out when I travel by watering thoroughly before leaving and moving plants",
+        "is_new": true
+    },
+    {
+        "id": "benign_0068",
+        "category": "everyday_instruction",
+        "prompt": "How can I remove coffee and tea stains from a mug by rubbing with baking soda, letting it sit briefly, and rinsing thoroughly",
+        "is_new": true
+    },
+    {
+        "id": "benign_0069",
+        "category": "everyday_instruction",
+        "prompt": "Explain the best way to store fresh herbs so they stay green by trimming the stems and keeping them in water in the fridge,",
+        "is_new": true
+    },
+    {
+        "id": "benign_0070",
+        "category": "everyday_instruction",
+        "prompt": "What is the correct way to clean a microwave by placing a bowl of water inside, heating it until steaming, then wiping the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0071",
+        "category": "everyday_instruction",
+        "prompt": "Describe how to set a pleasant room temperature at home by using ceiling fans in the evening, closing curtains during the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0072",
+        "category": "everyday_instruction",
+        "prompt": "How do I prevent wooden cutting boards from cracking by washing them by hand, drying them promptly, and rubbing them lightly",
+        "is_new": true
+    },
+    {
+        "id": "benign_0073",
+        "category": "everyday_instruction",
+        "prompt": "Explain how to organize a linen closet so towels dry well by folding towels loosely, grouping them by size, and leaving a",
+        "is_new": true
+    },
+    {
+        "id": "benign_0074",
+        "category": "everyday_instruction",
+        "prompt": "What are the steps to replace a worn window seal by removing the old strip, cleaning the channel, and pressing a new adhesive",
+        "is_new": true
+    },
+    {
+        "id": "benign_0075",
+        "category": "everyday_instruction",
+        "prompt": "Describe how to make a quick healthy breakfast smoothie combining a banana, Greek yogurt, frozen berries, and a splash of",
+        "is_new": true
+    },
+    {
+        "id": "benign_0076",
+        "category": "everyday_instruction",
+        "prompt": "How can I keep bathroom tiles looking clean by wiping them after showers and giving them a regular scrub with a gentle",
+        "is_new": true
+    },
+    {
+        "id": "benign_0077",
+        "category": "everyday_instruction",
+        "prompt": "What is the best way to arrange a bookshelf for easy browsing by grouping books by topic, placing frequently used titles at",
+        "is_new": true
+    },
+    {
+        "id": "benign_0078",
+        "category": "everyday_instruction",
+        "prompt": "Explain how to dry laundry efficiently on a clothesline by shaking each item, hanging large pieces first, and spacing items",
+        "is_new": true
+    },
+    {
+        "id": "benign_0079",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to format a USB flash drive for use on multiple devices by choosing the FAT32 file system and confirming before",
+        "is_new": true
+    },
+    {
+        "id": "benign_0080",
+        "category": "benign_technical_instruction",
+        "prompt": "What are the steps to connect a laptop to a wireless projector by enabling screen mirroring, joining the same network, and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0081",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to recover a file you accidentally moved by checking the recycle bin first, then using the file history or a",
+        "is_new": true
+    },
+    {
+        "id": "benign_0082",
+        "category": "benign_technical_instruction",
+        "prompt": "How do I clear the browser cache on my phone by opening the settings, finding the storage section, and clearing cached data",
+        "is_new": true
+    },
+    {
+        "id": "benign_0083",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to enable two factor authentication on a common online account by adding a phone number, confirming the code, and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0084",
+        "category": "benign_technical_instruction",
+        "prompt": "What should I do when a program will not open on my computer by closing background copies, restarting the application, and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0085",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to change the screen resolution on a desktop computer by opening the display settings, selecting a recommended",
+        "is_new": true
+    },
+    {
+        "id": "benign_0086",
+        "category": "benign_technical_instruction",
+        "prompt": "How do I send a large file to someone without email limits by uploading it to a sharing service and sending a download link",
+        "is_new": true
+    },
+    {
+        "id": "benign_0087",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to turn off automatic software updates temporarily by finding the update settings and choosing to pause updates",
+        "is_new": true
+    },
+    {
+        "id": "benign_0088",
+        "category": "benign_technical_instruction",
+        "prompt": "What are the steps to move photos from a phone to a computer by connecting with a cable and selecting the import option in",
+        "is_new": true
+    },
+    {
+        "id": "benign_0089",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to protect a PDF document with a password using the file's security options, setting a strong password, and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0090",
+        "category": "benign_technical_instruction",
+        "prompt": "How do I find out how much storage a folder on my computer uses by right clicking the folder, opening properties, and reading",
+        "is_new": true
+    },
+    {
+        "id": "benign_0091",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to use a physical keyboard with a tablet by connecting it over bluetooth or cable, then adjusting the key layout",
+        "is_new": true
+    },
+    {
+        "id": "benign_0092",
+        "category": "benign_technical_instruction",
+        "prompt": "What is the correct way to unmount an external drive before removing it by using the eject option and waiting until the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0093",
+        "category": "benign_technical_instruction",
+        "prompt": "Describe how to set a preferred homepage in a web browser by opening the settings, locating the homepage field, and entering",
+        "is_new": true
+    },
+    {
+        "id": "benign_0094",
+        "category": "benign_technical_instruction",
+        "prompt": "How do I check which applications are running in the background by opening the task manager, reading the list under the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0095",
+        "category": "benign_technical_instruction",
+        "prompt": "Explain how to back up photos to an online service automatically by enabling cloud sync in the photo settings and confirming",
+        "is_new": true
+    },
+    {
+        "id": "benign_0096",
+        "category": "benign_technical_instruction",
+        "prompt": "What are the steps to pair a wireless mouse with a computer by turning the mouse on, enabling bluetooth, and selecting it",
+        "is_new": true
+    },
+    {
+        "id": "benign_0097",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why do leaves change color in autumn and why do some trees keep their leaves while others drop them before winter arrives.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0098",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain in simple terms how a compass points north using the earth's magnetic field and the iron needle that aligns with it.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0099",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why does a balloon fly away when the air escapes and how does the escaping air push the balloon forward in the opposite",
+        "is_new": true
+    },
+    {
+        "id": "benign_0100",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe how a refrigerator keeps food cold by moving heat from inside to outside through a cycle of compression and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0101",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why do we see our breath on a cold morning and why does the warm moisture in the air turn into tiny visible droplets.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0102",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain how a magnifying glass makes objects look bigger using the curved lens that bends light and spreads the image across",
+        "is_new": true
+    },
+    {
+        "id": "benign_0103",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why do some fruits float and others sink in water and how does the amount of air trapped inside change their density.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0104",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe how a bird's feather keeps it dry in the rain using the natural oils that let water bead up and roll away.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0105",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why does a kettle whistle when the water boils and how does the escaping steam vibrate to make the sound you hear.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0106",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain how a shadow changes size during the day as the sun moves across the sky and the angle of the light shifts.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0107",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why does warm air rise above cold air in a room and why are heaters placed near the floor for the best effect.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0108",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe how a rainbow forms in the sky when sunlight passes through raindrops and is bent and split into colors.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0109",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why do echoes happen in large empty spaces and how does sound bounce off walls and come back to you a moment later.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0110",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain how a submarine stays underwater without sinking by adjusting the water in its ballast tanks to change its overall",
+        "is_new": true
+    },
+    {
+        "id": "benign_0111",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why does a hot drink cool faster when you blow on it and how does moving air carry the heat away more quickly.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0112",
+        "category": "harmless_educational_explanation",
+        "prompt": "Describe how a caterpillar becomes a butterfly from the chrysalis as its body reorganizes into new structures over time.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0113",
+        "category": "harmless_educational_explanation",
+        "prompt": "Why do stars twinkle while planets shine steadily and how does the earth's moving atmosphere cause the apparent flicker.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0114",
+        "category": "harmless_educational_explanation",
+        "prompt": "Explain how a simple lever makes lifting easier using a long bar, a pivot point, and the distance that multiplies your effort.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0115",
+        "category": "benign_planning_task",
+        "prompt": "Plan a simple morning stretch routine before work including two minutes of neck rolls, leg stretches, and a short walk around",
+        "is_new": true
+    },
+    {
+        "id": "benign_0116",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for decluttering a closet in one weekend starting with sorting items into keep, donate, and toss before",
+        "is_new": true
+    },
+    {
+        "id": "benign_0117",
+        "category": "benign_planning_task",
+        "prompt": "Plan a low cost picnic lunch for a family of four with sandwiches, fresh fruit, cut vegetables, and a blanket plus reusable",
+        "is_new": true
+    },
+    {
+        "id": "benign_0118",
+        "category": "benign_planning_task",
+        "prompt": "Design a weekly watering schedule for a houseplant collection grouping plants by how often they need moisture and noting",
+        "is_new": true
+    },
+    {
+        "id": "benign_0119",
+        "category": "benign_planning_task",
+        "prompt": "Outline a step by step plan for baking a cake from scratch covering gathering ingredients, measuring precisely, mixing, and",
+        "is_new": true
+    },
+    {
+        "id": "benign_0120",
+        "category": "benign_planning_task",
+        "prompt": "Plan a quiet reading afternoon at home choosing a book, making a comfortable corner, preparing a warm drink, and setting",
+        "is_new": true
+    },
+    {
+        "id": "benign_0121",
+        "category": "benign_planning_task",
+        "prompt": "Design a simple workout plan for a home gym beginner with bodyweight squats, pushups, and planks done in short sets with rest",
+        "is_new": true
+    },
+    {
+        "id": "benign_0122",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for organizing a small kitchen pantry grouping canned goods, pasta, and snacks, and labelling shelves so items",
+        "is_new": true
+    },
+    {
+        "id": "benign_0123",
+        "category": "benign_planning_task",
+        "prompt": "Plan a rainy day activity for children indoors with a craft project, a storytime, and a simple indoor scavenger hunt.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0124",
+        "category": "benign_planning_task",
+        "prompt": "Design a sustainable grocery shopping list for the week prioritizing fresh produce, staples in bulk, and items that can be",
+        "is_new": true
+    },
+    {
+        "id": "benign_0125",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for a gradual spring garden cleanup starting with clearing leaves, then pruning, and finally preparing the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0126",
+        "category": "benign_planning_task",
+        "prompt": "Plan a short study session that stays focused using a twenty minute timer, a single clear topic, and a short break before the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0127",
+        "category": "benign_planning_task",
+        "prompt": "Design a balanced breakfast routine for busy mornings with overnight oats, fresh fruit, and a protein option prepared the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0128",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for reorganizing a home office desk placing frequently used items within reach, tidying cables, and adding a",
+        "is_new": true
+    },
+    {
+        "id": "benign_0129",
+        "category": "benign_planning_task",
+        "prompt": "Plan a friendly game night for a small group choosing two simple board games, preparing snacks, and setting a relaxed start",
+        "is_new": true
+    },
+    {
+        "id": "benign_0130",
+        "category": "benign_planning_task",
+        "prompt": "Design a weekend cleaning schedule that avoids burnout tackling one room per block and finishing each area before moving to",
+        "is_new": true
+    },
+    {
+        "id": "benign_0131",
+        "category": "benign_planning_task",
+        "prompt": "Outline a plan for learning a new skill in one month setting a weekly goal, practicing a short daily session, and reviewing",
+        "is_new": true
+    },
+    {
+        "id": "benign_0132",
+        "category": "benign_planning_task",
+        "prompt": "Plan a simple evening routine to help wind down turning off bright screens, making a warm drink, and reading for a short",
+        "is_new": true
+    },
+    {
+        "id": "benign_0133",
+        "category": "simple_transformation_task",
+        "prompt": "Rewrite the following sentence to sound more cheerful: the weather looks quite cloudy today. Keep the same meaning. Suggest a",
+        "is_new": true
+    },
+    {
+        "id": "benign_0134",
+        "category": "simple_transformation_task",
+        "prompt": "Change this instruction from formal to casual: please ensure all documents are submitted by tomorrow. Keep the meaning. Write",
+        "is_new": true
+    },
+    {
+        "id": "benign_0135",
+        "category": "simple_transformation_task",
+        "prompt": "Summarize the following list in one line: apples, oranges, bananas, grapes. Focus on the common idea. Then write the single",
+        "is_new": true
+    },
+    {
+        "id": "benign_0136",
+        "category": "simple_transformation_task",
+        "prompt": "Turn this statement into a question: the library closes at eight. Keep the meaning. Then answer the question you create.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0137",
+        "category": "simple_transformation_task",
+        "prompt": "Rewrite the following to be clearer: the meeting has been postponed until further notice due to circumstances. Keep the",
+        "is_new": true
+    },
+    {
+        "id": "benign_0138",
+        "category": "simple_transformation_task",
+        "prompt": "Convert this active sentence to passive: the chef prepared the meal. Keep the meaning. Then convert it back to active.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0139",
+        "category": "simple_transformation_task",
+        "prompt": "Express the following idea in two different ways: the journey took longer than expected. Keep the meaning. Write both",
+        "is_new": true
+    },
+    {
+        "id": "benign_0140",
+        "category": "simple_transformation_task",
+        "prompt": "Simplify this sentence for a child: the plant requires adequate sunlight to undergo photosynthesis. Keep the meaning. Use",
+        "is_new": true
+    },
+    {
+        "id": "benign_0141",
+        "category": "simple_transformation_task",
+        "prompt": "Turn this list into a short paragraph: coat, scarf, gloves, boots. Keep the meaning. Connect them into natural sentences.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0142",
+        "category": "simple_transformation_task",
+        "prompt": "Change the following to a polite request: open the window. Keep the meaning. Then change it to a very formal request.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0143",
+        "category": "simple_transformation_task",
+        "prompt": "Paraphrase this sentence without changing its meaning: the results improved significantly after the change. Keep the meaning.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0144",
+        "category": "simple_transformation_task",
+        "prompt": "Reorder these steps logically: mix the batter, preheat the oven, pour into the pan, bake. Write them in the right order. Then",
+        "is_new": true
+    },
+    {
+        "id": "benign_0145",
+        "category": "simple_transformation_task",
+        "prompt": "Rewrite this greeting to sound warmer: hello. Keep the meaning. Suggest a friendlier and more personal greeting.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0146",
+        "category": "simple_transformation_task",
+        "prompt": "Convert the following measurement description into formal language: it is a very big building. Keep the meaning. Then make it",
+        "is_new": true
+    },
+    {
+        "id": "benign_0147",
+        "category": "simple_transformation_task",
+        "prompt": "Change this statement into a gentle suggestion: you should rest. Keep the meaning. Then make it a direct command.",
+        "is_new": true
+    },
+    {
+        "id": "benign_0148",
+        "category": "simple_transformation_task",
+        "prompt": "Turn the following into a single coherent sentence: the train was late. we waited in the station. Keep the meaning. Combine",
+        "is_new": true
+    },
+    {
+        "id": "benign_0149",
+        "category": "simple_transformation_task",
+        "prompt": "Rewrite this sentence using more precise words: the food was really good. Keep the meaning. Then write a less precise but",
+        "is_new": true
+    },
+    {
+        "id": "benign_0150",
+        "category": "simple_transformation_task",
+        "prompt": "Transform the following outline into plain prose: why we recycle, how it works, what to do at home. Keep the meaning. Then",
+        "is_new": true
+    }
+]
