@@ -126,7 +126,60 @@ def compute(root: Path, mode: str):
     return asr.astype(float), sup.astype(int)
 
 
-# ----------------------------------------------------------------------- plotting
+# ------------------------------------------------------------------ plotting
+def make_figure_panels(asr, sup, mode, min_support, outstem: Path):
+    """Within-attack panels (reviewer M3): each attack in its own row so
+    cross-attack comparisons never conflate different denominators; within-row
+    group ranking is population-representative. Values identical to the
+    grouped version (computed from the same ASR/sup matrices)."""
+    plt.rcParams.update({
+        "font.family": "DejaVu Sans", "font.size": 11,
+        "axes.spines.top": False, "axes.spines.right": False,
+        "axes.edgecolor": "#444444", "axes.linewidth": 0.8,
+    })
+    x = np.arange(len(GROUPS))
+    fig, axes = plt.subplots(len(ATTACKS), 1, figsize=(9.5, 7.2),
+                              sharex=True)
+    fig.subplots_adjust(hspace=0.32)
+    ymax = max(55.0, np.nanmax(asr.values) + 10)
+    for ax, attack in zip(axes, ATTACKS):
+        vals = asr[attack].values
+        sups = sup[attack].values
+        bars = ax.bar(x, vals, 0.62, color=COLORS[attack], edgecolor="white",
+                      linewidth=0.7, zorder=3)
+        for b, v, s in zip(bars, vals, sups):
+            if s / len(MODELS) < min_support:
+                b.set_hatch("xxx")
+                b.set_edgecolor(COLORS[attack])
+            ax.text(b.get_x() + b.get_width() / 2, v + 0.8, f"{v:.1f}",
+                    ha="center", va="bottom", fontsize=8.5, fontweight="bold",
+                    color="#222222", zorder=4)
+        ax.set_ylim(0, ymax)
+        ax.grid(axis="y", color="#DDDDDD", linewidth=0.7, zorder=0)
+        ax.set_axisbelow(True)
+        ax.tick_params(length=0)
+        ax.set_ylabel(f"{attack}\nASR (%)", fontsize=10)
+        n = [f"{s}" for s in sups]
+        # put support under each group label on the bottom panel only
+    axes[-1].set_xticks(x)
+    axes[-1].set_xticklabels(
+        [f"{g}\nn:{int(sup.loc[g]['PiF'])}/{int(sup.loc[g]['MetaCipher'])}/{int(sup.loc[g]['ArrAttack'])}"
+         for g in GROUPS], fontsize=8.5)
+    handles = [Patch(facecolor="white", edgecolor="#777777", hatch="xxx",
+                     label=f"< {min_support}/model support")]
+    axes[0].legend(handles=handles, frameon=False, fontsize=9, loc="upper right")
+    sub = ("category per prompt: attack-native taxonomy"
+           if mode == "native" else
+           "category per prompt: shared canonical taxonomy")
+    fig.suptitle("ASR by prompt group, within-attack (official judges)", fontsize=12)
+    fig.text(0.0, 0.995, sub, transform=fig.transFigure, fontsize=9,
+             style="italic", color="#666666")
+    fig.tight_layout(rect=(0, 0, 1, 0.97))
+    for ext in ("pdf", "png"):
+        fig.savefig(f"{outstem}.{ext}", dpi=300, bbox_inches="tight")
+    plt.close(fig)
+
+
 def make_figure(asr, sup, mode, min_support, outstem: Path):
     plt.rcParams.update({
         "font.family": "DejaVu Sans", "font.size": 11,
@@ -198,6 +251,8 @@ def main():
                     default="native")
     ap.add_argument("--min-support", type=int, default=10,
                     help="per-model support below which a cell is hatched")
+    ap.add_argument("--panel", action="store_true",
+                    help="render within-attack panels (M3) instead of grouped bars")
     args = ap.parse_args()
     args.outdir.mkdir(parents=True, exist_ok=True)
 
@@ -213,8 +268,13 @@ def main():
     out.to_csv(args.outdir / f"fig3_values_{args.category_mode}.csv")
 
     stem = args.outdir / f"fig3_prompt_group_bars_{args.category_mode}"
-    make_figure(asr, sup, args.category_mode, args.min_support, stem)
-    print(f"\nWrote {stem}.pdf/.png and fig3_values_{args.category_mode}.csv")
+    if args.panel:
+        pstem = args.outdir / f"fig3_prompt_group_bars_{args.category_mode}_panels"
+        make_figure_panels(asr, sup, args.category_mode, args.min_support, pstem)
+        print(f"\nWrote {pstem}.pdf/.png (within-attack panels)")
+    else:
+        make_figure(asr, sup, args.category_mode, args.min_support, stem)
+        print(f"\nWrote {stem}.pdf/.png and fig3_values_{args.category_mode}.csv")
 
 
 if __name__ == "__main__":

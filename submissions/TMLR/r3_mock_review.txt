@@ -1,0 +1,182 @@
+================================================================================
+TMLR REVIEW
+Submission: "Cross-Paradigm Jailbreak Transfer: A Unified Evaluation of
+Autoregressive and Diffusion Language Models"
+Reviewer recommendation: Reject in current form, with strong encouragement to revise and resubmit within the TMLR revision cycle.
+Reviewer confidence: 4/5 (familiar with the jailbreak-evaluation literature and with LLM-judge reliability work; less expert on diffusion LM decoding internals)
+================================================================================
+
+
+--------------------------------------------------------------------------------
+1. SUMMARY OF CONTRIBUTIONS
+--------------------------------------------------------------------------------
+
+The paper evaluates whether jailbreak attacks designed against autoregressive LMs transfer to diffusion language models. Three mechanism-distinct attacks (PiF, salience flattening; ArrAttack, robust semantic rewriting; MetaCipher, cipher-based hidden-intent recovery) are run against six 7-8B victims: three causal (Llama-3.1-8B-Instruct, Qwen2.5-7B-Instruct, Falcon-H1R-7B) and three diffusion-family (LLaDA-1.5-8B, Dream-v0-Instruct-7B, DiffuCoder-7B-Instruct), over a pooled 913-prompt harmful benchmark drawn from HarmBench, MaliciousInstruct, JailbreakBench and StrongREJECT. ASR is defined stage-explicitly, with one final attacked prompt and one final response per original prompt.
+
+The headline findings under the attacks' official (all DeepSeek-based) judges are: MetaCipher is the strongest mechanism overall (31.9%) but sharply selective (71.5% Qwen, 71.1% Llama, 47.3% LLaDA, below 1% on Falcon-H1R, Dream, DiffuCoder); PiF (6.3%) and ArrAttack (7.1%) transfer poorly. The paper then re-scores a stratified 2,982-response subsample with Claude-Sonnet-4.5 (two rubrics) and GPT-5.6-sol, finds that the Claude judges lift Dream and DiffuCoder MetaCipher from near zero to roughly 78-80% while GPT-5.6-sol reproduces the near-zero reading, and argues that the attack ranking is judge-invariant while the low cells are judge-conditional. Supporting analyses include two portfolio metrics (mechanism exposure envelope, attack-dependence gap), a case-level mixed-effects logistic model on 11,946 outcomes, a 5% human spot-check, a 51-row reproduction audit, a three-seed replication of six diffusion cells, and a proposed but untested four-gate account of jailbreak transfer.
+
+
+--------------------------------------------------------------------------------
+2. TMLR CRITERION 1: ARE THE CLAIMS SUPPORTED BY ACCURATE, CONVINCING AND CLEAR EVIDENCE?
+--------------------------------------------------------------------------------
+
+Partially, and not yet at the level required for certification. The descriptive matrix is real and carefully produced, and the authors deserve credit for surfacing rather than hiding the judge problem. But three of the paper's four stated contributions rest on quantities that the paper's own appendices show to be unstable or unattributable, and the abstract and conclusion still state several of them more firmly than the evidence allows. The specific failures are enumerated in Section 4 below. The most consequential are: (a) the absence of a no-attack baseline in the main comparison, which means no reported ASR is attributable to an attack; (b) a judge-variance story that the paper's own Appendix D.5 contradicts; and (c) an inferential claim about model family whose reported standard error is not the right standard error.
+
+I want to be explicit that none of these require new experiments on the scale of the original runs. Most are re-analyses of data the authors already have, plus one or two cheap control runs. That is why my recommendation is revise-and-resubmit rather than reject outright.
+
+
+--------------------------------------------------------------------------------
+3. TMLR CRITERION 2: WOULD SOME OF TMLR'S AUDIENCE BE INTERESTED?
+--------------------------------------------------------------------------------
+
+Yes, clearly. Cross-paradigm safety evaluation is timely, diffusion LMs are under-studied on the safety side, and the judge-sensitivity result, if it is stated correctly, is of independent interest to anyone reporting ASR. TMLR does not require novelty or significance beyond audience interest, so the fact that the paper introduces no new attack, benchmark, or model is not a defect and should not be held against it. The bar here is correctness of the claims, and that is where the work needs revision.
+
+
+--------------------------------------------------------------------------------
+4. WEAKNESSES
+--------------------------------------------------------------------------------
+
+W1. No no-attack baseline in the main results, so no reported number is attributable to an attack.
+
+Table 1 reports ASR per attack-model cell, but there is no row for the unattacked harmful prompt. The only such measurement appears buried in Appendix D.1, on a 100-prompt subset, for the three diffusion victims only: Dream 3%, DiffuCoder 16%, LLaDA 30% compliance with plain harmful requests. Those numbers reframe the paper. DiffuCoder's MetaCipher ASR is 0.9% against a 16% plaintext baseline, and its PiF ASR is 5.4% against the same baseline, so on this victim both attacks make the model substantially less likely to comply than doing nothing at all. LLaDA's MetaCipher ASR of 47.3% is a lift of roughly 17 points over baseline, not 47. An attack that scores below the no-attack control is evidence of capability destruction by the attack wrapper, not of victim robustness, and this reading is materially different from the one the paper offers in Sections 6.1 and 6.4. A no-attack control row, on the full 913-prompt pool, for all six victims, under each attack's official judge, is required before any of the ASR cells can be interpreted. This is the single most important requested change.
+
+W2. The judge-variance story is contradicted by the paper's own Appendix D.5.
+
+The paper frames judge disagreement as a provider-level phenomenon: DeepSeek and OpenAI agree on the low cells, Anthropic dissents, therefore "confirmed under two independent providers." Appendix D.5 undercuts this. The three-seed replication uses a common binary DeepSeek judge at temperature 0, and returns DiffuCoder PiF at 17.0% against an official 5.4%, LLaDA PiF at 20.4% against an official 7.0%, LLaDA ArrAttack at 38.4% against an official 8.5%, and DiffuCoder ArrAttack at 25.7% against an official 10.3%. Those replication levels sit much closer to the Claude-A column (16.9%, 16.3%, 60.6%, 27.3%) than to the official DeepSeek column. In other words, two DeepSeek judges with different prompts and decoding settings disagree with each other by factors of two to four, on the same cells, in the same direction as the cross-provider disagreement. The operative variable is the rubric and threshold, not the provider. Consequently the sentence "confirmed by two independent providers and contested only by the Anthropic family" is not supportable, and neither is any argument that resembles a vote across providers. Providers are not independent draws from ground truth, and three judges are not a majority procedure. The paper currently presents this as a robustness result; as written it is closer to a demonstration that the measurement instrument is not calibrated.
+
+Related: the paper reports a maximum agreement of kappa = 0.33 between the official judge and the strictest reference, and approximately 0.16 for the Claude judges, together with a precision of 0.24 for the official judge against GPT-5.6-sol. A precision of 0.24 for the primary ASR source, if it holds pooled across cells, implies that most official successes are not successes under the strict reference. That number is stated in passing in Section 6.6 and never reconciled with the headline 31.9%. It needs to be confronted directly or shown to be an artifact of pooling across cells with very different base rates.
+
+W3. The one instrument that could arbitrate is the human audit, and its results are not reported.
+
+The authors labelled a 5% stratified sample of 597 final cases by hand. Section 3.4 and Appendix B then state that the artifact does not preserve a per-attack confusion matrix, so the audit is used only as a qualitative quality-control layer. This is the crux of the paper's problem: there are four automated judges disagreeing by 80 percentage points on some cells, and the human labels that would adjudicate them exist but are not reported. Re-running or re-extracting that audit and reporting per-attack, per-family, per-outcome agreement of each of the four judges against the human labels would convert the paper's central weakness into its central contribution. I would consider this, together with W1, the difference between a rejected and an accepted paper. Blinding and a second annotator would strengthen it further, and would allow a kappa to be reported, but even a single-annotator confusion matrix would be a large improvement over the current absence.
+
+W4. The mixed-effects analysis does not deliver the standard error the paper claims for it.
+
+Contribution 4 and Section 4.3 state that the mixed-effects model "attaches an actual standard error to the family claim." The reported diffusion-family fixed effect is -0.97 with posterior SD 0.05, while the model-within-family random intercept has SD 3.03 with CI [1.82, 5.06]. These two quantities are inconsistent as a test of a family-level claim. Family is a between-cluster contrast over three clusters per level, so its uncertainty must be dominated by the model-level variance, on the order of 3.03 divided by the square root of three per family, that is, roughly plus or minus 2.5 on the log-odds scale, not 0.05. An SE of 0.05 indicates the coefficient is being identified largely from within-model information, which is not the comparison RQ2 asks about. With six models and three per family, the honest statement is that the family effect is not identifiable, which happens to support the paper's qualitative conclusion, but it must be arrived at correctly. I would ask the authors either to report the family contrast with model-level uncertainty propagated (for instance via the posterior predictive over new models, or a by-model bootstrap), or to withdraw the claim of an inferential family test and present Section D.3 as descriptive.
+
+Two smaller statistical points in the same area. First, the copyright coefficient of -6.81 with SD 0.72 is almost certainly quasi-separation, given the observed 0.0% MetaCipher copyright cell; the SE is not interpretable and a penalised fit or a reported zero cell would be more honest. Second, Wilson intervals on the ASR cells assume independent Bernoulli trials, but the same 913 prompts recur across every model and attack, and the prompt random intercept (SD 0.96) confirms substantial prompt-level clustering. Cell-to-cell comparisons should therefore be made through the model, not by eyeballing overlapping Wilson intervals.
+
+W5. LLaDA's decoding budget is not matched across attacks, which confounds the paper's flagship diffusion result.
+
+Appendix A.3 discloses that LLaDA runs 128 steps per 128-token block under PiF but 128 steps over the full window under MetaCipher and ArrAttack, a fourfold difference in denoising compute. The paper's most-cited diffusion finding is exactly the within-LLaDA contrast between MetaCipher (47.3%) and PiF (7.0%). Disclosing a confound is not the same as controlling it. A single re-run of LLaDA under PiF at the matched step schedule would resolve this, and it is cheap relative to the rest of the compute footprint. Until then, the claim that LLaDA's vulnerability signature is mechanism-driven rather than budget-driven is not established.
+
+Relatedly, causal victims are decoded at temperature 0.8 with top-p 0.9 while Dream is greedy at temperature 0.0 and DiffuCoder is at 0.3. The family comparison therefore also varies decoding stochasticity along with paradigm. The three-seed replication covers only diffusion cells; the stochastically decoded causal cells, which carry the largest ASR values in the paper, have no variance estimate at all.
+
+W6. The ArrAttack denominator is a self-inflicted limitation that the appendix already shows to be unnecessary.
+
+ArrAttack is reported on 165 held-out prompts while PiF and MetaCipher use 913, and Section 6.5 defends this as fidelity to the attack's staged protocol. Appendix A.1 then establishes that in the run that produced these results nothing was fit on the 748 non-held-out prompts: the rewriter, similarity filter and robustness judge were all fixed pretrained components, and the pipeline was transfer-only at evaluation time. The appendix itself concedes the pool "could in principle be pooled." The full-pool run was attempted and discarded (Appendix D.6) because the jailbroken_gptfuzz label is over-liberal and response coverage was 645-675 of 882 prompts per model. The correct fix is not to defend the 165-prompt stage but to complete the full-pool run and re-judge it with the strict judge, which is precisely what D.6 lists as future work. Without it, every cross-attack statement in the paper compares a 913-prompt estimate against a 165-prompt estimate under a different judge definition, and the comparison that produces contribution 1 is weaker than it needs to be.
+
+W7. Falcon-H1R's low ASR is largely an answer-rate artifact and should not be presented as a robustness result.
+
+Appendix D.1 reports that only 29.0% of PiF rows and 44.2% of ArrAttack rows contain any final answer, the rest terminating in a reasoning trace. A model that emits no answer on 56-71% of trials is not comparable to one that always answers, and "0.0% ASR" on such a denominator is uninformative. The authors do compute conditional ASR and find it similar, which is useful, but the conditional denominators are not shown per cell and the main text (Section 5.2) still describes Falcon as "the most robust model," with the answer-rate caveat deferred to an appendix. Either report Falcon's cells with an explicit no-answer outcome category in Table 1, or exclude Falcon from family averages and treat it as a case study. The manual read that found two actionable harmful responses in 60, plus the four raw-text escapes in 1,078, reinforces that the zero is not a zero.
+
+W8. Cross-attack comparison under non-comparable judges, plus a circularity the paper discloses but does not mitigate.
+
+PiF and ArrAttack use binary harmfulness judges; MetaCipher uses a four-way categorical judge in which only "compliance" counts. These are different questions, and the paper says so, yet the headline contribution is an ordering of the three attacks. Table 3 does help, since MetaCipher leads under every judge, and that is the strongest available defence of the ranking; it should be promoted from a sensitivity check to the primary evidence for contribution 1, with the official-judge ordering demoted. Separately, MetaCipher's attacker-side planning LLM, its categorical judge, and the PiF and ArrAttack binary judges all derive from the same DeepSeek family, so the attack declared strongest is the one whose construction and scoring share a base model. The Ethics section states this honestly, and the common-judge rescoring is offered as mitigation, but the mitigation is partial and the abstract does not carry the caveat. If any author of this submission is also an author of one of the three evaluated attacks, that should be disclosed to the AE, given that the paper's central empirical claim is that one specific attack dominates.
+
+W9. The reproduction audit is reported in a way that understates it.
+
+A 54.9% agreement rate between recorded and reproduced verdicts on 51 rows, and a 47% fail-hold rate, are presented under the heading of "no fabrication signal." Fabrication was never the concern a reader would have. The relevant concern is measurement reliability, and 54.9% agreement is close to chance for a balanced binary outcome. The subsequent decomposition into 7 judge-boundary and 9 regeneration cases rests on 16 observations and cannot carry the weight placed on it. The three-seed replication in D.5 is a much better instrument and should replace it as the headline reliability evidence, with the caveat from W2 attached.
+
+W10. The four-gate account.
+
+Section 6.1 is honest that this is an organising hypothesis with only three of four gates probed and no per-gate control. I have no objection to it appearing as such. However, it then does substantive work in Sections 6.1 through 6.7, in Figure 4, and in the conclusion's framing. Either add a gate-level control (for example, decode-only prompts that require reconstruction without a harmful payload, which the n=150 benign MetaCipher decode control in D.1 already approximates and could be extended into), or compress the account to a short forward-looking subsection so it does not read as a result.
+
+W11. Presentation.
+
+The abstract reports 31.9%, 71.5/71.1/47.3%, sub-1%, 78-80% and near-zero in sequence without giving the reader a frame for which number is primary, and it is hard to parse on first reading. The judge caveat is restated in nearly identical language in the abstract, introduction, Section 5.1, Sections 5.4, 5.7, 6.2, 6.4, 6.6, the conclusion and the limitations; consolidating it would free roughly a page. Table 3 gives no confidence intervals on the reweighted subsample columns, and kappa is reported pooled rather than per cell. Figure 3's cross-attack bars compare different populations, which the caption concedes, so the grouped bar format is the wrong chart for it. The exact Falcon-H1R checkpoint identifier, the Claude-Sonnet-4.5 snapshot accessed through OpenRouter, and the GPT-5.6-sol API model string and access date should appear in the paper itself, not only in the reproducibility package; "via a Chat plan" is not a reproducible access path.
+
+
+--------------------------------------------------------------------------------
+5. STRENGTHS
+--------------------------------------------------------------------------------
+
+S1. The stage-explicit ASR definition, with one final response per original prompt and an explicit refusal to substitute the best intermediate candidate, is the right convention and is more disciplined than much of the published attack literature.
+
+S2. The paper does not hide its inconvenient results. The judge disagreement, the FSR sensitivity (0.08 to 0.56 under leave-one-model-out), the discarded full-pool ArrAttack run, Falcon's answer-rate quirk, the DeepSeek circularity, the unfilled-template failure mode of the Claude rubric, and the fact that the four-gate account is untested are all disclosed by the authors themselves. Several of my criticisms above are built out of the authors' own appendices. That is a genuinely unusual and commendable level of transparency, and it is why this paper is worth revising rather than abandoning.
+
+S3. The mechanism-as-probe framing (salience, semantic boundary, hidden-intent recovery) is a useful organising principle for choosing a small attack portfolio, and it is more informative than sampling three attacks at random.
+
+S4. The within-family spread (LLaDA at 47.3% versus Dream at 0.1% under MetaCipher) exceeding the between-family gap is a clean and defensible qualitative point, and it survives most of the criticisms above because it is a large ordinal effect rather than a precise magnitude.
+
+S5. The leave-one-model-out sensitivity analysis in Table 6, and the decision to demote FSR to a footnote on the strength of it, is exactly the right response to a fragile statistic.
+
+S6. The manual diagnosis of why the Claude rubric inflates the low cells (unfilled templates scored as harmful) is a concrete, checkable mechanism rather than an appeal to judge noise, and it is the most valuable single observation in the paper.
+
+
+--------------------------------------------------------------------------------
+6. REQUESTED CHANGES
+--------------------------------------------------------------------------------
+
+Critical (I would not recommend acceptance without these):
+
+C1. Add a no-attack control row for all six victims on the full 913-prompt pool, under each attack's official judge and under at least one common judge, and report every ASR as a lift over that control as well as in absolute terms. Revise Sections 6.1, 6.2 and 6.4 in light of whatever it shows, including the possibility that some attacks reduce compliance below baseline.
+
+C2. Report the 597-case human audit as a confusion matrix against each of the four automated judges, broken down by attack and by model family, with agreement statistics. If the original labels cannot be recovered, re-label a fresh stratified sample, ideally blinded and with two annotators.
+
+C3. Withdraw the "confirmed under two independent providers" framing and replace it with a rubric-and-threshold account, reconciling Appendix D.5's DeepSeek binary judge levels with the official DeepSeek judge levels on the same cells. State plainly that absolute ASR in this setting is not identifiable without a calibrated judge.
+
+C4. Either propagate model-level uncertainty into the family contrast in Section D.3 or withdraw the claim that the mixed-effects model attaches a standard error to the family question. Address the copyright quasi-separation and replace overlapping-Wilson comparisons with model-based contrasts.
+
+C5. Re-run LLaDA under PiF with the step schedule matched to the MetaCipher and ArrAttack runs, and report whether the 7.0% figure survives.
+
+C6. Complete and re-judge the full-pool ArrAttack run with the strict judge, or state explicitly in the main text (not only Appendix D.6) that the ArrAttack column is a 165-prompt estimate for reasons of incomplete data rather than protocol necessity, and mark every cross-attack comparison accordingly.
+
+Recommended (would substantially strengthen the paper):
+
+R1. Move Table 3 into the primary results position and derive contribution 1 from the judge-invariant ordering rather than from the official-judge magnitudes.
+
+R2. Add a no-answer outcome category to Table 1 for Falcon-H1R, with per-cell conditional denominators, and remove Falcon from family averages or justify its inclusion given the 29-44% answer rate.
+
+R3. Add a multi-seed replication for at least the two high-ASR causal cells (Qwen and Llama under MetaCipher), which currently carry the paper's largest numbers with no variance estimate and temperature-0.8 decoding.
+
+R4. Extend the benign MetaCipher decode control (D.1, n=150) into a proper gate-level control so that reconstruction failure can be separated from arbitration failure without relying on the judge comparison, which the paper concedes is ambiguous on exactly this point.
+
+R5. Report per-cell confidence intervals and per-cell kappa in Table 3.
+
+Minor:
+
+M1. Pin all judge and victim model identifiers, snapshots, and access dates in the main paper.
+M2. Consolidate the repeated judge-dependence caveat into one place and cross-reference it.
+M3. Replace Figure 3's grouped bars with within-attack panels, since cross-attack bars compare different populations.
+M4. Restructure the abstract to state one primary number with its condition, then the sensitivity range.
+M5. Section 3.4 and Appendix A give slightly different accounts of what the 748 non-held-out prompts are used for; reconcile them.
+M6. Define ACTR at its first use in Figure 4.
+M7. State the total GPU-hours as a number rather than "on the order of a few hundred."
+
+
+--------------------------------------------------------------------------------
+7. BROADER IMPACT CONCERNS
+--------------------------------------------------------------------------------
+
+I have no blocking concerns. The paper introduces no new attack, corpus or weights, uses only public artifacts, truncates and sanitises all qualitative examples, and commits to releasing a metadata-and-verdict package rather than operational completions. The access-control policy for the restricted response fields is described at a reasonable level of specificity, though I would ask the authors to name who administers access after the review cycle ends, given that the stated policy removes field-level completes at that point.
+
+Two requests. First, the paper states that newly surfaced MetaCipher susceptibility for Dream and DiffuCoder "is being disclosed to the model vendors as part of this revision"; please give the disclosure status and dates, since the claim is time-sensitive and the Claude-judge reading that motivates it may itself be a false positive on unfilled templates. Second, if the disclosure rests on the Claude-judge numbers, it should be accompanied by the manual finding that many of those rows are empty templates, so that vendors are not acting on an inflated signal.
+
+
+--------------------------------------------------------------------------------
+8. QUESTIONS FOR THE AUTHORS
+--------------------------------------------------------------------------------
+
+Q1. Why does the common binary DeepSeek judge in Appendix D.5 return 17.0% for DiffuCoder under PiF when the official DeepSeek judge returns 5.4% on the same attack and victim? Is the difference the rubric, the temperature, the subsample, or the regeneration?
+
+Q2. What is the pooled precision of 0.24 for the official judge against GPT-5.6-sol computed over? Does it hold within the high-ASR cells, or is it driven by the low cells?
+
+Q3. On DiffuCoder, MetaCipher (0.9%) and PiF (5.4%) both fall below the 16% plaintext compliance baseline in D.1. Do you read this as capability destruction by the attack wrapper, and if so how does it affect the Section 6.4 conclusion?
+
+Q4. The mixed-effects family coefficient has posterior SD 0.05 while the model random intercept has SD 3.03. How is the family contrast identified, and what would the SD be under a posterior predictive over an unobserved seventh model?
+
+Q5. Given Appendix A.1's finding that nothing was fit on the 748 non-held-out prompts, is there any remaining methodological reason, as opposed to a data-completeness reason, not to report ArrAttack on the full pool?
+
+Q6. Is any author of this submission also an author of one of the three evaluated attacks?
+
+
+--------------------------------------------------------------------------------
+9. SUMMARY OF ASSESSMENT
+--------------------------------------------------------------------------------
+
+This is a carefully executed and unusually candid evaluation whose central problem is that it measures a quantity its own instruments cannot pin down, and then reports that quantity to one decimal place across eighteen cells. The authors have already done most of the work needed to fix this: the human audit exists, the seed replication exists, the benign decode control exists, the plaintext baselines exist for three of six models, and the sensitivity analyses exist. What is missing is that these are scattered through Appendix D as caveats on a headline rather than assembled into the headline itself. A revision that makes judge calibration and attack-attributable lift the primary objects of study, rather than footnotes to an ASR table, would be a better paper than the one currently submitted and, in my view, a clearly acceptable one for TMLR.
+
+Claims and evidence: not yet supported as stated (see W1, W2, W4, W5, W7).
+Audience: yes.
+Recommendation: reject in current form, revise and resubmit; I would be willing to review a revision.
