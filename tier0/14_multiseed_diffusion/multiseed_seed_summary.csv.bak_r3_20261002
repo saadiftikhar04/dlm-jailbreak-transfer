@@ -1,0 +1,7 @@
+model,attack,seed1_asr,seed2_asr,seed3_asr,mean_asr,seed_range,seed_var,n_per_seed
+diffucoder,arrattack,26.3,25.3,25.3,25.7,1.0,0.2,300
+diffucoder,pif,17.3,17.0,16.7,17.0,0.7,0.1,300
+dream,arrattack,2.7,1.7,1.7,2.0,1.0,0.2,300
+dream,pif,1.0,0.7,1.0,0.9,0.3,0.0,300
+llada,arrattack,39.7,38.0,37.7,38.4,2.0,0.8,300
+llada,pif,21.0,20.3,20.0,20.4,1.0,0.2,300

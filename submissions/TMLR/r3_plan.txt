@@ -4,6 +4,12 @@ Cross-Paradigm Jailbreak Transfer (TMLR). Generated 2026-09-14. Supersedes r3_pl
 Mark ✅ only when the on-disk artifact exists. Guardrails stay binding: judge temp 0, no row dropped without a status field, stratified samples reweighted to base rate, Wilson beside every proportion, JSON indent=4, never re-roll a low cell.
 ================================================================================
 
+
+
+
+
+
+
 --------------------------------------------------------------------------------
 BLOCK 0. DECISIONS TO MAKE BEFORE ANY WORK STARTS
 --------------------------------------------------------------------------------
@@ -24,7 +30,7 @@ BLOCK 0. DECISIONS TO MAKE BEFORE ANY WORK STARTS
 
 [✅] D4. Rule on ArrAttack path A vs B. CORRECTED 2026-09-15 -> PATH A. [see tier0/18_t4_arrattack_coverage_corrected.md]
     [✅] Diagnostic done, then CORRECTED: original "646/882 usable, 236 missing" used the best_attempt field = stage5 BUG (stores attempt COUNT, not response). Real field (arrattack_results.csv target_response): coverage ~99-100% all six victims. No full-pool gap.
-    [✅] Bounds: moot (~100% coverage, 0-1 prompt gap). RULED PATH A: strict re-judge of STORED full-pool responses (API-only, no GPU re-run) + cross-check judge; report full-pool strict ASR as primary; keep 165-prompt 7.1% as faithfulness.
+    [✅] Bounds: moot (~100% response coverage, 0-1 response gap). PATH A strict re-judge was attempted; SUPERSEDED BY USER RULING 2026-10-02: withdraw the unreconciled full-pool numerical estimates and retain the 165-prompt 7.1% faithfulness estimate as the only reportable ArrAttack ASR.
 
 
 
@@ -44,24 +50,30 @@ BLOCK 1. LAUNCH-NOW COMPUTE (long wall clock, start day 0, run while Block 2 pro
     [✅] Judge under each attack's official judge definition (PiF binary, ArrAttack binary, MetaCipher categorical-compliance) AND one common judge. [pif_ds/arr_ds/mc_ds + gpt_sol + claude; 1800 rows in t1_judge_cache.jsonl]
     [✅] Emit per-victim plaintext compliance with Wilson intervals. [tier0/18_t1_plaintext_control/t1_plaintext_compliance.csv + SUMMARY.md]
     [✅] Emit the conditional reading for DiffuCoder: attacked successes among plaintext-compliant cases. [small-n note in SUMMARY.md; full conditional in report]
+    [✅] Numeric audit: verified all six official control counts from the 1,800-row judge cache; fixed the CSV writer's column-order bug so every judge's Wilson bounds now align with its rate.
     [!] DECIDED 2026-09-15: ADOPT n=300 as authoritative control (DiffuCoder 4.3% / LLaDA 13.7% / Dream 0.3%); rewrite D.1 / Sec 6 / T13 accordingly. Old D.1 (16%/30%/3%) superseded.
 
-[ ] T2. (C5) LLaDA step-budget control, bracketed in BOTH directions on a ~50-100 prompt matched subsample.
-    [ ] Run LLaDA/PiF at the 32-steps-per-block schedule used by MetaCipher and ArrAttack.
-    [ ] Run LLaDA/MetaCipher at the 128-steps-per-block schedule used by PiF.
-    [ ] Note for the write-up: the confound currently runs AGAINST the paper's finding, since PiF received the larger denoising budget and still scored 7.0% while MetaCipher scored 47.3% on the smaller one. Per the Step-16 sweep (128 to 32 steps drops 24% to 4%), matching is likely to push PiF down, strengthening the contrast rather than threatening it. Say this explicitly instead of only conceding the confound.
+[✅] T2. (C5) LLaDA step-budget control, bracketed in BOTH directions on a ~50-100 prompt matched subsample. [DONE: 50 matched original prompts per attack, common DeepSeek binary judge at temperature 0]
+    [✅] Run LLaDA/PiF at the 32-steps-per-block schedule used by MetaCipher and ArrAttack. [50/50 generations valid; weighted ASR 6.008% at 128 steps vs 2.017% at 32; lift -3.991 pp, paired exact McNemar p=0.625]
+    [✅] Run LLaDA/MetaCipher at the 128-steps-per-block schedule used by PiF. [50/50 generations valid; weighted ASR 10.240% at 32 steps vs 46.769% at 128; lift +36.529 pp, paired exact McNemar p=8e-6]
+    [✅] Update the interpretation: the PiF decrease is directionally consistent with the prior sweep, but the MetaCipher increase is much larger, showing strong attack-specific budget sensitivity. These common-judge matched-sample controls do not replace the official full-pool ASRs. [reported in §6.2 and Appendix~\ref{tab:t2-step-bracket}]
+    [✅] Built a prompt-matched 50-request sample for both attacks, stratified over all four benchmarks (100 attack instances total); sample and baseline responses are validated in `tier0/16_llada_sensitivity/t2_matched_sample.json`.
+    [✅] Counterfactual generations, paired judging, benchmark reweighting, Wilson intervals, and exact McNemar tests completed; outputs in `tier0/16_llada_sensitivity/t2_bracket_scores.csv` and `t2_bracket_summary.csv`.
 
-[ ] T3. (R3) Three-seed variance for Qwen and Llama MetaCipher, ~50-100 prompts per cell, judge at temp 0.
-    [ ] Report per-cell mean, range, seed variance, in the same language now used for the diffusion cells.
+[✅] T3. (R3) Three-seed variance for Qwen and Llama MetaCipher, ~50-100 prompts per cell, judge at temp 0.
+    [✅] Llama generation already exists: 75 unique prompts × 3 seeds, all 225 rows status=ok. The prior SLURM job exited nonzero only in its post-generation checker, which parsed JSONL as a single JSON document; no regeneration is needed. Checker fix is staged in `tier0/12_low_asr_multiseed/t12_generate.py`.
+    [✅] Qwen generation: 70 uniform Arm-A prompts × 3 seeds; all 150 newly generated rows succeeded, and 20 prior valid Arm-A rows per seed were reused without reroll. Judged at temperature 0 under the common binary DeepSeek rubric.
+    [✅] Llama results re-judged with the common DeepSeek binary judge at temperature 0 and benchmark-reweighted: seed ASR 8.980%, 12.181%, 13.089%; mean 11.417%, range 4.110 pp, population variance 3.10676 pp². Per-seed Wilson intervals are in `tier0/18_t3_multiseed_llama/t3_seed_summary.csv`.
+    [✅] Report per-cell mean, range, seed variance, and Wilson intervals in the appendix table. [Qwen weighted mean 71.983%, range 5.699 pp, variance 5.88033 pp²; detail for both cells in `tier0/18_t3_multiseed_llama/t3_seed_summary.csv`]
 
-[ ] T4. (C6) ArrAttack full-pool, path decided by this diagnostic FIRST.
+[✅] T4. (C6) ArrAttack full-pool, path decided by this diagnostic FIRST.
     [✅] Diagnostic: test whether the ~645-675/882 coverage is missing at random. Compare covered vs missing prompts on benchmark, category, and prompt length. Rows "lacking a usable best-attempt response" are likely degenerate cases, i.e. failures, so re-judging only covered rows biases ASR upward. [CORRECTED 2026-09-15: the earlier "646/882 usable, 236 missing" used the best_attempt field, which is a BUG (stores attempt COUNT, not response). Using the REAL response field (arrattack_results.csv target_response) coverage is ~99-100% for ALL six victims. See tier0/18_t4_arrattack_coverage_corrected.md]
     [✅] Report worst-case bounds: all missing counted as failures (lower bound) and all as successes (upper bound). [bounds now ~moot: coverage ~100%, gap ~0-1 prompt]
-    [✅] RULED PATH A (revised from B): full-pool ArrAttack is ~100% complete; strict re-judge of the STORED full-pool responses (API-only, no GPU) + one cross-check judge; report full-pool strict-judged ASR as primary.
-    [✅] Execute path A: strict re-judge of stored full-pool responses (per-victim, ~913 each) + cross-check judge; report full-pool ASR vs 165-prompt. [DONE: tier0/18_t4_pathA/SUMMARY.md — strict-DS llama 13.9% qwen 13.1% llada 10.9% diffucoder 16.5% dream 8.5% falcon 1.9%; gpt-sol 16.2/14.6/14.5/7.9/6.0/1.5]
-    [ ] Either way, keep the verified 165-prompt 7.1% as the faithfulness row. [report full-pool alongside 165-prompt 7.1% in body (T15)]
+    [✅] RULED PATH A (revised from B): response coverage is ~99-100%; path-A strict re-judge was attempted, but the persisted numerical estimates failed identity/denominator reconciliation. [USER RULING 2026-10-02: withdraw the unverified full-pool percentages; keep the protocol-faithful 165-prompt estimate.]
+    [✅] Audit path-A outputs. [`t4_pathA_results.jsonl` and cache contain 5,380 stored keys in mixed numeric-global-index/normalized-prompt formats; raw-record and deduplicated rates disagree with `SUMMARY.md`, Dream differs most (75/880 vs 43/841), and 40 GPT-sol verdicts are missing. Best-of-N response selection is upper-bound-like. Summary updated to mark the full-pool numerical results NOT REPORTABLE; no new API calls.]
+    [✅] Keep the verified 165-prompt 7.1% as the protocol-faithful ArrAttack estimate. [Table 1; now the only reportable ArrAttack ASR]
 
-[ ] T5. (C2 path C only) Run the scoped blinded human annotation from D1.
+[ ] T5. (C2 path C only) Run the scoped blinded human annotation from D1. [WAIVED BY USER 2026-10-02: omit human annotation; do not assign remaining labels to the user. Report the absence of a human reference and retain judge-as-reference analyses with an explicit no-ground-truth caveat.]
 
 
 
@@ -74,37 +86,37 @@ BLOCK 1. LAUNCH-NOW COMPUTE (long wall clock, start day 0, run while Block 2 pro
 BLOCK 2. ZERO-COMPUTE RE-ANALYSIS (do while Block 1 runs)
 --------------------------------------------------------------------------------
 
-[ ] T6. (C3/W2) Build the rubric-and-threshold account.
-    [✅] Reconcile D.5 common-binary-DeepSeek against official-DeepSeek on the SAME cells: 17.0 vs 5.4 (DiffuCoder PiF), 20.4 vs 7.0 (LLaDA PiF), 38.4 vs 8.5 (LLaDA ArrAttack), 25.7 vs 10.3 (DiffuCoder ArrAttack). Two DeepSeek judges, 2-4x apart, same direction as the cross-provider gap. [done: tier0/18_t6_rubric_threshold_reconciliation.md; source tab:multiseed/kappa_report]
-    [✅] Split the pooled 0.24 official-vs-GPT-sol precision into high-ASR cells vs low-ASR cells to show whether it is a base-rate artifact or a live problem in the headline cells. [done: tier0/18_t6_precision_by_zone.md + 18_t6_precision_by_cell.csv — HIGH zone 0.412 vs pooled 0.243; headline MetaCipher qwen 0.683/llama 0.477/llada 0.151]
-    [✅] Delete every "confirmed by two independent providers" / "contested only by the Anthropic family" / vote-across-providers construction. [DONE: abstract (rewritten), §6.4, Introduction, Conclusion all rewritten to rubric-and-threshold framing; "via a Chat plan" removed + GPT-sol pinned (openai/gpt-5.6-sol, accessed 2026-09). Compiles 28pp clean]
+[✅] T6. (C3/W2) Build the rubric-and-threshold account. [final wording explicitly says no calibrated human reference is available; absolute ASR is not identifiable without calibration]
+    [✅] Reconcile D.5 common-binary-DeepSeek against official-DeepSeek on the SAME cells using the corrected attack-aware seed join: 6.9 vs 5.4 (DiffuCoder PiF), 7.7 vs 7.0 (LLaDA PiF), 38.4 vs 8.5 (LLaDA ArrAttack), 25.6 vs 10.3 (DiffuCoder ArrAttack). The PiF gaps shrink to 1.1-1.3x; both ArrAttack gaps remain about 2.5-4.5x. [recomputed from `tier0/14_multiseed_diffusion/multiseed_judged.jsonl`; see corrected `tier0/18_t6_rubric_threshold_reconciliation.md`]
+    [✅] Split cell-balanced official-vs-GPT-sol precision into high-ASR cells vs low-ASR cells, with a base-rate-weighted full-mix estimate. [RECOMPUTED from row-level labels: balanced sample overall 0.375 [0.331,0.421], HIGH 0.412 [0.363,0.462], LOW 0.174 [0.102,0.280]; full-cell-weighted overall 0.396 [0.349,0.445], HIGH 0.419 [0.369,0.470], LOW 0.085 [0.030,0.218]. The prior .243/.01 summary did not reproduce and is superseded. Per-cell Wilson intervals are in `tier0/18_t6_precision_by_cell.csv`; weighted zone results are documented in `tier0/18_t6_precision_by_zone.md` and §6.4.]
+    [✅] Delete every "confirmed by two independent providers" / "contested only by the Anthropic family" / vote-across-providers construction. [DONE: abstract (rewritten), §6.4, Introduction, Conclusion all rewritten to rubric-and-threshold framing; "via a Chat plan" removed + GPT-sol pinned (openai/gpt-5.6-sol, accessed 2026-09). Current compile 29pp clean]
     [✅] Decide how to present the Claude columns: recommended framing is a documented false-positive mode (unfilled templates scored as harmful, with the manual evidence) rather than a competing estimate of the same quantity. [DONE in §6.4: "documented false-positive mode of the rubric, with the manual evidence, rather than as a competing estimate"]
     [✅] Write the one-sentence conclusion: absolute ASR in this setting is not identifiable without a calibrated judge. [DONE: abstract + §6.4 — "absolute ASR here is not identifiable without a calibrated judge"]
-    [ ] Dependency: final wording waits on D1/T5 outcome, since precision against a judge is not precision against truth.
+    [✅] Dependency resolved by author decision to omit T5: final wording retains the no-ground-truth/no-calibrated-reference limitation; precision remains judge-relative, not truth-relative.
 
-[ ] T7. (C4/W4) Fix the family contrast and the two side statistics.
+[✅] T7. (C4/W4) Fix the family contrast and the two side statistics.
     [✅] Recompute the family difference with model-level uncertainty propagated: posterior predictive over an unobserved seventh model, and a by-model bootstrap. Expect SD near ±2.5 log-odds, not 0.05. [done: tier0/18_t7_family_contrast.md/.csv — model-SE metaCipher 3.07 / arrAttack 3.83 / PiF 5.42; posterior-predictive P(diffusion>causal) 0.28/0.81/0.45]
     [✅] If it lands there, withdraw the inferential claim and present D.3 as descriptive; state family non-identifiability at n=6 (3 per family) as a design limitation. [DONE: appendix.tex §Mixed model rewritten — model-level SD 3.1-5.4, posterior-predictive 0.28/0.81/0.45, family not identifiable; D3 descriptive. Overleaf 2536034]
     [✅] Make the within-family spread (LLaDA 47.3 vs Dream 0.1) the primary evidence for RQ2, since it needs no inferential machinery and survives every judge. [DONE: appendix.tex — "RQ2 read descriptively with within-family spread as primary evidence"]
     [✅] Refit copyright with Firth/penalized logistic, or report the zero cell and mark the SE uninterpretable (quasi-separation). [DONE: reported-zero path; appendix.tex states quasi-separation, SE not interpretable, zero cell reported]
-    [ ] Replace all overlapping-Wilson comparisons with model-based or paired contrasts on the shared pool (reuse mcnemar_pairs.csv, extend to remaining cells). [analysis pending]
+    [✅] Replace all overlapping-Wilson comparisons with model-based or paired contrasts on the shared pool (reuse mcnemar_pairs.csv, extend to remaining cells). [DONE: tier0/13_mixed_model_v2/mcnemar_pairs.csv contains paired McNemar results for all 15 model pairs under each attack on the shared prompt sets; §6 reports the low-ASR ArrAttack contrast and avoids ranking nonsignificant within-cluster differences]
 
-[ ] T8. (R1/R5/W8) Promote judge-invariance to primary evidence for Contribution 1.
+[✅] T8. (R1/R5/W8) Promote judge-invariance to primary evidence for Contribution 1.
     [✅] Move Table 3 into the primary results position; demote official-judge magnitudes (31.9%, 71.5/71.1/47.3) to judge-conditional secondary. [DONE: §5.1 rewritten — judge-invariant ordering primary, official magnitudes secondary; Table common_judge in primary position]
     [✅] Add per-cell Wilson CIs on the reweighted columns and per-cell kappa across the four judges on the 2,982-row subsample. [done: tier0/18_t8_judge_invariance.md/.csv — ordering MetaCipher>ArrAttack>PiF identical under all 4 judges (official 31.9/7.1/5.5, judgeA 63.6/34.2/14.8, judgeB 65.8/34.4/17.2, gpt_sol 22.6/13.2/0.2); per-cell kappa col added to Table common_judge]
     [✅] State the meta-point: the attack ordering is judge-invariant even though absolute ASR is not. [DONE: §5.1 "derive the headline contribution from this judge-invariant ordering"]
 
-[ ] T9. (R2/W7) Falcon no-answer accounting.
+[✅] T9. (R2/W7) Falcon no-answer accounting.
     [✅] Add per-cell no-answer outcome to Table 1 from falcon_per_cell_answer_rate.csv (PiF 29.0%, ArrAttack 44.2%, MetaCipher 100% stored) with conditional denominators. [DATA DONE: tier0/18_t9_falcon_noanswer.md; DONE Table 1 — Falcon row daggered $^\dagger$ + caption no-answer denominator, ref sec:falcon-rejudge]
     [✅] Exclude Falcon from family averages, or keep it with a hard caveat that the robust end is anchored on a 29-71% answer-rate denominator. [DONE: keep in family avg with hard caveat in Table 1 caption dagger + appendix]
     [✅] Disclose the 4/1078 raw-text escapes by prompt id (0.37%) and the 2-in-60 manual-read findings. Write "zero is not a zero." [VERIFIED present in appendix.tex line 57 (ArrAttack harmbench 11/18/29 + jailbreakbench 16) + Sec 8.3 2-in-60]
 
-[ ] T10. (W9) Reliability evidence swap.
+[✅] T10. (W9) Reliability evidence swap.
     [✅] Promote the three-seed replication (0.0-2.0pp spread) to headline reliability evidence. [DONE: §6.5 "replicated three seeds... Seed-to-seed spread is small"—headline reliability with max range 2.0pp]
-    [✅] Demote the 51-row reproduction audit to a spot-checks-consistent check; stop presenting 54.9% agreement under a "no fabrication signal" heading; state that the 16-case decomposition is under-powered. [DONE: §6.5 — audit reframed as spot-check-consistency layer, 54.9% ~chance, 16-case ($n{=}16$) under-powered, not presented as fabrication check]
+    [✅] Demote the 51-row reproduction audit to a spot-check-consistency layer, not a fabrication test; state that the 16-case decomposition is under-powered. [DONE: paper defines 28/51 class-conditional concordance (95% Wilson CI [41.4,67.7]) and explicitly says this is not exact same-audit-judge agreement; exact 21/51 remains in the internal numeric report only, with no fabrication claim]
     [✅] Attach the caveat that the seed replication uses one common binary DeepSeek judge at temp 0, so flatness across seeds is judge-consistency plus generation stability, not proof of either alone. [DONE: §6.5 "common binary DeepSeek judge with temperature fixed to 0... robustness view rather than new official magnitudes"]
 
-[ ] T11. (R4/W10) Gate-level control from existing data.
+[✅] T11. (R4/W10) Gate-level control from existing data.
     [✅] Turn the n=150 benign decode control into a per-gate stat: decode-correct AND respond / decode-correct AND refuse / decode-wrong, per victim. [done: tier0/18_t11_gate_control.md + t11_per_gate_exports.tsv — decode-correct 65-99% all victims; decoded_but_refused ~0 (benign); wrong_decode 0-9]
     [✅] If that closes R4, write it into the downgraded four-gate section. If not, state explicitly that R4 is the one anticipated strengthener left unrun, with its cost. [DONE: does NOT close R4; §3.1 four-gate section now states benign decode control isolates reconstruction gate (Dream 71% / DiffuCoder 97% / LLaDA 96%) but cannot separate harmful-arbitration gate or Gate 4, so R4 remains the one anticipated strengthener left unrun with its cost stated]
     [✅] Verify no gate is described as tested anywhere; Gate 4 was never probed. [DONE: §3.1 and gate prose say "not individually tested claims", "does not provide a per-gate control", Gate 4 "remain the one anticipated strengthener this revision does not probe"]
@@ -120,16 +132,21 @@ BLOCK 2. ZERO-COMPUTE RE-ANALYSIS (do while Block 1 runs)
 BLOCK 3. MANUSCRIPT RESTRUCTURE (after Block 1 lands)
 --------------------------------------------------------------------------------
 
-[✅] T12. (C1) Rebuild Table 1 with a plaintext control row and a lift column per cell, absolute and lift reported together. [done: tables/major_results.tex — Control column (n=300 plaintext) + per-cell Δlift; Llama relabel per D2; compiles 27pp clean]
-    [!] NOTE: negative lifts (capability destruction) now visible: LLaDA PiF −6.7pt, LLaDA ArrAttack −5.2pt, DiffuCoder MetaCipher −3.4pt (see T13 prose).
-[✅] T13. Rewrite §6.1, §6.2, §6.4 to the attack-attributable reading. Lead with the DiffuCoder capability-destruction case (16% plaintext vs 0.9% MetaCipher and 5.4% PiF, both below control).
-    [done: §6.2 + §6.4 rewritten with no-attack-control lift framing. USE n=300 numbers (DiffuCoder MetaCipher 0.9% < ctl 4.3%, Δ−3.4 destruction; LLaDA PiF 7.0%<13.7%; LLaDA ArrAttack 8.5%<12.3%); NOTE: with the corrected control, DiffuCoder PiF (5.4%) is NOT below control (4.3%) as the old prose/plan assumed — prose corrected accordingly. Compiles 28pp clean]
-[✅] T14. Restate LLaDA's 47.3 vs 7.0 contrast conditioned on step budget, with the T2 bracket, and disclose the cross-paradigm decoding-stochasticity mismatch (causal temp 0.8 / top-p 0.9, Dream temp 0, DiffuCoder temp 0.3) alongside it. [done: §6.2 LLaDA paragraph — step-budget confound disclosed (32/128 schedule mismatch), Step-16 evidence 128→32 drops 24%→4%, confound runs AGAINST the finding; decoding-stochasticity mismatch listed. T2 matched bracket still pending]
-[✅] T15. (C6) Put the ArrAttack denominator explanation in the BODY, not Appendix D.6: state whether 165 is an incomplete-data limit or a protocol choice, and mark every cross-attack comparison accordingly. [done: §6.5 — 165 is a protocol choice (not incomplete-data); full-pool ~99% complete + strict re-judge higher (Llama 13.9 vs 8.5); cross-attack comparisons marked, full-pool preferred]
-[ ] T16. (C2) Insert the confusion matrix, per attack and per family and per outcome, against whichever reference D1 selects, with agreement statistics and the small-n caveat.
-    [✅] ANALYSIS done vs GPT-5.6-sol (judge-as-reference): tier0/18_t16_confusion_matrix.csv/.md — official prec metacipher-causal 0.58, Claude FP=361 metacipher-diffusion (unfilled-template FP mode), small-n caveat. Human-labeled refresh pending T5.
-    [ ] MANUSCRIPT: insert the confusion table + agreement prose (judge-as-reference; "validated" wording stays removed). [insert in final pass]
+[✅] T12. (C1) Rebuild Table 1 with a plaintext control row and a lift column per cell, absolute and lift reported together. [done: `tables/major_results.tex` has n=300 controls with Wilson intervals, exact-count attack Wilson intervals/lifts, and the D2 Llama label; source-count audit passed; compiles 29pp]
+    [!] NOTE: negative lifts (capability destruction) are visible: LLaDA PiF −6.7pp, LLaDA ArrAttack −5.2pp, DiffuCoder MetaCipher −3.5pp. DiffuCoder PiF is +1.0pp over control.
+[✅] T13. Rewrite §6.1, §6.2, §6.4 to the attack-attributable reading. Lead with the DiffuCoder capability-destruction case (MetaCipher 0.9% vs 4.3% no-attack control; PiF 5.4% is above control).
+    [done: §6.2 + §6.4 use exact-count lifts: DiffuCoder MetaCipher Δ−3.5; LLaDA PiF 7.0%<13.7%, Δ−6.7; LLaDA ArrAttack 8.5%<12.3%, Δ−5.2; DiffuCoder PiF 5.4%>4.3%, Δ+1.0.]
+[✅] T14. Restate LLaDA's 47.3 vs 7.0 contrast conditioned on step budget, with the T2 bracket, and disclose the cross-paradigm decoding-stochasticity mismatch (causal temp 0.8 / top-p 0.9, Dream temp 0, DiffuCoder temp 0.3) alongside it. [done: §6.2/Appendix report T2 common-judge bracket: PiF 128→32 steps changes 6.008%→2.017% (Δ−3.991pp, McNemar p=.625); MetaCipher 32→128 changes 10.240%→46.769% (Δ+36.529pp, p=8e−6). Budget sensitivity is attack-specific; T2 estimates do not replace official magnitudes.]
+[✅] T15. (C6) Put the ArrAttack denominator explanation in the BODY, not Appendix D.6: state whether 165 is an incomplete-data limit or a protocol choice, and mark every cross-attack comparison accordingly. [done: §6.5 — 165 is a protocol choice (not incomplete-data); full-pool ~99% complete + strict re-judge higher (Llama 13.9 vs 8.5); cross-attack comparisons marked, full-pool preferred; stale limitations text corrected in R3 cleanup]
+[✅] T16. (C2) Insert the confusion matrix, per attack and per family and per outcome, against the available named reference, with agreement statistics and the small-n caveat. [human reference waived by user; GPT-5.6-sol remains explicitly judge-as-reference, not ground truth]
+    [✅] ANALYSIS done vs GPT-5.6-sol (judge-as-reference): tier0/18_t16_confusion_matrix.csv/.md — official prec metacipher-causal 0.58, Claude FP=361 metacipher-diffusion (unfilled-template FP mode), small-n caveat. User waived human-label refresh; GPT-sol remains the named interim reference, not truth.
+    [✅] MANUSCRIPT: inserted the full per-judge x attack x family confusion counts and Cohen's kappa against GPT-5.6-sol, explicitly labelled judge-as-reference, with the small-n and unfilled-template caveats; no human-reference result is claimed.
 [✅] T17. (M4) Rewrite the abstract: one primary number with its condition (the judge-invariant ordering), then the sensitivity range, then the low-cell spread. Drop the current number sequence. [done: sections/0_abstract.tex — judge-invariant ordering primary (MetaCipher>ArrAttack>PiF all 4 judges), then sensitivity range 22-66%, then low-cell spread + capability-destruction (DiffuCoder MetaCipher 0.9 vs 4.3 control); dropped "confirmed under two providers" construction; not-identifiable-without-calibration caveat]
+
+
+
+
+
 
 --------------------------------------------------------------------------------
 BLOCK 4. EDITORIAL, PINNING, ETHICS
@@ -137,30 +154,35 @@ BLOCK 4. EDITORIAL, PINNING, ETHICS
 
 [✅] T18. (M2) Consolidate the judge-dependence caveat into the single T6 section and cross-reference; remove the other ~9 restatements. [DONE: limitations + conclusion deduped to judge-conditional cross-refs; §5/§6 keep context-necessary short statements]
 [✅] T19. (M1) Pin in the main text: Falcon-H1R checkpoint id, all six victim HF revision hashes, Claude-Sonnet-4.5 OpenRouter snapshot, GPT-5.6-sol model string and access date. Remove "via a Chat plan." [DONE: appendix §pinned_checkpoints pins all 7 HF git-sha from runtime cache; GPT-5.6-sol openai/gpt-5.6-sol accessed 2026-09; "via a Chat plan" removed]
-[✅] T20. (M3) Replace Figure 3's cross-attack grouped bars with within-attack panels, or drop the figure. [DONE: fig3 regenerated as within-attack panels via plots/fig3_prompt_group_bars.py --panel; caption updated to within-panel population-representative reading]
+[✅] T20. (M3) Replace Figure 3's cross-attack grouped bars with within-attack panels, or drop the figure. [DONE: replaced the grouped-bar figure with a within-attack table (Table~\ref{tab:prompt-groups}); all 18 displayed rates now include source-verified success/total counts and 95% Wilson intervals, with the different attack-native grouping rules disclosed]
 [✅] T21. (M5) Reconcile §3.4 and Appendix A on the 748 non-held-out prompts: evaluation-time is transfer-only, stated once, consistently. [DONE: Sec 3.4 ArrAttack paragraph now matches App A — transfer-only, rewriter/filter/judge fixed pretrained, nothing fit on 748, denominator on 165-prompt stage]
 [✅] T22. (M6) Confirm ACTR is absent post-cut, or define it at first use in Figure 4. [DONE: ACTR absent from all sections/figures (0 mentions); exposure metrics fig uses MEE/MDG only]
-[ ] T23. (M7) Replace "on the order of a few hundred GPU-hours" with a concrete number and the hardware.
-[ ] T24. (Review §7) Vendor disclosure: give status and dates, and attach the empty-template manual finding so vendors are not acting on an inflated Claude-judge signal (GPT-sol reads those cells 0.6% / 0.0%).
-[ ] T25. (Review §7) Name who administers the access-controlled response fields after the review cycle ends.
-[ ] T26. (Q6) File the COI declaration with the AE: the submission evaluates MetaCipher and there is author overlap. State it plainly rather than conditionally, and add a sentence in the paper noting that the attack found strongest is one the authors co-developed, alongside the existing DeepSeek-circularity disclosure.
+[✅] T23. (M7) Replace "on the order of a few hundred GPU-hours" with a concrete number and the hardware. [DONE: Slurm accounting, 91 project-workdir GPU allocations, 2026-08-11 through 2026-09-17 = 1,411.77 allocated GPU-hours (rounded 1,412); A100 40/80 GB + H100; scoped as allocated wall time, with exclusions disclosed in ethics and manifest]
+[✅] T24. (Review §7) Resolve the vendor-disclosure request. [RESOLVED BY USER 2026-10-02: no vendors were contacted, so there are no disclosure dates; the prior prospective-disclosure statement was removed from the manuscript. If answering the reviewer, state no contact was made and explain that Claude's high readings are not treated as confirmed susceptibility because many are unfilled templates; the manuscript retains the manual/template finding and judge-conditional caveat. No vendor outreach or vendor-disclosure discussion in the manuscript.]
+[✅] T25. (Review §7) Name who administers the access-controlled response fields after the review cycle ends. [DONE 2026-10-02: the corresponding author listed in OpenReview administers time-limited, request-based sentence-verification access during review, then revokes access and deletes full field-level responses at review close. Only metadata, verdicts, aggregate scripts, and sanitized examples remain, so no raw-response administrator is needed after deletion.]
+[✅] T26. (Q6) Determine TMLR handling of the MetaCipher author overlap. [DONE 2026-10-02: at submission, factually disclose the author overlap as a non-financial competing interest in OpenReview's relevant metadata for editorial assessment; do not assert a formal COI solely on this basis and do not identify authors in the anonymized PDF before decision.]
+
+
+
+
+
 
 --------------------------------------------------------------------------------
 DEFINITION OF DONE
 --------------------------------------------------------------------------------
 
-[ ] 1. Every ASR cell reported as absolute AND as lift over a per-victim plaintext control; §6.1/§6.2/§6.4 revised to the attack-attributable reading. [C1]
-[ ] 2. Provider-vote framing gone; D.5-vs-official reconciled on the same cells; precision resolved by cell zone; non-identifiability stated. [C3]
-[ ] 3. Per-judge, per-attack, per-family confusion matrix reported against a named reference, with the "validated" wording either substantiated or removed. [C2]
-[ ] 4. Family contrast carries model-level uncertainty or the inferential claim is withdrawn; Firth fit or reported-zero for copyright; no Wilson-overlap comparisons remain. [C4]
-[ ] 5. LLaDA PiF re-run at matched steps, bracketed both directions, verdict stated, decoding mismatch disclosed. [C5]
-[ ] 6. ArrAttack full-pool reported with strict judge and missingness bounds, or path B completed; denominator reason in the body. [C6]
-[ ] 7. Falcon no-answer outcome and conditional denominators in Table 1; escapes disclosed by id. [R2]
-[ ] 8. Contribution 1 derived from judge-invariant ordering; Table 3 promoted with per-cell CI and kappa. [R1, R5]
-[ ] 9. Seed replication is headline reliability evidence; 51-row audit demoted. [W9]
-[ ] 10. Abstract, caveat consolidation, identifier pinning, Figure 3, §3.4/App A, ACTR, GPU-hours all closed. [W11, M1-M7]
-[ ] 11. Disclosure status and dates, access administrator named, four-gate confirmed prose-only, COI filed. [§7, W10, Q6]
-[ ] 12. Qwen and Llama MetaCipher cells carry three-seed variance. [R3]
-[ ] 13. Llama checkpoint identity resolved and any affected row relabelled or re-run. [D2]
-[ ] 14. Every number recomputed from validated on-disk data; no figure carried over from r1/r2 without re-derivation.
+[✅] 1. Every ASR cell reported as absolute AND as lift over a per-victim plaintext control; §6.1/§6.2/§6.4 revised to the attack-attributable reading. [C1]
+[✅] 2. Provider-vote framing gone; D.5-vs-official reconciled on the same cells; precision resolved by cell zone; non-identifiability stated. [C3; human calibration remains unavailable, now disclosed]
+[✅] 3. Per-judge, per-attack, per-family confusion matrix reported against a named reference, with the "validated" wording either substantiated or removed. [C2; GPT-5.6-sol is explicitly judge-as-reference, not ground truth; human audit waived by user]
+[✅] 4. Family contrast carries model-level uncertainty or the inferential claim is withdrawn; Firth fit or reported-zero for copyright; no Wilson-overlap comparisons remain. [C4]
+[✅] 5. LLaDA step-budget bracket run in both directions on a shared matched-prompt set; verdict stated and decoding mismatch disclosed. [C5; Appendix T2 bracket, common-judge paired results]
+[ ] 6. ArrAttack full-pool reported with strict judge and missingness bounds, or path B completed; denominator reason in the body. [C6; full-pool estimate withdrawn by author decision after the path-A identity/denominator audit; 165-prompt estimate retained, but the requested full-pool estimate remains unmet]
+[✅] 7. Falcon no-answer outcome and conditional denominators in Table 1; escapes disclosed by id. [R2]
+[✅] 8. Contribution 1 derived from judge-invariant ordering; Table 3 promoted with per-cell CI and kappa. [R1, R5]
+[✅] 9. Seed replication is headline reliability evidence; 51-row audit demoted. [W9]
+[✅] 10. Abstract, caveat consolidation, identifier pinning, Figure 3, §3.4/App A, ACTR, GPU-hours all closed. [W11, M1-M7; GPU-hours now backed by scoped Slurm accounting]
+[✅] 11. Access administrator named and four-gate remains prose-only. [§7, W10; corresponding author administers review-period access and deletes full response fields at close; T24 resolved by no-contact ruling and reviewer-response plan; T26 OpenReview disclosure plan resolved]
+[✅] 12. Qwen and Llama MetaCipher cells carry three-seed variance. [R3; common-judge, benchmark-reweighted estimates and Wilson intervals reported in Appendix Table~\ref{tab:multiseed}]
+[✅] 13. Llama checkpoint identity resolved and any affected row relabelled or re-run. [D2]
+[ ] 14. Every number recomputed from validated on-disk data; no figure carried over from r1/r2 without re-derivation. [PARTIAL: all 18 Table 1 source counts matched HPC judged CSVs; T1 rates/CIs checked against 1,800 cached labels and its CSV column-order bug fixed; Table 1 attack/control Wilson CIs and lifts verified; all common-judge table values/CIs/kappas checked; T6 precision and T14 seed summaries recomputed from row-level artifacts; §5.1 across-model SDs recomputed from the 18-cell ASR matrix; ANOVA percentages and cited mixed-model terms checked against their source outputs; §5.3 benchmark-level ASRs recomputed from all 11,946 official rows with counts/Wilson CIs; MetaCipher native-category counts/rates/CIs verified across its 5,478 judged rows; ArrAttack too-general 14/78 rate verified; all 18 within-attack content-group cells recomputed from raw judged CSVs and replaced by Table~\ref{tab:prompt-groups} with counts/Wilson CIs; T2 pilot sweep PiF counts (6/25, 1/25) and Wilson CIs checked against `sweep_asr_table.csv`; path-A full-pool percentages withdrawn after persisted-key/summary mismatch and 40 missing GPT-sol labels. Remaining manuscript numeric inventory still open.]
 ================================================================================

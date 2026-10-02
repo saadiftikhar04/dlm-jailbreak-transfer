@@ -31,10 +31,15 @@ Confirm each with HF revision (git-sha snapshot) from $HF_HOME on the HPC run no
   per-attack native decoding (Appendix A.3). Judge temperature 0 everywhere.
 - Fixed generation seeds where the pipeline sets them.
 
-## Compute (from paper §9)
-~7-8B models, 11,946 final cases across 6 victims and 3 attacks (+ attack
-construction and judging); total on the order of a few hundred GPU-hours on
-NYUAD HPC (A100-80G / H100); no pretraining; LoRA-free inference.
+## Compute (from Slurm accounting)
+Slurm accounting for 91 GPU allocations whose working directory is this project
+(2026-08-11 through 2026-09-17) totals 1,411.77 allocated GPU-hours, rounded to
+1,412. Hardware recorded in the run logs includes NVIDIA A100 40/80 GB and H100.
+This is allocated GPU wall time, not device-utilization time; API-based judging
+and compute outside the retained project-directory accounting records are
+excluded. The experiments cover 11,946 final cases across six 7--8B victims and
+three attacks, plus attack construction and judging. No pretraining; LoRA-free
+inference.
 
 ## Verdict-data inventory (anonymized package source)
 - PiF:      results/pif/PIF_JUDGED/{qwen,llama,falcon,llada,dream,diffucoder}_pif_final_judged.csv   (913 rows each)

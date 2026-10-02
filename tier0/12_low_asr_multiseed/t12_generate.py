@@ -17,8 +17,8 @@ from pif_target_models import load_target, target_generate
 MODEL_KEY = sys.argv[1].strip().lower()
 LOAD_KEY = {"qwen": "qwen2.5"}.get(MODEL_KEY, MODEL_KEY)  # sample uses 'qwen', model loader uses 'qwen2.5'
 _BASE = os.path.dirname(os.path.abspath(__file__))
-SAMPLE = os.path.join(_BASE, "multiseed_sample.json")
-OUTDIR = os.path.join(_BASE, "model_outputs")
+SAMPLE = os.environ.get("T12_SAMPLE", os.path.join(_BASE, "multiseed_sample.json"))
+OUTDIR = os.environ.get("T12_OUTDIR", os.path.join(_BASE, "model_outputs"))
 os.makedirs(OUTDIR, exist_ok=True)
 SEEDS = [1, 2, 3]
 TIMEOUT = int(os.environ.get("T12_TIMEOUT", "120"))  # per-generation wall-clock cap
@@ -84,7 +84,8 @@ for probe_m, label in [("diffucoder", "expect some diff"), ("dream", "expect ide
     for seed in SEEDS:
         fp = os.path.join(OUTDIR, f"{probe_m}_seed{seed}_outputs.json")
         if os.path.exists(fp):
-            outs.append(json.load(open(fp)))
+            with open(fp) as fh:
+                outs.append([json.loads(line) for line in fh if line.strip()])
     if len(outs) >= 2 and outs[0]:
         r0 = outs[0][0]
         for j in range(1, len(outs)):

@@ -18,6 +18,8 @@ export HF_HOME=/scratch/bc3194/huggingface_cache
 export HF_HUB_DISABLE_XET=1
 export CC=/share/apps/NYUAD5/gcc/9.2.0/bin/gcc
 export CXX=/share/apps/NYUAD5/gcc/9.2.0/bin/g++
-export MODEL_KEY=llama
+export MODEL_KEY="${MODEL_KEY:-llama}"
+export T12_SAMPLE="${T12_SAMPLE:-/scratch/bc3194/dlm-jailbreak-transfer/tier0/12_low_asr_multiseed/multiseed_sample.json}"
+export T12_OUTDIR="${T12_OUTDIR:-/scratch/bc3194/dlm-jailbreak-transfer/tier0/12_low_asr_multiseed/model_outputs}"
 /scratch/bc3194/conda_envs/envs/raven/bin/python tier0/12_low_asr_multiseed/t12_generate.py "$MODEL_KEY"
 echo "=== RC=$? ==="

@@ -1,33 +1,18 @@
-# T4 (C6) — ArrAttack full-pool strict re-judge (path A)  [2026-09-15]
+# T4 (C6) ArrAttack full-pool re-judge: NOT REPORTABLE (updated 2026-10-02)
 
-Script: tier0/18_t4_pathA/t4_pathA_rejudge.py -> t4_pathA_cache.jsonl / t4_pathA_results.jsonl
-Selection rule: per prompt, the FINAL response = the attempt with the max llm_judge_score
-(the pipeline's best-attempt selection), one per original prompt. Judge = fresh strict
-DeepSeek binary (same PIF template) + cross-check openai/gpt-5.6-sol strict binary. Temp 0.
+The author chose to withdraw the full-pool numerical estimates and retain the independently verified 165-prompt, 7.1% protocol-faithful estimate as the only reportable ArrAttack ASR. No further API calls are authorized by this ruling.
 
-## Full-pool strict-judged ArrAttack ASR (n = 880-882 unique prompts per victim)
-| victim | strict-DS ASR | gpt-sol ASR |
-|---|---:|---:|
-| llama | 13.9% | 16.2% |
-| qwen2.5 | 13.1% | 14.6% |
-| llada | 10.9% | 14.5% |
-| diffucoder | 16.5% | 7.9% |
-| dream | 8.5% | 6.0% |
-| falcon | 1.9% | 1.5% |
+## Audit findings
 
-## Reading (vs the 165-prompt faithfulness number 7.1%)
-- Full-pool strict ASR is substantially higher than the 165-prompt 7.1% for the
-  causal victims (llama 13.9%, qwen 13.1%) and diffucoder (16.5%). The 165-prompt
-  subset was an under-estimate of the full pool (as W6/C6 argued).
-- falcon stays lowest (1.9% strict / 1.5% gpt-sol) even on the full pool -> robust
-  end holds under both denominators.
-- Cross-check agreement: strict-DS and gpt-sol agree in direction on most victims
-  (dream/falcon), diverge on diffucoder (16.5 vs 7.9) and llada/qwen/llama (gpt-sol
-  slightly higher). Magnitudes judge-conditional as usual.
-- NOTE selection rule: max-llm-score attempt is a best-of-N -> an UPPER-BOUND-ish
-  per-prompt estimate; report with this stated, and cross-reference the judge
-  (T6) non-identifiability caveat.
+- Re-judge script: `t4_pathA_rejudge.py`; persisted outputs: `t4_pathA_cache.jsonl` and `t4_pathA_results.jsonl`.
+- The script selects one stored response per normalized original prompt by maximum `llm_judge_score`, a best-of-N selection that is upper-bound-like rather than an unbiased final-attempt estimate.
+- Both JSONL files contain 5,380 records with unique stored keys, but the key formats mix numeric global indices and normalized prompt strings. Reconstructing the script's prompt-key migration collapses duplicates inconsistently across victims.
+- Direct aggregation of every persisted record gives strict DeepSeek counts/rates: DiffuCoder 145/881 (16.5%), Dream 75/880 (8.5%), Falcon 17/882 (1.9%), LLaDA 101/912 (11.1%), Llama 130/913 (14.2%), and Qwen 118/912 (12.9%). These are not reportable because the row identity and denominator do not reconcile to the earlier summary.
+- Re-keying on normalized prompt text gives a different Dream result, 43/841 (5.1%), and also changes LLaDA to 96/881 (10.9%), Llama to 123/882 (13.9%), and Qwen to 115/881 (13.1%). The prior summary used Dream 75/880 (8.5%) alongside deduplicated values for several other models, so its estimates combine inconsistent units.
+- GPT-5.6-sol returned no parseable verdict for 40/5,380 records. Missing verdicts are not failures and must not be silently counted as such.
 
-## Plan status
-- T4 path A execution DONE. Report full-pool strict ASR as the C6 number alongside
-  the 165-prompt 7.1% faithfulness row; put denominator reason in the body (T15).
+## Coverage and interpretation
+
+The separate coverage audit uses the stored `target_response` field, not the progress counter. It finds 99.8%-100% response availability over the 882 unique pool texts for Dream, DiffuCoder, and Falcon, and near-complete coverage for the causal victims. Coverage does not repair the row-key inconsistency in the re-judge aggregation.
+
+The earlier full-pool percentages in this file are superseded and must not be quoted. The 165-prompt ArrAttack estimate (7.1% overall) remains the protocol-faithful value in Table 1. A corrected full-pool re-judge would require a stable benchmark/prompt row key and explicit handling of missing cross-check verdicts; it is not part of the current scope.

@@ -13,9 +13,16 @@ which python
 echo "=== config: $CONFIG_NAME ==="
 
 DIR=tier0/16_llada_sensitivity
+DATASET=${T2_DATASET:-$DIR/sweep50_dataset.json}
+OUT=${T2_OUTPUT:-$DIR/sweep_out_${CONFIG_NAME}.jsonl}
+ATTACK_ARG=()
+if [ -n "${ATTACK_FILTER:-}" ]; then
+  ATTACK_ARG=(--attack "$ATTACK_FILTER")
+fi
 /scratch/bc3194/conda_envs/envs/raven/bin/python \
   $DIR/sweep_llada_r2.py \
-  --dataset $DIR/sweep50_dataset.json \
-  --out $DIR/sweep_out_${CONFIG_NAME}.jsonl \
-  --config "$CONFIG_NAME"
+  --dataset "$DATASET" \
+  --out "$OUT" \
+  --config "$CONFIG_NAME" \
+  "${ATTACK_ARG[@]}"
 echo "=== RC=$? $(date) ==="

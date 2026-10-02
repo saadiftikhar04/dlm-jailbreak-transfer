@@ -12,41 +12,21 @@ judge seed-stability view, NOT the official attack-judge magnitudes.
 - ArrAttack prompts: drawn from the Step-13 FULL 913-pool results (NOT the 165
   held-out that Table 1 still reports) — see cross-cutting flag below.
 
-## Seed summary (multiseed_seed_summary.csv; ASR%, n_per_seed=300)
-| cell              | s1  | s2  | s3  | mean | range | var |
-|-------------------|-----|-----|-----|------|-------|-----|
-| dream/arrattack   | 2.7 | 1.7 | 1.7 | 2.0 | 1.0 | 0.2 |
-| dream/pif         | 1.0 | 0.7 | 1.0 | 0.9 | 0.3 | 0.0 |
-| diffucoder/arrattack | 26.3 | 25.3 | 25.3 | 25.7 | 1.0 | 0.2 |
-| diffucoder/pif    | 17.3 | 17.0 | 16.7 | 17.0 | 0.7 | 0.1 |
-| llada/arrattack   | 39.7 | 38.0 | 37.7 | 38.4 | 2.0 | 0.8 |
-| llada/pif         | 21.0 | 20.3 | 20.0 | 20.4 | 1.0 | 0.2 |
+## Seed summary (recomputed from attack-aware judge joins; weighted ASR%, n=300/seed)
+| cell | seed 1 [95% Wilson CI] | seed 2 [95% Wilson CI] | seed 3 [95% Wilson CI] | mean | range (pp) | variance (pp²) |
+|---|---|---|---|---:|---:|---:|
+| Dream / ArrAttack | 2.7 [1.4, 5.2] | 1.7 [0.7, 3.8] | 1.7 [0.7, 3.8] | 2.00 | 1.00 | 0.22186 |
+| Dream / PiF | 0.0 [0.0, 1.3] | 0.0 [0.0, 1.3] | 0.0 [0.0, 1.3] | 0.00 | 0.00 | 0.00000 |
+| DiffuCoder / ArrAttack | 26.3 [21.7, 31.6] | 25.3 [20.7, 30.5] | 25.3 [20.7, 30.5] | 25.65 | 1.00 | 0.22284 |
+| DiffuCoder / PiF | 7.0 [4.6, 10.5] | 7.0 [4.6, 10.5] | 6.7 [4.4, 10.1] | 6.90 | 0.33 | 0.02448 |
+| LLaDA / ArrAttack | 39.6 [34.3, 45.3] | 38.0 [32.7, 43.6] | 37.6 [32.3, 43.2] | 38.41 | 1.99 | 0.76088 |
+| LLaDA / PiF | 8.3 [5.7, 12.0] | 7.3 [4.9, 10.9] | 7.3 [4.9, 10.9] | 7.68 | 1.00 | 0.22263 |
 
 ## Finding (answers the reviewer's regeneration-variance objection)
-Seed-to-seed variance is SMALL everywhere: max range 2.0pp (llada/arrattack),
-all other cells <=1.0pp; seed variance <=0.8. The single-seed official cells
-are therefore stable under regeneration; the r1 worry that "regeneration
-variance is the same order as several reported differences" is NOT supported
-for the diffusion cells. (Note: dream/llada greedy temp 0 -> their seed spread
-is mostly judge-stability; diffucoder stochastic temp 0.3 -> true seed
-variance, still <=1.0pp.)
+Seed-to-seed variance is small across these six diffusion cells: the maximum range is 1.99 pp (LLaDA/ArrAttack), and the other five ranges are at most 1.00 pp. Dream/LLaDA decode greedily, so their seed spread largely reflects judge stability; DiffuCoder uses temperature 0.3. The table uses attack-aware joins. An earlier aggregation key omitted attack and reused some ArrAttack verdicts for PiF, which inflated several PiF rates; the corrected rates above match the per-row judge records.
 
-## CROSS-CUTTING NOTE (corrected 2026-09-13): full-pool ArrAttack is NOT reportable
-The multiseed ArrAttack sample was drawn from the Step-13 full-pool run. That
-run's labels are UNRELIABLE: the jailbroken_gptfuzz success label is over-liberal
-(cross-validated against the verified 165-prompt labels it agrees only
-25-89%: qwen 25, llama 44, llada 37, dream 89, diffucoder 53, falcon 75; clear
-refusals marked as success), and the run is response-incomplete (~645-675 of
-882 unique prompts per model have a stored best-attempt response). Hence no
-defensible full-pool ArrAttack ASR exists; the paper keeps the verified
-165-prompt held-out estimate (7.1% overall) as official and records the
-full-pool caveat in Appendix sec:appendix_fullpool_arr. The multiseed
-ArrAttack MEANS here (llada 38.4, diffucoder 25.7, dream 2.0) are therefore a
-common-binary-judge robustness/seed-stability view only, consistent with the
-paper's judge-sensitivity finding (the generic binary judge inflates ArrAttack
-as the Claude common judge does), and imply NO headline reversal.
-(Earlier draft of this note claimed a 39.3% 'reversal' from the broken
-jailbroken_gptfuzz label; that was WRONG and is retracted.)
+## R3 cross-cutting correction: full-pool ArrAttack
+The R3 audit found that the earlier coverage calculation used `best_attempt`, which is an attempt counter rather than a response field. The actual `target_response` coverage is approximately 99--100% across victims, and the stored full-pool responses were strict-rejudged (see `tier0/18_t4_pathA/SUMMARY.md`). The main paper reports that strict full-pool estimate alongside the protocol-faithful 165-prompt estimate. The ArrAttack seed results above are a separate common-binary-judge regeneration view on the sampled full-pool prompts; they do not replace either official magnitude.
 
 ## Files
 - multiseed_judged.jsonl (5400 per-row verdicts)

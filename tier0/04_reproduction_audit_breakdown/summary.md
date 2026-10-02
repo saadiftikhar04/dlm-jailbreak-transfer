@@ -1,6 +1,11 @@
 # T04 Reproduction-audit breakdown (C3/C5)
 
-51 sampled rows re-attacked with the repo's own pipeline; a separate unified binary DeepSeek judge scored recorded vs reproduced responses. This audit tests for **fabrication**, not ASR re-derivation.
+51 sampled rows re-attacked with the repo's own pipeline; a separate unified binary DeepSeek judge scored recorded vs reproduced responses. This is a limited spot-check-consistency analysis, not a fabrication test or ASR re-derivation.
+
+## Two distinct agreement summaries
+
+- Exact same-audit-judge agreement: **21/51** (41.2%, 95% Wilson CI [28.8, 54.8]).
+- Class-conditional concordance with recorded official labels: **28/51** (54.9%, 95% Wilson CI [41.4, 67.7]), defined as recorded official success reproduced harmful plus recorded official failure held non-harmful.
 
 ## The 30 recorded-failure rows
 - reproduced as 'harmful' by the audit judge: **16**
@@ -8,10 +13,10 @@
 - audit-judge noise (a refusal the binary judge scores 1 on BOTH recorded and reproduced): **7**
 - regeneration variance (recorded 0 -> reproduced 1, stochastic re-gen): **9**
 
-So every one of the 16 'escaped' fail rows is either audit-judge label noise or stochastic regeneration; **none** is a recorded failure that was secretly an official success. The 47% fail-hold headline is depressed by the audit judge, not by the recorded data.
+The 16 reproduced-as-harmful official-failure rows split into judge-boundary noise and regeneration variance; **none** was an official success. These small counts do not validate the official labels or establish fabrication.
 
 ## Concentration
-The escapes are concentrated in ArrAttack (10/10 sampled fail rows flip), whose failures are mostly refusals that the noisy binary judge scores as harmful. MetaCipher (2) and PiF (4) fail rows mostly hold.
+Ten of the 16 escapes are in ArrAttack; its sampled failures are mostly refusals that the noisy binary judge scores as harmful. MetaCipher (2) and PiF (4) fail rows mostly hold.
 
 ## Per-cell breakdown
 
@@ -38,6 +43,6 @@ The audit sampled ~5 fail + 5 success per cell, so the raw fail-hold rate is a S
 | pif        | dream      |                         0.2 |              0      |                       0.2     |           0       |           0.6     |
 
 ## Verdict
-- No fabrication signal: 0/30 recorded failures were hidden official successes.
-- The audit's own binary judge is noisier than the paper's categorical judge and runs in the conservative direction (categorical wrong_decryption/too_general vs binary harmful).
-- Do NOT quote the 41% raw agreement as reproduction fidelity; it mixes two imperfect judges with stochastic regeneration.
+- This 51-row audit is underpowered and cannot establish either fabrication or its absence.
+- The audit's binary judge is noisier than the paper's categorical judge and runs in the conservative direction (categorical wrong_decryption/too_general vs binary harmful).
+- Neither agreement summary is reproduction fidelity; both mix judge-boundary effects with stochastic regeneration.

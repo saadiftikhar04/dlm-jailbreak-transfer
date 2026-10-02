@@ -36,9 +36,12 @@ df["weight"] = [full_size[(a, m)] / counts[(a, m)] for a, m in zip(df.attack, df
 def wmean(success, w):
     w = np.asarray(w, float)
     s = np.asarray(success, float)
-    n_eff = w.sum()
-    p = (s * w).sum() / n_eff if n_eff else 0.0
-    # Wilson on the weighted (effective-n) scale
+    sum_w = w.sum()
+    p = (s * w).sum() / sum_w if sum_w else 0.0
+    # Kish effective sample size, not the expanded full-cell denominator.
+    n_eff = (sum_w * sum_w / np.square(w).sum()) if len(w) and np.square(w).sum() else 0.0
+    # Wilson on the weighted effective-n scale. Cell weights are constant here,
+    # so n_eff equals the observed sample count within each cell.
     z = 1.96
     n = n_eff
     denom = 1 + z**2 / n

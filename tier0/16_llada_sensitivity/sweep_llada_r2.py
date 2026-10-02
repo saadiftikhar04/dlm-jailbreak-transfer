@@ -90,12 +90,15 @@ def main():
     ap.add_argument("--dataset", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--config", required=True, choices=list(CONFIGS))
+    ap.add_argument("--attack", choices=["pif", "metacipher", "arrattack"], default=None)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--seed", type=int, default=1)
     args = ap.parse_args()
 
     with open(args.dataset) as f:
         items = json.load(f)
+    if args.attack:
+        items = [it for it in items if it.get("attack") == args.attack]
     if args.limit:
         items = items[:args.limit]
 

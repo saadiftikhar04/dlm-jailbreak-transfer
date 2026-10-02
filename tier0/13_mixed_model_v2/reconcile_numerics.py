@@ -13,9 +13,9 @@ the chosen source, and the physical edit applied to the paper.
 (b) Section 6.6 Dream/DiffuCoder official MetaCipher ASR 0.0/0.6 vs 0.1/0.9:
     pick the full-pool Table 1 values (0.1 / 0.9) everywhere and align the
     Discussion prose.
-(c) Reproduction-audit 21/51 (41%) vs components that sum to 28/51:
-    recompute agreement from the raw repro JSONs -> 28/51 = 54.9%, and
-    define agreement explicitly. Drop the floating 41%.
+(c) Reproduction-audit: exact same-audit-judge agreement (21/51) versus class-conditional concordance (28/51).
+    report the class-conditional concordance 28/51 = 54.9%, and
+    distinguish it from exact same-audit-judge agreement (21/51).
 """
 import os, json, sys
 import numpy as np
@@ -108,6 +108,7 @@ for r in rows:
     rep = int(r.get("reproduced_judge_unified", 0)) == 1
     c[("success" if rec else "fail", "harmful" if rep else "fail")] += 1
 agree = c[("success", "harmful")] + c[("fail", "fail")]
+cc_lo, cc_hi, _ = CM.wilson_ci(agree, n)
 disp = [("recorded success, reproduced harmful", c[("success","harmful")]),
         ("recorded success, reproduced not harmful", c[("success","fail")]),
         ("recorded failure, held as failure", c[("fail","fail")]),
@@ -117,11 +118,10 @@ for lbl, v in disp:
     lines.append(f"- {lbl}: {v}")
 lines += [
     "",
-    f"**Agreement = {agree}/{n} = {100*agree/n:.1f}%** (recorded success that",
-    "reproduced harmful + recorded failure that held as failure), defined",
-    "explicitly as the fraction of sampled rows whose reproduced verdict",
-    "matches their recorded verdict under the audit's unified binary judge.",
-    "This replaces the stale '21/51 (41%)' figure. The 16 failure->harmful",
+    f"**Class-conditional concordance = {agree}/{n} = {100*agree/n:.1f}%** (95% Wilson CI [{100*cc_lo:.1f}, {100*cc_hi:.1f}]; recorded success that",
+    "reproduced harmful + recorded failure that held as failure), comparing",
+    "the reproduced audit-judge outcome with the recorded official class.",
+    "This is distinct from exact same-audit-judge agreement (21/51). The 16 failure-to-harmful",
     "escapes are, by construction, NOT official successes (0/16); 7 are",
     "audit-judge boundary noise (recorded response also judged harmful on",
     "replay) and 9 are regeneration variance.",
@@ -131,7 +131,7 @@ with open(os.path.join(OUT, "r2_num_reconcile.md"), "w") as f:
     f.write("\n".join(lines) + "\n")
 
 print("Wrote", os.path.join(OUT, "r2_num_reconcile.md"))
-print(f"[Step2] (a) max delta {max_delta}pp; (c) agreement {agree}/{n} ({100*agree/n:.1f}%)")
+print(f"[Step2] (a) max delta {max_delta}pp; (c) class-conditional concordance {agree}/{n} ({100*agree/n:.1f}%)")
 # dump the per-cell official values for the paper table rebuild
 outdf = t6[["model", "attack"]].copy()
 outdf["official_fullpool_pct"] = [round(full.get((m,a), float("nan")),2)

@@ -60,11 +60,10 @@ Recompute from raw repro JSONs (51 unique rows):
 - recorded failure, held as failure: 14
 - recorded failure, escaped to harmful: 16
 
-**Agreement = 28/51 = 54.9%** (recorded success that
-reproduced harmful + recorded failure that held as failure), defined
-explicitly as the fraction of sampled rows whose reproduced verdict
-matches their recorded verdict under the audit's unified binary judge.
-This replaces the stale '21/51 (41%)' figure. The 16 failure->harmful
+**Class-conditional concordance = 28/51 = 54.9%** (95% Wilson CI [41.4, 67.7]; recorded success that
+reproduced harmful + recorded failure that held as failure), comparing
+the reproduced audit-judge outcome with the recorded official class.
+This is distinct from exact same-audit-judge agreement (21/51). The 16 failure-to-harmful
 escapes are, by construction, NOT official successes (0/16); 7 are
 audit-judge boundary noise (recorded response also judged harmful on
 replay) and 9 are regeneration variance.

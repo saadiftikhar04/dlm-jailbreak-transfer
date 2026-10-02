@@ -1,8 +1,12 @@
-# Full-pool ArrAttack data integrity audit (2026-09-13)
+# Initial full-pool ArrAttack audit (2026-09-13; coverage corrected 2026-09-15)
 
 During R2 finalization I checked whether the Step-13 full-pool ArrAttack run
-could yield a reportable ASR. Verdict: NO — the run's labels are unreliable
-and its response coverage is incomplete. This note records the evidence.
+could yield a reportable ASR. The concern about the original labels remains:
+they are unreliable. The initial claim that response coverage was incomplete
+was later corrected after discovering that the progress field used as a proxy
+was an attempt count, not a response-presence indicator. See
+`tier0/18_t4_arrattack_coverage_corrected.md` for the corrected coverage audit
+and `tier0/18_t4_pathA/SUMMARY.md` for the later re-judge ruling.
 
 ## What was checked
 Source: /scratch/bc3194/dlm-jailbreak-transfer/arrattack_fullpool/
@@ -37,11 +41,14 @@ success; a neutral historical article marked harmful). Aggregate jailbroken_llm
 over the full pool = ~5% (qwen 39, llama 42, llada 85, dream 19, diffucoder 87,
 falcon 1 of 5478), which is CONSISTENT with the 165 (7.1%) — i.e., no reversal.
 
-## Finding 3 — response coverage incomplete
-Progress files cover 882 unique prompts (not 913). Of those, only ~645-675 per
-model have a stored best-attempt target_response in the results CSVs (~237
-prompts per model lack a usable response). So the run is incomplete even at
-the generation level.
+## Finding 3 — initial coverage diagnostic was invalid (superseded)
+The initial diagnostic used `best_attempt` as a proxy for response presence.
+That field stores the number of attempts, not a response or response index, so
+the 645-675/882 coverage claim was an artifact. The corrected audit reads the
+real `target_response` field and finds near-complete coverage. This correction
+does not repair the original `jailbroken_gptfuzz` label problem or make the
+strict re-judge numerically reportable; the persisted path-A aggregation was
+later withdrawn after its row identities failed reconciliation.
 
 ## Actions
 - Do NOT report the full-pool ArrAttack ASR. Keep the verified 165-prompt

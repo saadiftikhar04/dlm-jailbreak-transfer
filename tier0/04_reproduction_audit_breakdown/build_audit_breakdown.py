@@ -10,7 +10,8 @@ base-rate REWEIGHTING the stratified fail-hold rate needs (guardrail G2).
 Schema note: *_judge_unified is a separate NOISY binary DeepSeek audit judge
 (it scores some pure refusals as harmful); recorded_success is the paper's
 official categorical label. stratum in {fail,success} is defined off
-recorded_success. The audit's job is fabrication-detection, not re-deriving ASR.
+recorded_success. This is a limited spot-check-consistency analysis, not a
+fabrication test or an ASR re-derivation.
 """
 import os, sys, json
 import numpy as np, pandas as pd
@@ -38,6 +39,12 @@ repro_harmful = fails[fails.reproduced_judge_unified == 1]
 official_succ = repro_harmful[repro_harmful.recorded_success == True]
 judge_noise = repro_harmful[repro_harmful.recorded_judge_unified == 1]   # both=1
 regen_var = repro_harmful[repro_harmful.recorded_judge_unified == 0]     # 0 -> 1
+exact_audit_agree = int((df.recorded_judge_unified == df.reproduced_judge_unified).sum())
+success_reproduced_harmful = int((succ.reproduced_judge_unified == 1).sum())
+failures_held_nonharmful = int((fails.reproduced_judge_unified == 0).sum())
+class_concordance = success_reproduced_harmful + failures_held_nonharmful
+exact_lo, exact_hi, _ = C.wilson_ci(exact_audit_agree, len(df))
+class_lo, class_hi, _ = C.wilson_ci(class_concordance, len(df))
 
 got = {
     "recorded_failure_rows": len(fails),
@@ -110,8 +117,14 @@ pd.DataFrame(rw).to_csv(os.path.join(OUT, "audit_reweighted_escape_rate.csv"),
 lines = [
     "# T04 Reproduction-audit breakdown (C3/C5)\n",
     "51 sampled rows re-attacked with the repo's own pipeline; a separate unified "
-    "binary DeepSeek judge scored recorded vs reproduced responses. This audit tests "
-    "for **fabrication**, not ASR re-derivation.\n",
+    "binary DeepSeek judge scored recorded vs reproduced responses. This is a "
+    "limited spot-check-consistency analysis, not a fabrication test or ASR re-derivation.\n",
+    "## Two distinct agreement summaries\n",
+    f"- Exact same-audit-judge agreement: **{exact_audit_agree}/{len(df)}** "
+    f"({100*exact_audit_agree/len(df):.1f}%, 95% Wilson CI [{100*exact_lo:.1f}, {100*exact_hi:.1f}]).",
+    f"- Class-conditional concordance with recorded official labels: **{class_concordance}/{len(df)}** "
+    f"({100*class_concordance/len(df):.1f}%, 95% Wilson CI [{100*class_lo:.1f}, {100*class_hi:.1f}]), "
+    "defined as recorded official success reproduced harmful plus recorded official failure held non-harmful.\n",
     "## The 30 recorded-failure rows",
     f"- reproduced as 'harmful' by the audit judge: **{len(repro_harmful)}**",
     f"- of those, actually official successes (recorded_success=True): "
@@ -120,13 +133,12 @@ lines = [
     f"reproduced): **{len(judge_noise)}**",
     f"- regeneration variance (recorded 0 -> reproduced 1, stochastic re-gen): "
     f"**{len(regen_var)}**\n",
-    "So every one of the 16 'escaped' fail rows is either audit-judge label noise "
-    "or stochastic regeneration; **none** is a recorded failure that was secretly an "
-    "official success. The 47% fail-hold headline is depressed by the audit judge, "
-    "not by the recorded data.\n",
+    "The 16 reproduced-as-harmful official-failure rows split into judge-boundary "
+    "noise and regeneration variance; **none** was an official success. These small "
+    "counts do not validate the official labels or establish fabrication.\n",
     "## Concentration",
-    "The escapes are concentrated in ArrAttack (10/10 sampled fail rows flip), whose "
-    "failures are mostly refusals that the noisy binary judge scores as harmful. "
+    "Ten of the 16 escapes are in ArrAttack; its sampled failures are mostly refusals "
+    "that the noisy binary judge scores as harmful. "
     "MetaCipher (2) and PiF (4) fail rows mostly hold.\n",
     "## Per-cell breakdown\n", by_cell.to_markdown(index=False),
     "\n## Base-rate reweighting (G2)\n",
@@ -136,12 +148,12 @@ lines = [
     "audit-judge harmful rate:\n",
     pd.DataFrame(rw).to_markdown(index=False),
     "\n## Verdict",
-    "- No fabrication signal: 0/30 recorded failures were hidden official successes.",
-    "- The audit's own binary judge is noisier than the paper's categorical judge and "
+    "- This 51-row audit is underpowered and cannot establish either fabrication or its absence.",
+    "- The audit's binary judge is noisier than the paper's categorical judge and "
     "runs in the conservative direction (categorical wrong_decryption/too_general vs "
     "binary harmful).",
-    "- Do NOT quote the 41% raw agreement as reproduction fidelity; it mixes two "
-    "imperfect judges with stochastic regeneration.",
+    "- Neither agreement summary is reproduction fidelity; both mix judge-boundary "
+    "effects with stochastic regeneration.",
 ]
 with open(os.path.join(OUT, "summary.md"), "w") as f:
     f.write("\n".join(lines) + "\n")

@@ -67,12 +67,17 @@ Every number below traces to a saved CSV/JSON and a script that produced it.
    cross-family ASR comparisons are decoding-confounded, so LLaDA's 40.3-pt
    mechanism-dependence gap partly measures a 4× denoising difference.
 
-8. **No fabrication signal in the reproduction audit (T04).** Of 30 sampled
-   recorded-failure rows, the audit's separate binary judge re-scores 16 as harmful,
-   but **0** are actual official successes — they split into 7 audit-judge-noise
-   (a refusal the binary judge scores harmful in both recorded and reproduced text)
-   and 9 stochastic regeneration-variance. The 47% "fail-hold" headline is depressed
-   by the audit judge, not the recorded data.
+8. **Limited spot-check reproduction audit (T04), not a fabrication test.** Exact
+   agreement between the audit judge's recorded-response and regenerated-response
+   verdicts is 21/51 (41.2%, 95% Wilson CI [28.8, 54.8]). The separate
+   class-conditional concordance with recorded official labels is 28/51 (54.9%,
+   95% Wilson CI [41.4, 67.7]), defined as 14/21 official successes re-judged
+   harmful plus 14/30 official failures judged non-harmful after regeneration.
+   Of 30 official-failure rows, 16 were judged harmful on regeneration, but 0 were
+   official successes; the 16 split into 7 audit-judge boundary cases and 9
+   regeneration-variance cases. Both agreement measures are underpowered and mix
+   judge-boundary effects with stochastic regeneration, so this sample does not
+   establish either fabrication or the absence of fabrication.
 
 ## Task status
 

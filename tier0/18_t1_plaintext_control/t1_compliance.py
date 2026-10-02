@@ -58,7 +58,13 @@ with open(f"{HERE}/t1_plaintext_compliance.csv", "w", newline="") as f:
         row = [m, 300]
         for j in JUDGES:
             k, nn, p, lo, hi = out[j]
-            row += [round(p, 4), round(lo, 4), round(hi, 4)]
+            row.append(round(p, 4))
+        for j in JUDGES:
+            k, nn, p, lo, hi = out[j]
+            row.append(round(lo, 4))
+        for j in JUDGES:
+            k, nn, p, lo, hi = out[j]
+            row.append(round(hi, 4))
         row += [round(mc_rate, 4)]
         w.writerow(row)
 print("\nsaved", f"{HERE}/t1_plaintext_compliance.csv")
