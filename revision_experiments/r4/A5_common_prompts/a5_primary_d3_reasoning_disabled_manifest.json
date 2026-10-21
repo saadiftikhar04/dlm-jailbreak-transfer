@@ -1,0 +1,66 @@
+{
+    "task_id": "A5-D3",
+    "n_eligible_prompts": 90,
+    "attack_checkpoint_cells": 18,
+    "d3_rows": 1620,
+    "route": {
+        "route": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "provider": "Nvidia via OpenRouter",
+        "input_price": "0",
+        "output_price": "0"
+    },
+    "run_id": "reasoning_disabled",
+    "judge_configuration": {
+        "temperature": 0,
+        "top_p": 1,
+        "max_tokens": 256,
+        "stream": false,
+        "reasoning": {
+            "enabled": false
+        },
+        "retry": "one identical retry for transport, empty, or invalid JSON"
+    },
+    "raw_prompt_or_response_text_in_outputs": false,
+    "row_identity": [
+        "attack",
+        "exact checkpoint scope",
+        "dataset",
+        "prompt_idx"
+    ],
+    "statuses": {
+        "ok": 1322,
+        "judge_error": 298
+    },
+    "input_sha256": {
+        "tier0/02_dedup_and_config_audit/pool_913.csv": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "revision_experiments/r4/A7_prompt_pool/a7_prompt_ledger.csv": "5311bde783ec97e6fd0cbb994b59e0260b82b8622d4cd8eec0666af7af85a6a3",
+        "revision_experiments/r4/A7_prompt_pool/a7_results_ledger.csv": "666c47618d2865cb3fbf2cf81efc09dcd154a4a8470c333dd788b0d2172b86b0",
+        "revision_experiments/r4/A5_common_prompts/a5_official_row_ledger.csv": "9ad6e5d4426acc00ecd94405290ed9901269e2c11f48e3c49a4438ac733b9147",
+        "results/pif/PIF_JUDGED/qwen_pif_final_judged.csv": "5758e2c60607daabd6c32ac2ecd2a8548565cb8cf2fd631a2a5cd4f4849c8ba3",
+        "results/metacipher/Metacipher_Judged/qwen.csv": "394cea0c45fdda8caf0525160731895c4a79ecf928e00000df35c34b3b5490da",
+        "results/arrattack/Arrattack_Judged/arrattack_qwen_judged.csv": "b80527a397b22814adec74961a43c494a553a8dbcbaea845278e9fe77c8bb363",
+        "results/pif/PIF_JUDGED/llama_pif_final_judged.csv": "e603578815e1d32a6e62109d7cb9b863b81fb689099c6f155a2eb02a4cab89af",
+        "results/metacipher/Metacipher_Judged/llama.csv": "1c554636f2741c7f8a15f97040227eacd70e76e839cd5f4d584c73a8922162e3",
+        "results/arrattack/Arrattack_Judged/arrattack_llama_judged.csv": "9c0a4c3b2338d79c09ab2ff4e083768539705927aa2fe91fd41b42bc6d48188a",
+        "results/pif/PIF_JUDGED/falcon_pif_final_judged.csv": "10a4bbfcf7dd3d8122ed2ee0ddb8560a830aaf161ba01a5638a6f2598524357b",
+        "results/metacipher/Metacipher_Judged/falcon.csv": "78aed32b89b00e12865f9d697d29ea067d96159756b77cb367838e16e84270a1",
+        "results/arrattack/Arrattack_Judged/arrattack_falcon_judged.csv": "7c29727f59f9a40c2abe8538af4cd16190eb5271498c79fbe701334d7ef8fb98",
+        "results/pif/PIF_JUDGED/llada_pif_final_judged.csv": "a23d894dc8a18eec53170466ccf57362837558de92d40ddeee796d032a423061",
+        "results/metacipher/Metacipher_Judged/llada.csv": "adbfbd96cc1e1293381c9fe9ee2679b5a2ea876cf5d87233346b0992954d1a52",
+        "results/arrattack/Arrattack_Judged/arrattack_llada_judged.csv": "0ab20c962bc1888213d4cd9fd0f9834faba2d114ab5e520dd18f3cc37f377284",
+        "results/pif/PIF_JUDGED/dream_pif_final_judged.csv": "06afe955bae421c3883a3873d55865a5f0a6923fd0909338139142b31a641c83",
+        "results/metacipher/Metacipher_Judged/dream.csv": "94a127326d2e9777b69794403c91af404f2afa077772bc8d470ce22a35804faf",
+        "results/arrattack/Arrattack_Judged/arrattack_dream_judged.csv": "748aa67cd5f76a1ce60b44e844e1eb7777274e25ac403dd61749185686205667",
+        "results/pif/PIF_JUDGED/diffucoder_pif_final_judged.csv": "ebf5a4dba2e86a05f3c97811a024ab70d3b52f029801653583d59749af95b372",
+        "results/metacipher/Metacipher_Judged/diffucoder.csv": "3153f86b53ce9ee8b7d443726eff3d67920ae2a955b00f6c993874936b713249",
+        "results/arrattack/Arrattack_Judged/arrattack_diffucoder_judged.csv": "446a3d740b608db69e16dd132205b8cd5fb0e5a119bf011c9c06a90e562a8739",
+        "revision_experiments/r4/A4_discrepancy_audit/a4_existing_evidence.py": "570a32cd690e41c22cce51850b548adb56ca037b436ead260505a197843a675a",
+        "submissions/TMLR/r4_plan.txt": "1389fd6c3cbcf9243d98cf4d79207e5535117bd8665a8ef6b4c65e35e0d89186"
+    },
+    "output_sha256": {
+        "a5_primary_d3_reasoning_disabled_ledger.csv": "6821ea0a9dc2a03c2eff42928ed521f65a34f14c0ed5691d7e0a2d8e0db638c9",
+        "a5_primary_d3_reasoning_disabled_cell_rates.csv": "668fcf21144e5b178a189975c5fa01a2a42dff754a453094afd5037eea763a59",
+        "a5_primary_d3_reasoning_disabled_summary.md": "34eed277859a0968e506bdda4c7f0444305fff0871b46b25fe818405f38e65a9"
+    },
+    "analysis_script_sha256": "6ff299d4e1d175f3e2a9db836ea7e52ab8fedd62e4b9a96b5fdbbc806c9020c1"
+}

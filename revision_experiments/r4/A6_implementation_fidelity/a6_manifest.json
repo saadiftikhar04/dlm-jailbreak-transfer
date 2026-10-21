@@ -1,0 +1,94 @@
+{
+    "task_id": "A6",
+    "pif_rows": 5478,
+    "pif_cells": 6,
+    "similarity_definition": "max tokenwise cosine of aligned final BERT hidden states; unequal token lengths fail",
+    "bert_model": "bert-large-uncased",
+    "bert_revision": "6da4b6a26a1877e173fca3225479512db81a5e5b",
+    "theta": 0.85,
+    "model_device": "cuda:0",
+    "reference_model_recovery": "not run; new victim inference requires the compute-approval gate",
+    "new_api_calls": 0,
+    "new_victim_generations": 0,
+    "analysis_script_sha256": "f456dd1ecedaea653671d9890ab771c38b7a60f697aa43f2e2870a7046abfbbc",
+    "source_sha256": {
+        "tier0/02_dedup_and_config_audit/pool_913.csv": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "results/pif/PIF_JUDGED/qwen_pif_final_judged.csv": "5758e2c60607daabd6c32ac2ecd2a8548565cb8cf2fd631a2a5cd4f4849c8ba3",
+        "results/pif/PIF_JUDGED/llama_pif_final_judged.csv": "e603578815e1d32a6e62109d7cb9b863b81fb689099c6f155a2eb02a4cab89af",
+        "results/pif/PIF_JUDGED/falcon_pif_final_judged.csv": "10a4bbfcf7dd3d8122ed2ee0ddb8560a830aaf161ba01a5638a6f2598524357b",
+        "results/pif/PIF_JUDGED/llada_pif_final_judged.csv": "a23d894dc8a18eec53170466ccf57362837558de92d40ddeee796d032a423061",
+        "results/pif/PIF_JUDGED/dream_pif_final_judged.csv": "06afe955bae421c3883a3873d55865a5f0a6923fd0909338139142b31a641c83",
+        "results/pif/PIF_JUDGED/diffucoder_pif_final_judged.csv": "ebf5a4dba2e86a05f3c97811a024ab70d3b52f029801653583d59749af95b372",
+        "PiF/attack_mlm.py": "21874b8f4b9ad35de29dccc7cff59a73f17529662880987a8021176d1f28a90e",
+        "PiF/run_pif.py": "8b20953758f8624bf8904ca220abb34e61821c051e0e1d63be5ec193e9cb685a",
+        "scripts/metacipher_multi.py": "754568d4259e40aadbea60c6f6ba6abd38261590435fd50ab6eeaaa3dfc056e7",
+        "ArrAttack/stage5_attack.py": "8bbc7937d45d62331f88a3136b457930cf356a5537328641b27f4719bf18f7c7"
+    },
+    "outputs_sha256": {
+        "a6_pif_bert_similarity.csv": "98897392c6e4ff49bb2efd0f83efb54be8b403e8893a45e5803fa826e4fdcad9",
+        "a6_pif_bert_summary.csv": "18bf74deef94ed6ff82c7665c7764a7f18a596beb9a6f72fe90bf00b1c6062c7",
+        "a6_summary.md": "017581860d5b4ed6a20c49fc02cf3dedfd3a3abf68de96fd72cb8c6998438dd7"
+    },
+    "success_label_mapping_audit": {
+        "pif": {
+            "rows": 5478,
+            "mismatches": 0
+        },
+        "metacipher": {
+            "rows": 5478,
+            "mismatches": 0
+        },
+        "arrattack": {
+            "rows": 990,
+            "mismatches": 0
+        }
+    },
+    "direct_source_function_spotcheck": {
+        "n": 7,
+        "all_match": true,
+        "rows": [
+            {
+                "model": "qwen",
+                "dataset": "harmbench",
+                "prompt_idx": 1,
+                "source_function_matches": true
+            },
+            {
+                "model": "llama",
+                "dataset": "harmbench",
+                "prompt_idx": 1,
+                "source_function_matches": true
+            },
+            {
+                "model": "falcon",
+                "dataset": "harmbench",
+                "prompt_idx": 1,
+                "source_function_matches": true
+            },
+            {
+                "model": "llada",
+                "dataset": "harmbench",
+                "prompt_idx": 1,
+                "source_function_matches": true
+            },
+            {
+                "model": "llada",
+                "dataset": "strongreject",
+                "prompt_idx": 147,
+                "source_function_matches": true
+            },
+            {
+                "model": "dream",
+                "dataset": "harmbench",
+                "prompt_idx": 1,
+                "source_function_matches": true
+            },
+            {
+                "model": "diffucoder",
+                "dataset": "harmbench",
+                "prompt_idx": 1,
+                "source_function_matches": true
+            }
+        ]
+    }
+}

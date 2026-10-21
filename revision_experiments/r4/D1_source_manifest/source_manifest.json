@@ -1,0 +1,711 @@
+{
+    "manifest_version": "1.0",
+    "recorded_at_utc": "2026-10-02T21:18:36Z",
+    "updated_at_local_date": "2026-10-04",
+    "purpose": "Freeze the R4 pre-new-outcome source state. This manifest contains paths, hashes, metadata, and no raw response text.",
+    "repositories": {
+        "analysis_repository": {
+            "revision": "8237ef201dfba9eddf0879d1d597452f31fd2059",
+            "branch": "main",
+            "preexisting_worktree_changes": [
+                ".gitignore",
+                "submissions/TMLR/r4_mock_review.txt",
+                "submissions/TMLR/r4_plan.txt"
+            ]
+        },
+        "paper_repository": {
+            "relative_path": "Overleaf_TMLR",
+            "revision": "7a7d2a792d483b451ae4e235a1e3f105dde581c6",
+            "branch": "main",
+            "worktree_clean_at_freeze": true,
+            "post_A1_revision": "71ab1c1646870533131808701b623691dcb0e932",
+            "post_A1_worktree_clean": true
+        }
+    },
+    "prompt_pool": {
+        "source_ledger": "tier0/11_common_judge_rescore/all_final_responses.jsonl",
+        "sha256": "9bb88e18dcc3b6f749ee8ba56ced363d7c684e233efd78eaf14a9c290265c794",
+        "byte_size": 36912990,
+        "row_count": 11946,
+        "composition_by_attack": {
+            "pif": 5478,
+            "metacipher": 5478,
+            "arrattack": 990
+        },
+        "composition_by_benchmark": {
+            "harmbench": 5250,
+            "jailbreakbench": 1320,
+            "malicious_instruct": 1320,
+            "strongreject": 4056
+        },
+        "row_identity": {
+            "candidate_key": ["dataset", "prompt_idx"],
+            "audit": "This composite key is unique within every attack-model cell in the frozen ledger. prompt_idx alone is not globally unique across benchmarks.",
+            "canonical_immutable_key": "benchmark identity + original benchmark prompt identity; do not join on normalized prompt text"
+        },
+        "demasked_ledger": {
+            "source": "tier0/11_common_judge_rescore/all_final_responses_demasked.jsonl",
+            "sha256": "322be12e13356b1780b7fe3d57d21b0b80904e9d035199a88f8796c28b58c0d0",
+            "byte_size": 36406956
+        }
+    },
+    "victim_checkpoint_revisions": {
+        "qwen2.5-7b-instruct": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "llama-3.2-3b-instruct": "0cb88a4f764b7a12671c53f0838cd831a0843b95",
+        "llama-3.1-8b-instruct": "0e9e39f249a16976918f6564b8830bc894c89659",
+        "falcon-h1r-7b": "a6f74bf181389908efd6970878d7ee2b42f5d417",
+        "llada-1.5-8b": "84346fd91ba60252d260022201ad6fc5a3468fb2",
+        "dream-v0-instruct-7b": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+        "diffucoder-7b-instruct": "4fdd4580064ca5d11808069ce78f88d068753c96"
+    },
+    "judged_cells": [
+        {
+            "attack": "pif",
+            "model_alias": "qwen",
+            "source": "results/pif/PIF_JUDGED/qwen_pif_final_judged.csv",
+            "rows": 913,
+            "sha256": "5758e2c60607daabd6c32ac2ecd2a8548565cb8cf2fd631a2a5cd4f4849c8ba3"
+        },
+        {
+            "attack": "pif",
+            "model_alias": "llama",
+            "source": "results/pif/PIF_JUDGED/llama_pif_final_judged.csv",
+            "rows": 913,
+            "sha256": "e603578815e1d32a6e62109d7cb9b863b81fb689099c6f155a2eb02a4cab89af"
+        },
+        {
+            "attack": "pif",
+            "model_alias": "falcon",
+            "source": "results/pif/PIF_JUDGED/falcon_pif_final_judged.csv",
+            "rows": 913,
+            "sha256": "10a4bbfcf7dd3d8122ed2ee0ddb8560a830aaf161ba01a5638a6f2598524357b"
+        },
+        {
+            "attack": "pif",
+            "model_alias": "llada",
+            "source": "results/pif/PIF_JUDGED/llada_pif_final_judged.csv",
+            "rows": 913,
+            "sha256": "a23d894dc8a18eec53170466ccf57362837558de92d40ddeee796d032a423061"
+        },
+        {
+            "attack": "pif",
+            "model_alias": "dream",
+            "source": "results/pif/PIF_JUDGED/dream_pif_final_judged.csv",
+            "rows": 913,
+            "sha256": "06afe955bae421c3883a3873d55865a5f0a6923fd0909338139142b31a641c83"
+        },
+        {
+            "attack": "pif",
+            "model_alias": "diffucoder",
+            "source": "results/pif/PIF_JUDGED/diffucoder_pif_final_judged.csv",
+            "rows": 913,
+            "sha256": "ebf5a4dba2e86a05f3c97811a024ab70d3b52f029801653583d59749af95b372"
+        },
+        {
+            "attack": "metacipher",
+            "model_alias": "qwen",
+            "source": "results/metacipher/Metacipher_Judged/qwen.csv",
+            "rows": 913,
+            "sha256": "394cea0c45fdda8caf0525160731895c4a79ecf928e00000df35c34b3b5490da"
+        },
+        {
+            "attack": "metacipher",
+            "model_alias": "llama",
+            "source": "results/metacipher/Metacipher_Judged/llama.csv",
+            "rows": 913,
+            "sha256": "1c554636f2741c7f8a15f97040227eacd70e76e839cd5f4d584c73a8922162e3"
+        },
+        {
+            "attack": "metacipher",
+            "model_alias": "falcon",
+            "source": "results/metacipher/Metacipher_Judged/falcon.csv",
+            "rows": 913,
+            "sha256": "78aed32b89b00e12865f9d697d29ea067d96159756b77cb367838e16e84270a1"
+        },
+        {
+            "attack": "metacipher",
+            "model_alias": "llada",
+            "source": "results/metacipher/Metacipher_Judged/llada.csv",
+            "rows": 913,
+            "sha256": "adbfbd96cc1e1293381c9fe9ee2679b5a2ea876cf5d87233346b0992954d1a52"
+        },
+        {
+            "attack": "metacipher",
+            "model_alias": "dream",
+            "source": "results/metacipher/Metacipher_Judged/dream.csv",
+            "rows": 913,
+            "sha256": "94a127326d2e9777b69794403c91af404f2afa077772bc8d470ce22a35804faf"
+        },
+        {
+            "attack": "metacipher",
+            "model_alias": "diffucoder",
+            "source": "results/metacipher/Metacipher_Judged/diffucoder.csv",
+            "rows": 913,
+            "sha256": "3153f86b53ce9ee8b7d443726eff3d67920ae2a955b00f6c993874936b713249"
+        },
+        {
+            "attack": "arrattack",
+            "model_alias": "qwen",
+            "source": "results/arrattack/Arrattack_Judged/arrattack_qwen_judged.csv",
+            "rows": 165,
+            "sha256": "b80527a397b22814adec74961a43c494a553a8dbcbaea845278e9fe77c8bb363"
+        },
+        {
+            "attack": "arrattack",
+            "model_alias": "llama",
+            "source": "results/arrattack/Arrattack_Judged/arrattack_llama_judged.csv",
+            "rows": 165,
+            "sha256": "9c0a4c3b2338d79c09ab2ff4e083768539705927aa2fe91fd41b42bc6d48188a"
+        },
+        {
+            "attack": "arrattack",
+            "model_alias": "falcon",
+            "source": "results/arrattack/Arrattack_Judged/arrattack_falcon_judged.csv",
+            "rows": 165,
+            "sha256": "7c29727f59f9a40c2abe8538af4cd16190eb5271498c79fbe701334d7ef8fb98"
+        },
+        {
+            "attack": "arrattack",
+            "model_alias": "llada",
+            "source": "results/arrattack/Arrattack_Judged/arrattack_llada_judged.csv",
+            "rows": 165,
+            "sha256": "0ab20c962bc1888213d4cd9fd0f9834faba2d114ab5e520dd18f3cc37f377284"
+        },
+        {
+            "attack": "arrattack",
+            "model_alias": "dream",
+            "source": "results/arrattack/Arrattack_Judged/arrattack_dream_judged.csv",
+            "rows": 165,
+            "sha256": "748aa67cd5f76a1ce60b44e844e1eb7777274e25ac403dd61749185686205667"
+        },
+        {
+            "attack": "arrattack",
+            "model_alias": "diffucoder",
+            "source": "results/arrattack/Arrattack_Judged/arrattack_diffucoder_judged.csv",
+            "rows": 165,
+            "sha256": "446a3d740b608db69e16dd132205b8cd5fb0e5a119bf011c9c06a90e562a8739"
+        }
+    ],
+    "frozen_judge_configuration": {
+        "primary_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "provider": "Nvidia via OpenRouter free route",
+        "temperature": 0,
+        "top_p": 1,
+        "max_tokens": 256,
+        "stream": false,
+        "prompt_and_taxonomy_source": "submissions/TMLR/r4_plan.txt D3",
+        "smoke_test": {"http_status": 200, "reported_cost": 0, "result": "valid refusal JSON under frozen parameters"}
+    },
+    "judge_and_analysis_source_hashes": [
+        {
+            "source": "tier0/11_common_judge_rescore/common_judge.py",
+            "sha256": "3ff616a68e8fb270dae6b4df27bb0c3193e0a8e671bf15ec3e570a6647c696cf"
+        },
+        {
+            "source": "tier0/11_common_judge_rescore/aggregate_common_judge.py",
+            "sha256": "121910e5e0bc940e5cfb97490e8007953b8f2ec3d6af571fb2fa822b92883eb9"
+        },
+        {
+            "source": "PiF/pif_judge.py",
+            "sha256": "d8fdb6a2f073692f4a4a9dd8b01ccce79d13ee0298ff54d710b54df571252184"
+        },
+        {
+            "source": "PiF/judge_pif_llm.py",
+            "sha256": "f21c38dbe89b59a389def9f8798e734f1fb11a625daba9d2a5147fb29de43a06"
+        },
+        {
+            "source": "ArrAttack/deepseek_judge.py",
+            "sha256": "b6fe2fafa9bb267796064acb72ceb178841a05f20281503e7efdecc368dfec2d"
+        },
+        {
+            "source": "ArrAttack/dual_judge.py",
+            "sha256": "85f79fcfa4f4c341f72637a9b546c8ea9038211bdff60ea8d9ea24673e79c589"
+        },
+        {
+            "source": "ArrAttack/judge_results.py",
+            "sha256": "8714a75b9e448c937248bda8e409cc5490e4659751d68985851e095dd26d9234"
+        },
+        {
+            "source": "scripts/pif_target_models.py",
+            "sha256": "91e302696886ea6794ab0c5cf262f12b2b0afdaed61d4a3f0c99b1795bc773f3"
+        },
+        {
+            "source": "MetaCipher/scripts/run_pif.py",
+            "sha256": "da3d4e80f96b2a809f118bfae99b5dd4832247ec51f35f5c7757523fd8183d01"
+        },
+        {
+            "source": "MetaCipher/scripts/metacipher_multi.py",
+            "sha256": "5e8f0b3ad376be6d297db33c123a886155e0cb8fa5dde5aeba394282fd7303f5"
+        },
+        {
+            "source": "MetaCipher/src/llm.py",
+            "sha256": "e558da44b3580c218cfe48504c5fb6c792399d90d6a90fb05b0b239da1edaf35"
+        },
+        {
+            "source": "ArrAttack/stage5_attack.py",
+            "sha256": "8bbc7937d45d62331f88a3136b457930cf356a5537328641b27f4719bf18f7c7"
+        },
+        {
+            "source": "ArrAttack/utils/model_utils.py",
+            "sha256": "c5a311b204f3eb0658241f3325455b7c83a2fc8bf7933313d358c314317df724"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_jailbreakbench.py",
+            "sha256": "bf016c2146488aa8beb3523d5c489d6e27b7edd21e997c8c26acc801784aa2fd"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_harmbench.py",
+            "sha256": "70907273c9878b7c96f1c49ec26d1da8f5673919ff93ac3f3edcde4155682c17"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_strongreject.py",
+            "sha256": "6e8f01e72122d228787fabbc6d464375103576b34b33e6b6e17e53b3aaea11a5"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_maliciousinstruct.py",
+            "sha256": "daf025aa321d186910efedc5d96f3eb4bf2bfd9efb62f9c558a1c435c385411c"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_autodanturbo.py",
+            "sha256": "d38cbd7f3681c10272e825eaeae406e1e2349aa6f120296d018b5ad572c2f79f"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_ace.py",
+            "sha256": "220c5f8a6bd2c550f63fd10db4cf329808b63cdb6e05c1349adc0c062ebc8ac0"
+        },
+        {
+            "source": "MetaCipher/scripts/post-processing/judge_vbcde.py",
+            "sha256": "25e92554fa14af719afa012c776f1e7b77e569ae3a56faf707018eb2c4584509"
+        },
+        {
+            "source": "tier0/18_t12_table1/build_table1.py",
+            "sha256": "9445f4600c0f4a2af7c31a11db998fa4040c0ac9da53ec37eb8aa09ad2fe4556"
+        }
+    ],
+    "frozen_document_hashes": [
+        {
+            "source": "submissions/TMLR/r4_plan.txt",
+            "sha256": "94c9edcfcf9812b2703ded9852d55f88db02ef3b39b64092ec7cf035e737a666"
+        },
+        {
+            "source": "submissions/TMLR/r4_mock_review.txt",
+            "sha256": "aa17b0fcaf1120cc9c2bc986de2fdbaf10677a5c601ea3278a737d144c2795ac"
+        },
+        {
+            "source": "tier0/00_shared/judged_file_manifest.csv",
+            "sha256": "39309de3c57d5122a78593c1b7a0e868a521fcb99bc9ec78cf6469c2d7f16e7e"
+        }
+    ],
+    "analysis_script_source_hashes": [
+        {
+            "source": "tier0/01_existing_label_breakdown/build_breakdown.py",
+            "sha256": "82d6ffcc98c2bb6eeef690ebf50832455690e73620399c835fefbb279f9461af"
+        },
+        {
+            "source": "tier0/05_statistical_reanalysis/build_reanalysis.py",
+            "sha256": "f3b5ea0b56a628355987dec622086eedb767910ff560665b87cf86d3bee8f5e8"
+        },
+        {
+            "source": "tier0/18_t1_plaintext_control/t1_judge.py",
+            "sha256": "011e3e5f54e6ca6373fb81f49965611606a2b4c5ca062b0d2ab675eafdd77418"
+        },
+        {
+            "source": "tier0/18_t4_pathA/t4_pathA_rejudge.py",
+            "sha256": "4c40845480c8880dd68206bfaa788e852a5429f3929c4dbaf36bc9e81cf810cd"
+        },
+        {
+            "source": "tier0/18_t7_family_contrast.py",
+            "sha256": "bce19535b9102c8194b2909d3aed538ab908b71a524b457bcf8237819bcf48fd"
+        },
+        {
+            "source": "tier0/18_t8_judge_invariance.py",
+            "sha256": "49a9ed9b373b87f334b91530a743d4cf8b8820cb200028b2c5f09e66874c49a1"
+        },
+        {
+            "source": "tier0/18_t12_table1/build_table1.py",
+            "sha256": "9445f4600c0f4a2af7c31a11db998fa4040c0ac9da53ec37eb8aa09ad2fe4556"
+        },
+        {
+            "source": "tier0/17_arrattack_missingness/missingness_diag.py",
+            "sha256": "df9f399cdd96fedca31f2566552b9d6cb0a7e065f76a37ebd9b61b9232f8a717"
+        },
+        {
+            "source": "tier0/18_t5_human_annotation/build_t5_sample.py",
+            "sha256": "1f7dfb9745e010f2668c33b41281be83812719c41aa5b841489d4b4884a83c49"
+        }
+    ],
+    "decision_log": [
+        {
+            "decision": "D2",
+            "date": "2026-10-03",
+            "ruling": "Choose the preferred Llama identity repair: rerun PiF and MetaCipher on Llama-3.1-8B-Instruct over the canonical pool with matched plaintext controls; retain Llama-3.2-3B as a separate sensitivity record.",
+            "rationale": "Creates one checkpoint identity for the primary three-attack profile. G1 remains unsubmitted pending the task-specific compute approval gate."
+        },
+        {
+            "decision": "D3",
+            "date": "2026-10-02",
+            "ruling": "Primary common judge is nvidia/nemotron-3-ultra-550b-a55b:free via OpenRouter; temperature=0, top_p=1, max_tokens=256; six-category rubric is frozen in submissions/TMLR/r4_plan.txt.",
+            "rationale": "Free route verified at zero reported cost; non-DeepSeek general reasoning model selected for request-conditioned compliance categories. No outcome-based selection."
+        },
+        {
+            "decision": "D5",
+            "date": "2026-10-04",
+            "ruling": "Do not conduct human calibration. No author annotation is assigned, no external annotator has been recruited or approved, and no human-labeling run is authorized. Mark J4 not conducted and retain the human-calibration gap as a limitation.",
+            "rationale": "The author explicitly ruled out author annotation; no external annotator is available. Automated-judge agreement must not be presented as accuracy or human ground truth."
+        },
+        {
+            "decision": "D4",
+            "date": "2026-10-03",
+            "ruling": "Primary ASR@1 is the D3 verdict on the first victim response for the first eligible attack candidate per canonical prompt; no best-of-N response selection. Secondary ASR@k is cumulative D3 success over sequential victim queries, with k=50 for PiF, k=5 for MetaCipher, and k=50 for ArrAttack, and per-prompt query counts. Describe the as-run MetaCipher Q-table and the PiF/ArrAttack feedback stops as adaptive components; do not call this a fixed causal-to-target transfer.",
+            "rationale": "The selected later MetaCipher responses and PiF final responses do not supply a uniform first-query outcome. Missing first-response outputs remain explicitly unresolved and G3 is gated."
+        },
+        {
+            "decision": "D6",
+            "date": "2026-10-02",
+            "ruling": "Encrypt and retain full response fields in institutionally controlled storage until 12 months after the final editorial decision, then securely delete. Allow approved, logged, time-limited read-only verification under a data-use agreement; retain metadata, verdicts, aggregates, sanitized examples, and hashes thereafter.",
+            "rationale": "Adopt gated retention rather than deletion at review close, subject to confirming institutional storage and access-control capability before release."
+        },
+        {
+            "decision": "D7",
+            "date": "2026-10-03",
+            "ruling": "Freeze Wilson intervals, paired McNemar tests, Cochran's Q for three-attack comparisons, Holm adjustment within attack-control and attack-pair families, and 10,000 prompt/duplicate-cluster bootstrap replicates with seed 20261002. Primary controls are matched on prompt identity, D3 judge, and each unique victim decoder configuration; family/portfolio summaries are descriptive, and the mixed-effects family inference is withdrawn.",
+            "rationale": "Pre-registers analyses before any new outcome judging. D7 details are frozen in submissions/TMLR/r4_plan.txt."
+        }
+    ],
+    "configuration_reconstruction": {
+        "status": "A1 source and judge matrices built; historical run-only fields explicitly marked unknown",
+        "generation_table": "revision_experiments/r4/A1_config_audit/config_matrix.csv",
+        "judge_table": "revision_experiments/r4/A1_config_audit/judge_matrix.csv",
+        "source_hashes": "revision_experiments/r4/A1_config_audit/a1_source_hashes.json",
+        "unknown_fields": [
+            "Exact source revision executed for every original HPC cell",
+            "Per-row random seeds for the original generation runs",
+            "The provenance/model that produced the stored ArrAttack three-way gpt_fuzz labels",
+            "Exact API access dates and served snapshots for historical DeepSeek, Claude, and GPT-sol calls"
+        ],
+        "rule": "Unknown run metadata is left unknown; source-code settings are not misrepresented as verified runtime values."
+    },
+    "r4_phase0_artifacts": [
+        {
+            "source": "submissions/TMLR/r4_plan.txt",
+            "sha256_current_after_phase0_decisions": "b4475d8e8f8831a7268642a8be467a842cf294caf0df31e3fd12c69c2b0cb3a6"
+        },
+        {
+            "source": "revision_experiments/r4/A1_config_audit/build_a1_tables.py",
+            "sha256": "7196125b44ba24f04b3431b17ba2fdd4ce0b55e8cc47f89281ea9d76425aa392"
+        },
+        {
+            "source": "revision_experiments/r4/A1_config_audit/config_matrix.csv",
+            "sha256": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a"
+        },
+        {
+            "source": "revision_experiments/r4/A1_config_audit/judge_matrix.csv",
+            "sha256": "9fc7c49c0e994e501b6dd408f9a636ec0ac07e3739a5987845993ceb9a2a87e5"
+        },
+        {
+            "source": "revision_experiments/r4/A1_config_audit/a1_source_hashes.json",
+            "sha256": "cad5b5df9636d127041e0fbd87c2d753e80a3c73cb5a4db3190fde13e63ade76"
+        },
+        {
+            "source": "revision_experiments/r4/A1_config_audit/a1_summary.md",
+            "sha256": "30d71e715d6c5b1c1419ea4dc7a009e1862d5ebd8f3a612a68128a6bb1b1c408"
+        },
+        {
+            "source": "revision_experiments/r4/A2_attempts/a2_attempt_audit.py",
+            "sha256": "cf4a9aa51970d948dd85b5f49824149f11e433284f573cd60bb917835dd2463b"
+        },
+        {
+            "source": "revision_experiments/r4/A2_attempts/a2_attempt_audit.json",
+            "sha256": "ffe4810ff2cf167a8507134d911899cc3ed315af1fd01b7ee41c668da142cf1d"
+        },
+        {
+            "source": "revision_experiments/r4/A2_attempts/a2_summary.md",
+            "sha256": "2f2ee5bbcc1cafe287b12745ea44e154446b3e63ed205acf70b3f035b0637407"
+        },
+        {
+            "source": "Overleaf_TMLR/main.tex",
+            "sha256": "c5f76ee54370c1e1792f446a642ea7b59d2e2fb27dc7a579a084a55549955491"
+        },
+        {
+            "source": "Overleaf_TMLR/sections/appendix.tex",
+            "sha256": "7de2fb48e9173077b538e97d198f2aecdee83eadfd907419f8a3e625df56f504"
+        },
+        {
+            "source": "Overleaf_TMLR/sections/9_ethical_considerations.tex",
+            "sha256": "c5674d01bce590b9945b7625c2e8e8ea8e08983c185e8a6e2a1dba1c94ba87c1"
+        },
+        {
+            "source": "Overleaf_TMLR/tables/a1_generation_config.tex",
+            "sha256": "e2eace6f3b16ed68c6147447523c13ef7aa539827705f7facfdd1fa408cfe1d7"
+        },
+        {
+            "source": "Overleaf_TMLR/tables/a1_judge_config.tex",
+            "sha256": "6330f30e556907205251f82ce61df781de1e8478aee34abb4d810bf4b737cc69"
+        }
+    ],
+    "phase1_c0_audit_updates": {
+        "updated_at_local_date": "2026-10-04",
+        "new_outcomes_generated": false,
+        "new_api_judgments_run": true,
+        "current_plan": {
+            "source": "submissions/TMLR/r4_plan.txt",
+            "sha256": "56adb405da7777e81ea417b2e7a997df89f7050e37be1394608da46f6a1e61a5"
+        },
+        "A2_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A2_attempts/a2_attempt_audit.py",
+                "sha256": "d6c7bbe47a91ceec52000f056f6d956db4ec771639690f42f4b9399654dec0f2"
+            },
+            {
+                "source": "revision_experiments/r4/A2_attempts/a2_attempt_audit.json",
+                "sha256": "ffe4810ff2cf167a8507134d911899cc3ed315af1fd01b7ee41c668da142cf1d"
+            },
+            {
+                "source": "revision_experiments/r4/A2_attempts/a2_summary.md",
+                "sha256": "250d266e78f4e62cee492f5bab5d0e09110f162ada767d841e184e095a526e94"
+            }
+        ],
+        "A3_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_outcome_mechanism.py",
+                "sha256": "495e548c2f73cc021544dc74353e9b271991d550b774a27c858bc0e1b40741a7"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_c1_semantic_rubric.md",
+                "sha256": "eb8167d5eac0945e61a8b4f7a861a5d962d59bd2f066c412360cedb73306bd16"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_source_hashes.json",
+                "sha256": "0c6e9f6cb6563b38c904939a497365fd430a0738e6b3ad28a39dccd66a0ca2c1"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_summary.md",
+                "sha256": "16b6b1f6d8023e8b4dc960e0960316de34c29e2706f278d5625e34d572734dd1"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/metacipher_outcomes_by_model_benchmark.csv",
+                "sha256": "70e819358c4d8561999b7ed0ea16ea98c5c2e2d30fda1feaeaf8ff16ae864c13"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/placeholder_hits_by_cell.csv",
+                "sha256": "eff76a437565c2fd4cdf33b41e18fad8d58f748666e152addf4ae6d765a920eb"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/benign_control_existing_labels.csv",
+                "sha256": "9ea78171234d305d6cac479b0b8bfb6aa39e7e7090d4111bd68a74bfa2374553"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/run_a3_c1_semantic_audit.py",
+                "sha256": "e0ef0e1a74c5a5eada114bc42a0a7339a94f49cf9c5c72ee50143ddebd0611b1"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_c1_semantic_labels_v3.jsonl",
+                "sha256": "45071a7b03df9a388fc46ea66047b749ecb8f85c40ae858f0a55408076d52e30"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_c1_summary_by_model_mask_v3.csv",
+                "sha256": "a79cbd3f932d82247caa263d67ba7b65a9807198b10a77cadfb15c6b0392eddf"
+            },
+            {
+                "source": "revision_experiments/r4/A3_outcome_mechanism/a3_c1_summary_v3.md",
+                "sha256": "34c37783786b51eaca2f593319c097079512516857899e2ec1274f2e606f998e"
+            }
+        ],
+        "A3_C0_validation": "24 MetaCipher model-by-benchmark counts matched the existing breakdown exactly; 18 attack-model response scans completed; 900 benign-control labels audited; 117 of 632 decode_and_comply responses were exact normalized prefixes of at least 40 characters. No API or human labels were used.",
+        "A3_C1_status": "Frozen rubric executed on 900 retained prompt-victim records. Exactly 750 returned valid labels; 90 ended in invalid_json, 59 in http_429, and 1 in http_502 after the one permitted retry. All 900 row keys remain present; failed rows are not labels. No further retry was run because the frozen per-row retry limit is exhausted. No human labels were used.",
+        "A4_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A4_discrepancy_audit/a4_existing_evidence.py",
+                "sha256": "0f984d669ae2cfb4b5e266dc1c5533cd928a40f0ab9d55082f255b73a91f450d"
+            },
+            {
+                "source": "revision_experiments/r4/A4_discrepancy_audit/a4_summary.md",
+                "sha256": "d77749a37b77e98173b6bf0eae0649f178eba07523a98ea878019855e78df663"
+            },
+            {
+                "source": "revision_experiments/r4/A4_discrepancy_audit/a4_llada_bracket_summary.csv",
+                "sha256": "254a2d3304d447d26f7e3b64d2ee94c87159f94428e227dc6c612963dca60dda"
+            },
+            {
+                "source": "revision_experiments/r4/A4_discrepancy_audit/a4_existing_judge_comparisons.csv",
+                "sha256": "13eae68686635e051dc131de5e59f4323c0cfd5e3e9ba77debd519d707f364fd"
+            }
+        ],
+        "A4_status": "Existing-evidence recheck: same stored LLaDA MetaCipher responses score 25/50 by the official label (50.67% stratified weighted) and 5/50 by the prior T2 DeepSeek binary judge (10.24% weighted), a judge disagreement rather than a generation effect. Prior T11/GPT-sol same-stored-response comparisons for selected cells are tabulated. The row-keyed regenerated Llama MetaCipher responses behind 11.4% remain absent; the frozen D3 judge has not been applied. No new judging/generation was run.",
+        "A5_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A5_common_prompts/a5_common_prompt_analysis.py",
+                "sha256": "69ee1bb5b40270832534e44d1f06e100ff60168b30456104cb4776813e432cd9"
+            },
+            {
+                "source": "revision_experiments/r4/A5_common_prompts/a5_manifest.json",
+                "sha256": "a17d7100688b7c02da4c2aa4f72d8e228e16c6547e6e51af98cc5c18ab895b58"
+            },
+            {
+                "source": "revision_experiments/r4/A5_common_prompts/a5_summary.md",
+                "sha256": "64058af23c8fe1d2e391e864cc7c9fd13b3c9b9087645cc9077ab9513bf30421"
+            },
+            {
+                "source": "revision_experiments/r4/A5_common_prompts/a5_official_cell_rates.csv",
+                "sha256": "a85e9ec918258d141aa3172f69d2b568b9e4884be66d0082820eb3ac8a56aa8e"
+            }
+        ],
+        "A5_status": "Attack-specific paired analysis completed on 165 canonical held-out prompts with checked ArrAttack tail remapping; D3 labels remain absent. After A7 exclusions, the eligible paired held-out subset is 90 rows and has separate descriptive paired tests in the A7 artifacts.",
+        "A6_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A6_implementation_fidelity/a6_pif_fidelity.py",
+                "sha256": "f456dd1ecedaea653671d9890ab771c38b7a60f697aa43f2e2870a7046abfbbc"
+            },
+            {
+                "source": "revision_experiments/r4/A6_implementation_fidelity/a6_manifest.json",
+                "sha256": "7dc423e44bfc5cae2dc95bf9f3556a0bad4198bfd070b53432b4aa75df80463c"
+            },
+            {
+                "source": "revision_experiments/r4/A6_implementation_fidelity/a6_summary.md",
+                "sha256": "017581860d5b4ed6a20c49fc02cf3dedfd3a3abf68de96fd72cb8c6998438dd7"
+            },
+            {
+                "source": "revision_experiments/r4/A6_implementation_fidelity/a6_pif_bert_summary.csv",
+                "sha256": "18bf74deef94ed6ff82c7665c7764a7f18a596beb9a6f72fe90bf00b1c6062c7"
+            }
+        ],
+        "A6_status": "All 5,478 PiF prompts rescored with the pinned BERT threshold implementation; 5,476 meet theta=0.85, while two LLaDA pairs have unequal token lengths. Seven direct source-function spot checks pass. The max-token cosine gate is not a semantic-preservation guarantee. Categorical success mappings reconcile on all 11,946 saved rows. Reference-model recovery still requires an approved new victim inference.",
+        "A7_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A7_prompt_pool/a7_dedup_and_taxonomy.py",
+                "sha256": "60e643263cd3ae8dd949500f78845d44da8e762b55b58ccbc0aac790bc405939"
+            },
+            {
+                "source": "revision_experiments/r4/A7_prompt_pool/a7_manifest.json",
+                "sha256": "88735a9aea0d034f9c4078a07ba25e1897b425499efc1278ee0ff29f76b53a7c"
+            },
+            {
+                "source": "revision_experiments/r4/A7_prompt_pool/a7_summary.md",
+                "sha256": "6e8e78ab0905115a41abce040fa3e184efe6964cd28272192cf5edd4aa2d3a8e"
+            },
+            {
+                "source": "revision_experiments/r4/A7_prompt_pool/a7_dedup_sensitivity.csv",
+                "sha256": "11aa7719019693bb2a5ba3e5da43aea0f617d30d552f1b5eb1958640a7dce110"
+            },
+            {
+                "source": "revision_experiments/r4/A7_prompt_pool/a7_eligible_common_mcnemar_holm.csv",
+                "sha256": "566a1c5817e10a244e4d482a37941d9708a6e5494b347979987c072d77492e6a"
+            }
+        ],
+        "A7_status": "MPNet edges and connected components validated; copyright/context-missing rows excluded, and dedup sensitivity plus eligible-subset paired tests are available. MaliciousInstruct remains unmapped because the source provides no category metadata; no human labels were added. Manuscript use must retain this taxonomy limitation and ArrAttack held-out scope.",
+        "A8_current_artifacts": [
+            {
+                "source": "revision_experiments/r4/A8_model_lineage/a8_build_lineage.py",
+                "sha256": "3e57616b36a07d6787583c4e318070918e57fc789cb88734555ae963b9f2a94e"
+            },
+            {
+                "source": "revision_experiments/r4/A8_model_lineage/a8_manifest.json",
+                "sha256": "1c48b60fe406aceb77373340261ebefb4ffc2dc41c625730698acc6dff717868"
+            },
+            {
+                "source": "revision_experiments/r4/A8_model_lineage/a8_summary.md",
+                "sha256": "b1a6220e8720b43e83b41f463885c51461cc2b135c66109e9b70022478957c9c"
+            },
+            {
+                "source": "revision_experiments/r4/A8_model_lineage/a8_model_lineage.csv",
+                "sha256": "7688dcd0eadc16e77874b8bc2fe0d74830932855eff16c44042a9cb9ec45ee86"
+            },
+            {
+                "source": "revision_experiments/r4/A8_model_lineage/a8_qwen_dream_paired_comparison.csv",
+                "sha256": "eaeefc7fa433947ad2a414033ad9a4d28f97e6eda1080a38feade09f5c1108aa"
+            }
+        ],
+        "A8_status": "Seven distinct checkpoint identities and the 165-prompt same-initialization comparison are documented from primary model sources. The pair controls initialization only. The lineage table is integrated in the current manuscript; broader M2/M4 claim checks remain open.",
+        "current_manuscript_verification": {
+            "date": "2026-10-04",
+            "build_command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+            "result": "success; 22 pages; no undefined references, citation errors, or overfull boxes; remaining warnings are underfull boxes and the included PDF version notice",
+            "current_plan_sha256": "56adb405da7777e81ea417b2e7a997df89f7050e37be1394608da46f6a1e61a5",
+            "audit_note_sha256": "fed9e32787c928ee680586ea0c5c77a8fa1ddbce991e5f596cde6dc077232e97",
+            "source_hashes": [
+                {
+                    "source": "Overleaf_TMLR/main.tex",
+                    "sha256": "41be0c471b73eaa0c33b6e7b781dcedd14c86c1afd9c4cd39b561cc3842c64b8"
+                },
+                {
+                    "source": "Overleaf_TMLR/figures/methodology.tex",
+                    "sha256": "d534d92531d8099c42e4ded17ec903a02ea0d17c8fcdc8a757dfa2734037df74"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/0_abstract.tex",
+                    "sha256": "5fa41e10a8dbed2e57d89e69025932ecd9a29608ccf835c0def99ec3c2991871"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/1_introduction.tex",
+                    "sha256": "6a43caa425e10e57d0e20de1f7151b42d8095db0299b9d970c1f5dab61314dbe"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/2_related_works.tex",
+                    "sha256": "67b30169c1812a82127f168ca320e2336247a7aa03422a03e77ed17e0508dc82"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/3_task_definition.tex",
+                    "sha256": "9ffb48a6f96b819bfdd4140aeaf8d0af38f6113208334109d730fe6809981703"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/4_methodology.tex",
+                    "sha256": "b89c14e42ae38848781c3361bef4c5d9dea0254ae43ce95c8868c1dc166c83d1"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/5_experiment.tex",
+                    "sha256": "46c47ebae22603e1fa4934199626591c12be3f16b1aadcb7332e3639165214fc"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/6_discussion.tex",
+                    "sha256": "5244df43d26547efd810f050a2e8844112400f6de15150add626bf49aa9398fd"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/7_conclusion.tex",
+                    "sha256": "fc07bcb8847782fa2496687d8c26b7303273ce0a739c244d93533027c7ba18d1"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/8_limitations.tex",
+                    "sha256": "bb06abcaff65c5964f868179dc3f286c87d458a21b455803e97123a8516838e4"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/9_ethical_considerations.tex",
+                    "sha256": "4511e8c6a5fe864ca8a6207a4b27f97701e023df82dcbfc7cd12288e79c8a3d9"
+                },
+                {
+                    "source": "Overleaf_TMLR/sections/appendix.tex",
+                    "sha256": "29f8fd99ff7f9f2734fbba939df44e74d52b91cd13e529ba851fc10d402be5fb"
+                },
+                {
+                    "source": "Overleaf_TMLR/tables/a1_generation_config.tex",
+                    "sha256": "16c25a71f74eb38334bc4b0ed4028ca1b0096e8e2ed9490de18c96f85ad26908"
+                },
+                {
+                    "source": "Overleaf_TMLR/tables/a1_judge_config.tex",
+                    "sha256": "b41e93248fcaf0f563f19cf1e7ba60afe66704722dea19583ffe268714eab1b4"
+                },
+                {
+                    "source": "Overleaf_TMLR/tables/common_judge_table.tex",
+                    "sha256": "b3541e91712f33c2728f1383caa7f978ba91f83ad54c0e5c397f9a387f7df799"
+                },
+                {
+                    "source": "Overleaf_TMLR/tables/major_results.tex",
+                    "sha256": "858cfe36c7de85cefc740430dec20b365a31e5ebe7c6b0912a14597cb72a703f"
+                },
+                {
+                    "source": "Overleaf_TMLR/tables/r4_model_lineage.tex",
+                    "sha256": "613aeec4984a999434e61bfdb334e18aecea611a9d7703d8b216961e44b32190"
+                }
+            ]
+        }
+    },
+    "method_reference": {
+        "llada_documented_steps": "For 512 generated tokens, the LLaDA paper sets diffusion steps equal to answer length; with block_length=128 this is 128 steps per block.",
+        "source": "https://arxiv.org/abs/2502.09992"
+    },
+    "privacy": {
+        "raw_harmful_text_in_manifest": false,
+        "absolute_local_paths": false,
+        "author_or_account_identifiers": false,
+        "response_text_access": "restricted source ledger only; the manifest records hashes and aggregate metadata"
+    }
+}

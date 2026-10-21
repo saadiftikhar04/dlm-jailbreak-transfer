@@ -1,0 +1,4 @@
+[Sat Oct 10 17:54:15 +04 2026] START ArrAttack-fullpool victim=llada
+HF_HOME=/scratch/bc3194/huggingface_cache  DEEPSEEK set=yes
+{'task_id': 'G7', 'target': 'llada', 'rows': 913, 'complete': True, 'status_counts': {'completed': 913}}
+[Sat Oct 10 20:21:16 +04 2026] DONE ArrAttack-fullpool victim=llada

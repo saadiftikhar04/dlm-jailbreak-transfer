@@ -1,0 +1,92 @@
+[
+    {
+        "source": "tier0/02_dedup_and_config_audit/decoding_config_matrix_authoritative.csv",
+        "present": true,
+        "sha256": "9e2674dc79b66625d4905b84c1c44e59a298b6dd8fe7c182cedd74b24f6668ac"
+    },
+    {
+        "source": "scripts/pif_target_models.py",
+        "present": true,
+        "sha256": "91e302696886ea6794ab0c5cf262f12b2b0afdaed61d4a3f0c99b1795bc773f3"
+    },
+    {
+        "source": "scripts/run_pif.py",
+        "present": true,
+        "sha256": "8b20953758f8624bf8904ca220abb34e61821c051e0e1d63be5ec193e9cb685a"
+    },
+    {
+        "source": "scripts/attack_mlm.py",
+        "present": true,
+        "sha256": "21874b8f4b9ad35de29dccc7cff59a73f17529662880987a8021176d1f28a90e"
+    },
+    {
+        "source": "scripts/eval_template.py",
+        "present": true,
+        "sha256": "aed9a0f4d7e1b480f8e08cdf5e7d03387d20b2c14fffe742797a8b0d7ad3797f"
+    },
+    {
+        "source": "scripts/deepseek_patch.py",
+        "present": true,
+        "sha256": "63db158e8451c923ba7e4281a421f43eba83c0b4164993b2f798ef467d8b2edd"
+    },
+    {
+        "source": "scripts/metacipher_multi.py",
+        "present": true,
+        "sha256": "754568d4259e40aadbea60c6f6ba6abd38261590435fd50ab6eeaaa3dfc056e7"
+    },
+    {
+        "source": "PiF/judge_pif_llm.py",
+        "present": true,
+        "sha256": "f21c38dbe89b59a389def9f8798e734f1fb11a625daba9d2a5147fb29de43a06"
+    },
+    {
+        "source": "MetaCipher/scripts/metacipher_multi.py",
+        "present": true,
+        "sha256": "5e8f0b3ad376be6d297db33c123a886155e0cb8fa5dde5aeba394282fd7303f5"
+    },
+    {
+        "source": "MetaCipher/src/llm.py",
+        "present": true,
+        "sha256": "e558da44b3580c218cfe48504c5fb6c792399d90d6a90fb05b0b239da1edaf35"
+    },
+    {
+        "source": "ArrAttack/stage5_attack.py",
+        "present": true,
+        "sha256": "8bbc7937d45d62331f88a3136b457930cf356a5537328641b27f4719bf18f7c7"
+    },
+    {
+        "source": "ArrAttack/utils/model_utils.py",
+        "present": true,
+        "sha256": "c5a311b204f3eb0658241f3325455b7c83a2fc8bf7933313d358c314317df724"
+    },
+    {
+        "source": "ArrAttack/judge_results.py",
+        "present": true,
+        "sha256": "8714a75b9e448c937248bda8e409cc5490e4659751d68985851e095dd26d9234"
+    },
+    {
+        "source": "ArrAttack/dual_judge.py",
+        "present": true,
+        "sha256": "85f79fcfa4f4c341f72637a9b546c8ea9038211bdff60ea8d9ea24673e79c589"
+    },
+    {
+        "source": "ArrAttack/deepseek_judge.py",
+        "present": true,
+        "sha256": "b6fe2fafa9bb267796064acb72ceb178841a05f20281503e7efdecc368dfec2d"
+    },
+    {
+        "source": "tier0/11_common_judge_rescore/common_judge.py",
+        "present": true,
+        "sha256": "3ff616a68e8fb270dae6b4df27bb0c3193e0a8e671bf15ec3e570a6647c696cf"
+    },
+    {
+        "source": "tier0/13_mixed_model_v2/adjudicate_judgeC.py",
+        "present": true,
+        "sha256": "e88c81397df626293147330a2b4463e09b59f8dde01e105e71606a815737e0cd"
+    },
+    {
+        "source": "tier0/18_t1_plaintext_control/t1_judge.py",
+        "present": true,
+        "sha256": "011e3e5f54e6ca6373fb81f49965611606a2b4c5ca062b0d2ab675eafdd77418"
+    }
+]

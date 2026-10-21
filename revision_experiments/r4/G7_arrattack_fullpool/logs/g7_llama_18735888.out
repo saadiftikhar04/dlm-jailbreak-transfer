@@ -1,0 +1,4 @@
+[Sat Oct 10 17:38:42 +04 2026] START ArrAttack-fullpool victim=llama
+HF_HOME=/scratch/bc3194/huggingface_cache  DEEPSEEK set=yes
+{'task_id': 'G7', 'target': 'llama', 'rows': 913, 'complete': True, 'status_counts': {'completed': 913}}
+[Sat Oct 10 19:21:01 +04 2026] DONE ArrAttack-fullpool victim=llama

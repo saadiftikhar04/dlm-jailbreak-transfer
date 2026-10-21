@@ -1,0 +1,4 @@
+[Sat Oct 10 18:10:06 +04 2026] START ArrAttack-fullpool victim=diffucoder
+HF_HOME=/scratch/bc3194/huggingface_cache  DEEPSEEK set=yes
+{'task_id': 'G7', 'target': 'diffucoder', 'rows': 913, 'complete': True, 'status_counts': {'completed': 886, 'empty_response': 27}}
+[Sun Oct 11 02:58:36 +04 2026] DONE ArrAttack-fullpool victim=diffucoder

@@ -1,0 +1,48 @@
+{
+    "task_id": "A4-llama-2x2",
+    "model_alias": "llama",
+    "historical_exact_attack_judge_reproducible": false,
+    "historical_limitation": "The former deepseek-chat model ID is absent from the current DeepSeek model catalog; current method-specific ratings use deepseek-flash with the inspected MetaCipher judge prompt/parser and are labeled as a current method-faithful comparison, not as the historical judge version.",
+    "original_response_rows": 75,
+    "regenerated_response_rows": 225,
+    "d3_calls_planned": 300,
+    "deepseek_flash_calls_planned": 300,
+    "actual_rows_by_judge_and_status": {
+        "D3|judge_error": 148,
+        "D3|ok": 152,
+        "MetaCipher-current|ok": 299,
+        "MetaCipher-current|parse_error": 1
+    },
+    "actual_api_attempts_by_judge": {
+        "D3": 488,
+        "MetaCipher-current": 300
+    },
+    "gpu_hours": 0,
+    "raw_response_text_in_outputs": false,
+    "d3_error_detail_limitation": "All rows retain judge_error and attempt counts, but the first runner version did not retain the transport-versus-parse subtype; do not attribute the failures to one cause.",
+    "d3_valid_n": 152,
+    "d3_judge_error_n": 148,
+    "deepseek_flash_valid_n": 299,
+    "deepseek_flash_parse_error_n": 1,
+    "d3_rubric_sha256": "04c3e363c2261e5641082c66589a6ccbc10e27d85ade50591b8a9c8a002f1b86",
+    "d3_config_sha256": "66a8f7fc8954316d092b45896fb5ac7cebaa615e5af487bf495ac218b2e5cb09",
+    "deepseek_flash_source_sha256": "754568d4259e40aadbea60c6f6ba6abd38261590435fd50ab6eeaaa3dfc056e7",
+    "deepseek_flash_config_sha256": "3e4ddad1db65b2f6ffdc21ff348ef1abe8dff493aaa754371f9fd2bf3d24630a",
+    "input_sha256": {
+        "t3_sample": "fff6c3d6c785fb5f443e626753a0de6f59a0dd81b744d1fd8b474285baa2cd27",
+        "official_llama_csv": "1c554636f2741c7f8a15f97040227eacd70e76e839cd5f4d584c73a8922162e3",
+        "a7_prompt_ledger": "5311bde783ec97e6fd0cbb994b59e0260b82b8622d4cd8eec0666af7af85a6a3",
+        "llama_seed1_outputs": "4775f5b310d15b6d001a8e3836722dc03089a3650291eeef8bae8c8a09630708",
+        "llama_seed2_outputs": "0f034a9fd1708724f439b3b1cfb30cafc82327c053c3bb83ba4336c5bc517299",
+        "llama_seed3_outputs": "0915b18d32a3d0ea3c151c4f84cbae091115f0ed457b2afefcf7692246a79693"
+    },
+    "output_sha256": {
+        "a4_llama_2x2_cell_rates.csv": "2f879fa096335c1dfd0f9fc79a761aba1eb2e1b875628dc0d585760aa31a3fbc",
+        "a4_llama_2x2_seed_rates.csv": "30209ea45c47a8f05aa5669aa928bbc0139a66d1a92e0f6f52594d7ceafd9451",
+        "a4_llama_2x2_paired_source_effects.csv": "0b2010f7cd2c0e0bcdd608a1a2456d60ec37f08c0fa59e887c3efd96da79c79f",
+        "a4_llama_2x2_judge_agreement.csv": "f14340dcf6f1f633e1e66d04fedd67bd399dbd6dd1eeb28c7615ea927136f9c6",
+        "a4_llama_2x2_discordant_rows.csv": "402e6f6820fe604e1891a41f10ed063b89de68bc4a3c54741eee3425ad71063a",
+        "a4_llama_2x2_ledger.csv": "015e33b3b4ec2672b1a1f7a1782e4e9d0b7128fc5e7f12fdb250d5b5d0b6993a"
+    },
+    "analysis_script_sha256": "305e99bac3192cf341b875477cc06d0087eae4e5e4b397fe78449bb86cd29a7d"
+}

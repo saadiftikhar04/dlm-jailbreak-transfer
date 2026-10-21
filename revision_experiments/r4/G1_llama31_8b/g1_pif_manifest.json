@@ -1,0 +1,49 @@
+{
+    "task_id": "G1",
+    "attack": "pif",
+    "model_alias": "llama31_8b",
+    "checkpoint_id": "meta-llama/Llama-3.1-8B-Instruct",
+    "checkpoint_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+    "canonical_pool_rows": 913,
+    "prompt_rows_in_ledger": 913,
+    "victim_query_rows": 1331,
+    "prompt_row_statuses": {
+        "ok": 913
+    },
+    "query_row_statuses": {
+        "ok": 1331
+    },
+    "generation_config_sha256": "a1fb4ac4e65de2fd2121b5a1e1d53ec4e4041943931524cdb0040292a784d030",
+    "source_sha256": {
+        "pool_913": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "a1_config_matrix": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a",
+        "a1_pif_feedback_query_config": "de59daa9f5149133ce3a133aef0f48c6f571be4dda12d5976b98206c183928dd",
+        "r4_plan": "c566dc825d64048149b7d26bb21086761aa0a2b0d658feeb19aec61b95e3afd6",
+        "g1_runner": "e006af72c743d41bf1da50e9bc7af8814f52b3063b3480d536fdcb0a626d654d",
+        "pif_target_models": "5bcab71c221dfe5d9afcd1b1a1b803b8e4e9b4752123041c5711e60c9c9210c3",
+        "pif_runner": "da3d4e80f96b2a809f118bfae99b5dd4832247ec51f35f5c7757523fd8183d01",
+        "pif_attack": "21874b8f4b9ad35de29dccc7cff59a73f17529662880987a8021176d1f28a90e",
+        "pif_eval_template": "aed9a0f4d7e1b480f8e08cdf5e7d03387d20b2c14fffe742797a8b0d7ad3797f",
+        "metacipher": "1db14e5ef347726c6e8ca2e6919d68b1633f17826e135b81079556deff29c6e3",
+        "g1_sbatch": "10ba43cd018cac9d0886f73caf692a7e83e38274016ffc7babcf68911bdd678c"
+    },
+    "output_sha256": {
+        "pif_query_ledger.csv": "e5ebc7c83e362bf8aa4d741545c34c8ddc1c8f019cf0a1db7d8fd711c1f91b5e",
+        "pif_prompt_ledger.csv": "7ac356c9ee809ba1e69a6c96ed378c74c2210a1ce526b43c44bc467aa17d0df1"
+    },
+    "raw_prompts_or_responses_in_manifest": false,
+    "raw_output_access_mode": "restricted working data; mode 0600 files within mode 0700 directory",
+    "bert_runtime": {
+        "model_id": "google-bert/bert-large-uncased",
+        "revision": "6da4b6a26a1877e173fca3225479512db81a5e5b",
+        "snapshot_file_sha256": {
+            "config.json": "f9a38c9ffa369f288c3206d0bf352dfed11d7bdee93aa5b2de6d7fdc7bff7871",
+            "tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+            "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        }
+    },
+    "pinned_generation_config_file_sha256": "189fb0c0d7fd8a527db217c0a60a0e013f0394cd8800f9697a666a9e75e5f7fd",
+    "d4_first_response_rule": "query_index=1 in pif_query_ledger.csv; no later selected response substitutes for it",
+    "full_pool_adapter": "All 913 pool_913.csv keys are passed to the audited attack_mlm.generate_attack loop; the current run_pif.py llama CLI dataset branch is not used for pool selection",
+    "a1_feedback_config_artifact": "revision_experiments/r4/A1_config_audit/a1_pif_feedback_query_config.csv"
+}

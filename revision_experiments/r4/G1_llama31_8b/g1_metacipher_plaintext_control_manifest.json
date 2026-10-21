@@ -1,0 +1,42 @@
+{
+    "task_id": "G1",
+    "subtask": "MetaCipher matched plaintext control",
+    "model_alias": "llama31_8b",
+    "checkpoint_id": "meta-llama/Llama-3.1-8B-Instruct",
+    "checkpoint_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+    "canonical_pool_rows": 913,
+    "response_rows": 913,
+    "status_counts": {
+        "ok": 913
+    },
+    "generation_configuration": {
+        "tokenizer_chat_template": "apply_chat_template(tokenize=false, add_generation_prompt=true), then tokenizer default special-token behavior",
+        "max_input_tokens": 2048,
+        "max_new_tokens": 512,
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.9,
+        "pad_token_id": "tokenizer.eos_token_id",
+        "eos_token_id_argument": "omitted, use pinned model generation config",
+        "dtype": "float16"
+    },
+    "config_sha256": "bf0a0380ee7ecaca0fc9edb7a89fe0b774fdb99ca3d62d25f25c2d782a75a6b1",
+    "source_sha256": {
+        "pool_913": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "a1_config_matrix": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a",
+        "a1_pif_feedback_query_config": "de59daa9f5149133ce3a133aef0f48c6f571be4dda12d5976b98206c183928dd",
+        "r4_plan": "c566dc825d64048149b7d26bb21086761aa0a2b0d658feeb19aec61b95e3afd6",
+        "g1_runner": "e006af72c743d41bf1da50e9bc7af8814f52b3063b3480d536fdcb0a626d654d",
+        "pif_target_models": "5bcab71c221dfe5d9afcd1b1a1b803b8e4e9b4752123041c5711e60c9c9210c3",
+        "pif_runner": "da3d4e80f96b2a809f118bfae99b5dd4832247ec51f35f5c7757523fd8183d01",
+        "pif_attack": "21874b8f4b9ad35de29dccc7cff59a73f17529662880987a8021176d1f28a90e",
+        "pif_eval_template": "aed9a0f4d7e1b480f8e08cdf5e7d03387d20b2c14fffe742797a8b0d7ad3797f",
+        "metacipher": "1db14e5ef347726c6e8ca2e6919d68b1633f17826e135b81079556deff29c6e3",
+        "g1_sbatch": "e20cdf1a02d778ff7981cadfd829d089242d5cc4c7c83e448faba95861ffbbbe"
+    },
+    "output_sha256": {
+        "metacipher_plaintext_control_rows.csv": "3a403d9224bd20b20bacc39f3315dfa62f33e2be66dcf2fcb53e7a681df5cdc8",
+        "metacipher_plaintext_control_summary.csv": "d70a94252a149b83f55580d58d750beda3e56eff840bee6e9305d22db64dc791"
+    },
+    "raw_prompts_or_responses_in_manifest": false
+}

@@ -1,0 +1,27 @@
+{
+    "task_id": "A3-C1",
+    "generated_at_utc": "2026-10-03T16:48:05.763931+00:00",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "rubric_sha256": "eb8167d5eac0945e61a8b4f7a861a5d962d59bd2f066c412360cedb73306bd16",
+    "execution_config_sha256": "37800bac087bf457ab11ecf4ed4f21b1a50184fb4ccda97046d1cd7827bf4f56",
+    "reasoning": {
+        "enabled": false
+    },
+    "input_rows": 900,
+    "output_rows": 900,
+    "status_counts": {
+        "ok": 750,
+        "invalid_json": 90,
+        "http_502": 1,
+        "http_429": 59
+    },
+    "provider_counts": {
+        "unknown": 151,
+        "Nvidia": 749
+    },
+    "technical_retries_used": 328,
+    "api_attempts_max_per_row": 2,
+    "max_workers": 2,
+    "minimum_seconds_between_requests": 3.2,
+    "request_row_contains_prompt_or_response": false
+}

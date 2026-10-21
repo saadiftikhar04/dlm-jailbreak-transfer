@@ -1,0 +1,4 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:06<00:19,  6.43s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:12<00:12,  6.18s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:18<00:06,  6.17s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:19<00:00,  3.91s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:19<00:00,  4.76s/it]
+slurmstepd: error: *** JOB 18720674 ON cn261 CANCELLED AT 2026-10-10T09:46:14 DUE TO TIME LIMIT ***

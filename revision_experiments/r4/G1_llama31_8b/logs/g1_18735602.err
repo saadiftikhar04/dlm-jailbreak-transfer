@@ -1,0 +1,48 @@
+Traceback (most recent call last):
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/_snapshot_download.py", line 165, in snapshot_download
+    repo_info = api.repo_info(repo_id=repo_id, repo_type=repo_type, revision=revision)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 2867, in repo_info
+    return method(
+           ^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 2660, in model_info
+    r = get_session().get(path, headers=headers, timeout=timeout, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/requests/sessions.py", line 671, in get
+    return self.request("GET", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 107, in send
+    raise OfflineModeIsEnabled(
+huggingface_hub.errors.OfflineModeIsEnabled: Cannot reach https://huggingface.co/api/models/google-bert/bert-large-uncased/revision/6da4b6a26a1877e173fca3225479512db81a5e5b: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/bc3194/dlm-jailbreak-transfer/scripts/r4_g1_generate.py", line 1048, in <module>
+    main()
+  File "/scratch/bc3194/dlm-jailbreak-transfer/scripts/r4_g1_generate.py", line 1038, in main
+    run_pif()
+  File "/scratch/bc3194/dlm-jailbreak-transfer/scripts/r4_g1_generate.py", line 718, in run_pif
+    bert_model, bert_tokenizer, bert_info = load_bert_snapshot()
+                                            ^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/dlm-jailbreak-transfer/scripts/r4_g1_generate.py", line 218, in load_bert_snapshot
+    snapshot = snapshot_download(
+               ^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/scratch/bc3194/conda_envs/envs/raven/lib/python3.11/site-packages/huggingface_hub/_snapshot_download.py", line 236, in snapshot_download
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find an appropriate cached snapshot folder for the specified revision on the local disk and outgoing traffic has been disabled. To enable repo look-ups and downloads online, set 'HF_HUB_OFFLINE=0' as environment variable.

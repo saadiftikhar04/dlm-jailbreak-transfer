@@ -1,0 +1,47 @@
+{
+    "task_id": "G4-llada-metacipher-openrouter-v4-0731",
+    "attack": "metacipher",
+    "model_alias": "llada",
+    "checkpoint_id": "GSAI-ML/LLaDA-1.5",
+    "checkpoint_revision": "84346fd91ba60252d260022201ad6fc5a3468fb2",
+    "canonical_pool_rows": 913,
+    "canonical_pool_sha256": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+    "generation_configuration": {
+        "chat_encoding": "apply_chat_template(tokenize=false, add_generation_prompt=true), then tokenizer default special-token behavior",
+        "max_input_tokens": 2048,
+        "max_new_tokens": 512,
+        "diffusion_steps": 512,
+        "gen_length": 512,
+        "block_length": 128,
+        "temperature": 0.0,
+        "remasking": "low_confidence"
+    },
+    "generation_config_sha256": "0e2d9d28e1725e54b71ad8c1be00d0c2528efabe983e3cedaeb36116b938e869",
+    "agent_api_configuration": {
+        "base_url": "https://openrouter.ai/api/v1",
+        "model": "deepseek/deepseek-v4-flash-0731",
+        "credential_env": "OPENROUTER_API_KEY",
+        "credential_value_recorded": false
+    },
+    "agent_api_configuration_sha256": "de0b9703f1e89be95860c45975e4cad4bfe26a40bbe66893bdee2de575f42c24",
+    "source_sha256": {
+        "pool_913": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "a1_config_matrix": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a",
+        "a1_pif_feedback_query_config": "de59daa9f5149133ce3a133aef0f48c6f571be4dda12d5976b98206c183928dd",
+        "r4_plan": "5a04606c7719c99a7fa6755b77fdc4cbd62aa9d4e4177198f683e894372bb55d",
+        "g1_runner": "4e25c3c9b79b7427f0ca47677a4cc54234caf9b635abf293edc7e76679c667b4",
+        "pif_target_models": "5bcab71c221dfe5d9afcd1b1a1b803b8e4e9b4752123041c5711e60c9c9210c3",
+        "pif_runner": "da3d4e80f96b2a809f118bfae99b5dd4832247ec51f35f5c7757523fd8183d01",
+        "pif_attack": "21874b8f4b9ad35de29dccc7cff59a73f17529662880987a8021176d1f28a90e",
+        "pif_eval_template": "aed9a0f4d7e1b480f8e08cdf5e7d03387d20b2c14fffe742797a8b0d7ad3797f",
+        "metacipher": "f53d6d90b4037dc3acca6f4c16b993474bfb790dd9fa4e3809ea92caf70c995c",
+        "g4_sbatch": "367ac8aa7277d19c960f29bd5067b9019c013cc6966db6a522740152538465b8"
+    },
+    "resource_estimate": {
+        "a100_gpu_hours": 76,
+        "api_requests": 6700,
+        "api_cost_usd": null,
+        "api_cost_note": "Token usage was not recorded in the previous direct-API run; estimate before submission and set an OpenRouter spend limit."
+    },
+    "credential_value_recorded": false
+}

@@ -1,0 +1,48 @@
+{
+    "task_id": "A4-qwen-2x2",
+    "model_alias": "qwen",
+    "historical_exact_attack_judge_reproducible": false,
+    "historical_limitation": "The former deepseek-chat model ID is absent from the current DeepSeek model catalog; current method-specific ratings use deepseek-flash with the inspected MetaCipher judge prompt/parser and are labeled as a current method-faithful comparison, not as the historical judge version.",
+    "original_response_rows": 70,
+    "regenerated_response_rows": 210,
+    "d3_calls_planned": 280,
+    "deepseek_flash_calls_planned": 280,
+    "actual_rows_by_judge_and_status": {
+        "D3|judge_error": 116,
+        "D3|ok": 164,
+        "MetaCipher-current|ok": 278,
+        "MetaCipher-current|parse_error": 2
+    },
+    "actual_api_attempts_by_judge": {
+        "D3": 432,
+        "MetaCipher-current": 280
+    },
+    "gpu_hours": 0,
+    "raw_response_text_in_outputs": false,
+    "d3_error_detail_limitation": "All rows retain judge_error and attempt counts, but the first runner version did not retain the transport-versus-parse subtype; do not attribute the failures to one cause.",
+    "d3_valid_n": 164,
+    "d3_judge_error_n": 116,
+    "deepseek_flash_valid_n": 278,
+    "deepseek_flash_parse_error_n": 2,
+    "d3_rubric_sha256": "04c3e363c2261e5641082c66589a6ccbc10e27d85ade50591b8a9c8a002f1b86",
+    "d3_config_sha256": "530498231cdb6cd5278902057df5457a7f024de15065ff06a52209ee4a14e3d7",
+    "deepseek_flash_source_sha256": "754568d4259e40aadbea60c6f6ba6abd38261590435fd50ab6eeaaa3dfc056e7",
+    "deepseek_flash_config_sha256": "a4d5e1bcae8b8c50d236a01d0ea4bf0c0fb0c805d3da636eba3c3b82265ffc74",
+    "input_sha256": {
+        "t3_sample": "fff6c3d6c785fb5f443e626753a0de6f59a0dd81b744d1fd8b474285baa2cd27",
+        "official_qwen_csv": "394cea0c45fdda8caf0525160731895c4a79ecf928e00000df35c34b3b5490da",
+        "a7_prompt_ledger": "5311bde783ec97e6fd0cbb994b59e0260b82b8622d4cd8eec0666af7af85a6a3",
+        "qwen_seed1_outputs": "a143283dcdbc76c1c25f205a76b81a158608e35af9dca0ab146a1568dd9ca3af",
+        "qwen_seed2_outputs": "642df979c2ee2820c8d08252d9b469bf9fc78677d5f1eef7ffb0d10cae4b412c",
+        "qwen_seed3_outputs": "0583982352d12a54d49a564f72fb8f519316b6b10cb35557f47656223f57a6d8"
+    },
+    "output_sha256": {
+        "a4_qwen_2x2_cell_rates.csv": "f986503cd2ed01489f97a9d85c15d22e720330c48c3b0b7a2cf02789ef2f47ba",
+        "a4_qwen_2x2_seed_rates.csv": "ed5c1b5b1b6d7839199ac8b54244d84d87a245ccc903b7770850b3ffd11159c7",
+        "a4_qwen_2x2_paired_source_effects.csv": "0c71c26e84d878f17acf7a723d1f9bb078b7d50153ac9efe336b295efff1c467",
+        "a4_qwen_2x2_judge_agreement.csv": "04de16393ca332bcd3d183da55e438d07e77067ec3862f70632cd5971a5cfc53",
+        "a4_qwen_2x2_discordant_rows.csv": "3ebe22046b53c4014766585bc84b4a6acc74f20325a9ca41c9b2fa722812ffe3",
+        "a4_qwen_2x2_ledger.csv": "752c88a3b73734e56fd2a56cd55f37e17e6113f2bb6f5e5607e8183b08d75250"
+    },
+    "analysis_script_sha256": "305e99bac3192cf341b875477cc06d0087eae4e5e4b397fe78449bb86cd29a7d"
+}

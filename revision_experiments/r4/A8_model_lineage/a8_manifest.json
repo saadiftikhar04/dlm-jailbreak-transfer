@@ -1,0 +1,34 @@
+{
+    "task_id": "A8",
+    "lineage_rows": 7,
+    "same_initialization_pair": "Qwen2.5-7B-Instruct and Dream-v0-Instruct-7B share Qwen2.5-7B autoregressive initialization; post-training and architecture differ",
+    "paired_prompt_n": 90,
+    "new_model_inference": false,
+    "new_api_judging": false,
+    "model_documentation_sources": [
+        "https://arxiv.org/abs/2412.15115",
+        "https://arxiv.org/abs/2505.19223",
+        "https://arxiv.org/abs/2506.20639",
+        "https://arxiv.org/abs/2508.15487",
+        "https://github.com/ML-GSAI/LLaDA",
+        "https://huggingface.co/Dream-org/Dream-v0-Instruct-7B",
+        "https://huggingface.co/GSAI-ML/LLaDA-1.5",
+        "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct",
+        "https://huggingface.co/apple/DiffuCoder-7B-Base",
+        "https://huggingface.co/apple/DiffuCoder-7B-Instruct",
+        "https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct",
+        "https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct",
+        "https://huggingface.co/tiiuae/Falcon-H1-7B-Base",
+        "https://huggingface.co/tiiuae/Falcon-H1R-7B"
+    ],
+    "input_sha256": {
+        "revision_experiments/r4/A1_config_audit/config_matrix.csv": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a",
+        "revision_experiments/r4/A7_prompt_pool/a7_results_ledger.csv": "666c47618d2865cb3fbf2cf81efc09dcd154a4a8470c333dd788b0d2172b86b0"
+    },
+    "outputs_sha256": {
+        "a8_model_lineage.csv": "7688dcd0eadc16e77874b8bc2fe0d74830932855eff16c44042a9cb9ec45ee86",
+        "a8_qwen_dream_paired_comparison.csv": "24509a6b8b00df0e457a1a3f1bc64268bfa20184ec32f7bb0244050e5f85002a",
+        "a8_summary.md": "7e2f72f20bc4fa7898b76a28c0fdbf7251b6cf1c78bf2765c3147b4f3a47f7f3"
+    },
+    "analysis_script_sha256": "56e1360f3dda730e7d519ab6c269418b302b72d347035bf0a3f75a2f8fdace02"
+}

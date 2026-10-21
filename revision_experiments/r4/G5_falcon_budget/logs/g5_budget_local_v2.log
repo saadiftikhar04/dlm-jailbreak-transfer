@@ -1,0 +1,20 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+The fast path for FalconH1 will be used when running the model on a GPU
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:00,  3.32it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  3.59it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  3.54it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00,  4.58it/s]
+Some parameters are on the meta device because they were offloaded to the cpu.
+G5 budget pilot: completed 10/60 unique prompts
+G5 budget pilot: completed 20/60 unique prompts
+G5 budget pilot: completed 30/60 unique prompts
+G5 budget pilot: completed 40/60 unique prompts
+G5 budget pilot: completed 50/60 unique prompts
+G5 budget pilot: completed 60/60 unique prompts
+Traceback (most recent call last):
+  File "/home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/r4_g5_falcon_budget_pilot.py", line 324, in <module>
+    main()
+  File "/home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/r4_g5_falcon_budget_pilot.py", line 277, in main
+    observed = {(row["pilot_row_key"], int(row["max_new_tokens"])) for row in output_rows}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bc3194/Desktop/dlm-jailbreak-transfer/scripts/r4_g5_falcon_budget_pilot.py", line 277, in <setcomp>
+    observed = {(row["pilot_row_key"], int(row["max_new_tokens"])) for row in output_rows}
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''

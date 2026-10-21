@@ -1,0 +1,220 @@
+{
+    "task_id": "G2",
+    "canonical_prompt_rows": 913,
+    "unique_decoder_configurations": 12,
+    "response_rows": 10956,
+    "status_counts": {
+        "ok": 10956
+    },
+    "checkpoint_revisions": {
+        "qwen": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "llama31_8b": "0e9e39f249a16976918f6564b8830bc894c89659",
+        "falcon": "a6f74bf181389908efd6970878d7ee2b42f5d417",
+        "dream": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+        "diffucoder": "4fdd4580064ca5d11808069ce78f88d068753c96",
+        "llada": "84346fd91ba60252d260022201ad6fc5a3468fb2"
+    },
+    "configurations": {
+        "qwen": [
+            {
+                "config_id": "pif_arrattack_settings",
+                "source_cells": [
+                    "pif/qwen",
+                    "arrattack/qwen"
+                ],
+                "generation_config": {
+                    "do_sample": true,
+                    "temperature": 0.8,
+                    "top_p": 0.9
+                },
+                "settings_note": "A1 causal decoding settings shared by PiF and ArrAttack",
+                "config_sha256": "71a614926c8af5f09b02fc8779513eb4f1a4af135ce2d6747dd95194c17a86ab"
+            },
+            {
+                "config_id": "metacipher_settings",
+                "source_cells": [
+                    "metacipher/qwen"
+                ],
+                "generation_config": {
+                    "do_sample": true,
+                    "temperature": 0.7,
+                    "top_p": 0.9
+                },
+                "settings_note": "A1 MetaCipher causal decoding settings",
+                "config_sha256": "6000067146cc09832cdd2aeb08bb6116a9d3f70997b08e51d9449b845f484ed6"
+            }
+        ],
+        "llama31_8b": [
+            {
+                "config_id": "pif_arrattack_settings",
+                "source_cells": [
+                    "pif/llama-3.2-3b-settings",
+                    "arrattack/llama-3.1-8b"
+                ],
+                "generation_config": {
+                    "do_sample": true,
+                    "temperature": 0.8,
+                    "top_p": 0.9
+                },
+                "settings_note": "A1 causal decoding settings; checkpoint is the D2 Llama-3.1-8B target",
+                "config_sha256": "d75e6ca6e97a6b4efda6cdeb03aeb1b3408898c140d7fbd748c3abb675a81c7d"
+            },
+            {
+                "config_id": "pif_feedback_query_exact",
+                "source_cells": [
+                    "pif/llama-3.1-8b-first-feedback"
+                ],
+                "generation_config": {
+                    "max_input_tokens": 128,
+                    "max_length": 512,
+                    "use_chat_template_tokenizer": true,
+                    "add_generation_prompt": false,
+                    "use_model_generation_defaults": true
+                },
+                "settings_note": "PiF first optimizer victim query: exact apply_chat_template tokenization without an assistant generation prompt, input cap 128, max_length 512, and no generation-argument overrides beyond max_length",
+                "config_sha256": "7ba4feba2a59a058d249959899606ec0eefe62f6d63f83cb34e46eaba54c2a62"
+            },
+            {
+                "config_id": "metacipher_settings",
+                "source_cells": [
+                    "metacipher/llama-3.2-3b-settings"
+                ],
+                "generation_config": {
+                    "do_sample": true,
+                    "temperature": 0.7,
+                    "top_p": 0.9
+                },
+                "settings_note": "A1 MetaCipher causal decoding settings; checkpoint is the D2 Llama-3.1-8B target",
+                "config_sha256": "13abada31bf2e5b73290fee32c9fe6cf8231bbcb8e8d9ff29f0b31bf7c2793bb"
+            }
+        ],
+        "falcon": [
+            {
+                "config_id": "pif_arrattack_settings",
+                "source_cells": [
+                    "pif/falcon",
+                    "arrattack/falcon"
+                ],
+                "generation_config": {
+                    "do_sample": true,
+                    "temperature": 0.8,
+                    "top_p": 0.9
+                },
+                "settings_note": "A1 causal decoding settings shared by PiF and ArrAttack",
+                "config_sha256": "6bc6d9745958d18cc289b750284ccb218060641e83ccbb7c890607908b972359"
+            },
+            {
+                "config_id": "metacipher_settings",
+                "source_cells": [
+                    "metacipher/falcon"
+                ],
+                "generation_config": {
+                    "do_sample": true,
+                    "temperature": 0.7,
+                    "top_p": 0.9
+                },
+                "settings_note": "A1 MetaCipher causal decoding settings",
+                "config_sha256": "8f0f6f0180d3ff07037eb851562ac2501575f7c0579d5e2039961865dfde2552"
+            }
+        ],
+        "dream": [
+            {
+                "config_id": "pif_arrattack_settings",
+                "source_cells": [
+                    "pif/dream",
+                    "arrattack/dream"
+                ],
+                "generation_config": {
+                    "temperature": 0.0,
+                    "top_p": null,
+                    "alg": "origin",
+                    "alg_temp": null
+                },
+                "settings_note": "A1 PiF/ArrAttack Dream settings; steps track generated length",
+                "config_sha256": "2b6486868169aaf7f107c9dc884ba0c3607a3628e9a0e6246a279cb92d22c170"
+            },
+            {
+                "config_id": "metacipher_settings",
+                "source_cells": [
+                    "metacipher/dream"
+                ],
+                "generation_config": {
+                    "steps": 128,
+                    "temperature": 0.2,
+                    "top_p": 0.95,
+                    "alg": "entropy",
+                    "alg_temp": 0.0
+                },
+                "settings_note": "A1 MetaCipher Dream settings",
+                "config_sha256": "fce19e841cdaf9d5ea2babc63efa782a71436ae749a89474fb5444f7a6c83074"
+            }
+        ],
+        "diffucoder": [
+            {
+                "config_id": "pif_arrattack_settings",
+                "source_cells": [
+                    "pif/diffucoder",
+                    "arrattack/diffucoder"
+                ],
+                "generation_config": {
+                    "temperature": 0.3,
+                    "top_p": 0.95,
+                    "alg": "entropy",
+                    "alg_temp": 0.0
+                },
+                "settings_note": "A1 PiF/ArrAttack DiffuCoder settings; steps track generated length",
+                "config_sha256": "bff451efb07d86d8715843022995ba09388f16cb1da60b528ce4d1186865f2d3"
+            },
+            {
+                "config_id": "metacipher_settings",
+                "source_cells": [
+                    "metacipher/diffucoder"
+                ],
+                "generation_config": {
+                    "steps": 128,
+                    "temperature": 0.4,
+                    "top_p": 0.95,
+                    "alg": "entropy",
+                    "alg_temp": 0.0
+                },
+                "settings_note": "A1 MetaCipher DiffuCoder settings",
+                "config_sha256": "5c4e3228e19fe598faea591962877c350492898c9db5e5d2e78558f02b5e8155"
+            }
+        ],
+        "llada": [
+            {
+                "config_id": "locked_128_steps_per_block",
+                "source_cells": [
+                    "pif/llada",
+                    "metacipher/llada",
+                    "arrattack/llada"
+                ],
+                "generation_config": {
+                    "block_length": 128,
+                    "temperature": 0.0
+                },
+                "settings_note": "D7 locked LLaDA schedule: low-confidence remasking; steps equal actual gen_length up to 512, with 128-token blocks",
+                "config_sha256": "c99e0f231792d0df4efb6b174d9ec3c258e4228336cb95b1eddc900ee17e66e4"
+            }
+        ]
+    },
+    "raw_working_file_sha256": {
+        "g2_raw_qwen.csv": "a831691a52478fea59b04847fd451e1abc899793287a12059bd795f33a39d7dd",
+        "g2_raw_llama31_8b.csv": "bdf89ed3df185cf0182e70dec59b492bc980fb057dbbc9b0e089287c313f3149",
+        "g2_raw_falcon.csv": "d200efdb5ded0ffe47dce98d4f4956be96590bc932f009bf9664e6ab41da8ba9",
+        "g2_raw_dream.csv": "f539123c9a8639d1b08835d26d8cba6798f34fa82e60479b2bc070f1c00f55b1",
+        "g2_raw_diffucoder.csv": "da66a1ad07ce34eecfaf97ea17028b2bff86683b93fbe32ac3bb24e92142d567",
+        "g2_raw_llada.csv": "cf3e0c091dc67d7712af526bd474aaa592a415b6c190b3e8a16387a81798f784"
+    },
+    "response_free_ledger_sha256": "b4f0296d339d0f3141500e8723048a985cbf2ae501dceb1a8f83e4c382719e7c",
+    "source_file_sha256": {
+        "runner": "4f67c789001b29b107e0ed9302efede813c0a344d82a6d0638d9ce367ba852ff",
+        "target_generation": "5bcab71c221dfe5d9afcd1b1a1b803b8e4e9b4752123041c5711e60c9c9210c3",
+        "slurm_script": "6799a0fd18a982cf77bbd0ff081538a92b7a212602dd5d59b3421e4f8eb41e72",
+        "prompt_pool": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "a1_config_matrix": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a",
+        "execution_plan": "ea8b2e28850a2a3df0d1d563559b1bc83394a80b640c3dc4658c1bcae1f00df6"
+    },
+    "raw_text_in_response_free_ledger": false,
+    "raw_working_files_access_control_required": true
+}

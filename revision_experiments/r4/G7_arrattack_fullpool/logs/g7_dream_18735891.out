@@ -1,0 +1,4 @@
+[Sat Oct 10 18:08:25 +04 2026] START ArrAttack-fullpool victim=dream
+HF_HOME=/scratch/bc3194/huggingface_cache  DEEPSEEK set=yes
+{'task_id': 'G7', 'target': 'dream', 'rows': 913, 'complete': True, 'status_counts': {'completed': 904, 'empty_response': 9}}
+[Sun Oct 11 02:32:10 +04 2026] DONE ArrAttack-fullpool victim=dream

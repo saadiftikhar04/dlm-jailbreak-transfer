@@ -21,5 +21,4 @@ uncommitted_structure_manifest.txt
 *.tar.gz
 *.zip
 paths.txt
-**Overleaf
 *.pdf
