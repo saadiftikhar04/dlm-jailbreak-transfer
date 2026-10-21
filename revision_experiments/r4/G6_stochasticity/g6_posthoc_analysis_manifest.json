@@ -1,0 +1,20 @@
+{
+    "experiment": "G6_decode_only_stochasticity_posthoc_analysis",
+    "analysis_script_sha256": "e01f6ff503e081b17afad6b3d46b8e84e2acc1cc2ee28e49fe3862bbd0d72b5d",
+    "judge_ledger_sha256": "a5613c89026520c952e20fdb371bf5ae8c52a1b7d124bcd7d59ae03677520634",
+    "base_summary_sha256": "c01b21340d35920528e0943f240b348f5b325240458331ab60b1ee3c98d303ef",
+    "paired_seed_greedy_sha256": "ab9db686ddbeeea5eaa18bd7ef7daea1c2534f9c3c90029ee71d08fcef827911",
+    "seed_summary_sha256": "16905bcaeb9556eb9e903da5e1b2ff6431d464a44512c89a82d36cbf8c19b8ee",
+    "judge_rows": 560,
+    "paired_rows": 6,
+    "seed_summary_rows": 2,
+    "pairing_key": [
+        "model",
+        "dataset",
+        "prompt_idx"
+    ],
+    "unresolved_outcomes": "counted as failure under intention-to-evaluate",
+    "sample_conditional": true,
+    "pool_weighted": false,
+    "raw_prompts_or_responses_in_outputs": false
+}

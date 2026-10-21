@@ -1,0 +1,17 @@
+bash: cannot set terminal process group (4187013): Inappropriate ioctl for device
+bash: no job control in this shell
+expoctivate: command not found
+Command 'rt' not found, but can be installed with:
+sudo apt install rt4-clients  # version 4.4.4+dfsg-2ubuntu2, or
+sudo apt install rt5-clients  # version 5.0.1+dfsg-1ubuntu1
+G6 D3 preflight passed: 0/560 judge rows recorded
+G6 D3 progress: 10/560
+G6 D3 progress: 20/560
+G6 D3 progress: 30/560
+G6 D3 progress: 40/560
+G6 D3 progress: 50/560
+G6 D3 progress: 60/560
+G6 D3 progress: 70/560
+G6 D3 progress: 80/560
+G6 D3 progress: 90/560
+G6 D3 progress: 100/560

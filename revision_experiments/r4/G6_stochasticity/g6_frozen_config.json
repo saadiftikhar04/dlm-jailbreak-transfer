@@ -1,0 +1,71 @@
+{
+    "experiment": "G6_decode_only_stochasticity",
+    "repository_head": "7f92b2bc88dff5c6c363278b20cfb516299506de",
+    "runner_sha256": "e66b0a44e0b9a9d4467918d68442279919c560c7d083fa0a365a6df660874704",
+    "environment_freeze_sha256": "46bb6adbcf543adb62960b2c9980fe5c2b8615e66103353abb6ff085f4e5230a",
+    "sample_scope": "70 Qwen MetaCipher arm-A IDs paired with Llama-3.1-8B G1 query_index=1",
+    "sample_conditional_only": true,
+    "pool_weighted_inference": false,
+    "sample_sha256": "fff6c3d6c785fb5f443e626753a0de6f59a0dd81b744d1fd8b474285baa2cd27",
+    "paired_input_sha256": "04e93e9d4e9290b4ccc68992608c54a362f8df553cb9328a1c95ea8afb4c3eea",
+    "models": {
+        "qwen": {
+            "model_id": "Qwen/Qwen2.5-7B-Instruct",
+            "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+            "prompt_field": "qwen_attacked_prompt"
+        },
+        "llama": {
+            "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+            "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+            "prompt_field": "llama_attacked_prompt"
+        }
+    },
+    "seeds": [
+        20261021,
+        20261022,
+        20261023
+    ],
+    "conditions": [
+        "seed_20261021",
+        "seed_20261022",
+        "seed_20261023",
+        "greedy"
+    ],
+    "tokenization": {
+        "chat_template": "apply_chat_template(tokenize=False, add_generation_prompt=True)",
+        "tokenizer_call": "tokenizer(text, return_tensors='pt', truncation=True, max_length=2048)",
+        "max_input_tokens": 2048
+    },
+    "generation": {
+        "max_new_tokens": 512,
+        "sampling": {
+            "do_sample": true,
+            "temperature": 0.7,
+            "top_p": 0.9
+        },
+        "greedy": {
+            "do_sample": false,
+            "temperature": 0.7,
+            "top_p": 0.9
+        },
+        "dtype": "float16",
+        "seed_reset": "torch.manual_seed and torch.cuda.manual_seed_all before each prompt/model/seed decode; seed 0 before each greedy decode",
+        "retry_generation": false
+    },
+    "expected_generation_rows": 560,
+    "judge": {
+        "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+        "temperature": 0,
+        "top_p": 1,
+        "max_tokens": 256,
+        "reasoning": {
+            "enabled": false
+        },
+        "stream": false,
+        "retry_limit": 1,
+        "attempt_interval_seconds": 3.2,
+        "expected_judge_rows": 560,
+        "raw_responses_in_judge_ledger": false
+    },
+    "config_sha256": "35ce5720c2940e72e1373518678038d15d99e061425e65ceb244d1ff33ef20c6"
+}

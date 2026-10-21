@@ -1,0 +1,83 @@
+{
+    "task_id": "G3",
+    "model_alias": "diffucoder",
+    "checkpoint_id": "apple/DiffuCoder-7B-Instruct",
+    "checkpoint_revision": "4fdd4580064ca5d11808069ce78f88d068753c96",
+    "pif_optimizer_iterations": 1,
+    "pif_optimizer_first_query_only": true,
+    "pif_optimizer_parameters": {
+        "evaluation_template": "This intent is [MASK]",
+        "top_n": 15,
+        "top_m": 15,
+        "top_k": 15,
+        "warm_up": 0,
+        "temperature": 0.25,
+        "semantic_threshold": 0.85
+    },
+    "generation_config": {
+        "model_key": "diffucoder",
+        "model_type": "dlm",
+        "prompt_encoding_call": "tokenizer.apply_chat_template(chat, return_tensors='pt', truncation=True, max_length=128)",
+        "generation_call": "pif_target_models.target_generate_from_input_ids(model, tokenizer, model_key, captured_input_ids, generation_config=native_dlm_parameters)",
+        "native_dlm_parameters": {
+            "max_new_tokens": 512,
+            "steps": 512,
+            "temperature": 0.3,
+            "top_p": 0.95,
+            "alg": "entropy",
+            "alg_temp": 0.0
+        },
+        "generation_defaults": "pinned model-specific native diffusion settings; 512 new tokens",
+        "completion_decoding": "tokenizer.decode(skip_special_tokens=False); split '<|dlm_pad|>'; remove '<|im_end|>'",
+        "capture_policy": "pass through attack_mlm's exact encoded input_ids; use the pinned model's native diffusion API without prompt re-encoding"
+    },
+    "seed_rule": "20261011 + model index * 100000 + stable prompt ordinal",
+    "run_mode": "failure_continuation",
+    "generation_config_sha256": "6b3c941dc09e44440582a4a94bd1dcc0b90ab150ab85a5ed57f26dbd54175144",
+    "bert_runtime": {
+        "model_id": "google-bert/bert-large-uncased",
+        "revision": "6da4b6a26a1877e173fca3225479512db81a5e5b"
+    },
+    "runtime_generation_api": "pif_target_models.target_generate_from_input_ids(model, tokenizer, model_key, captured_input_ids, generation_config=native_dlm_parameters)",
+    "historical_rows": 0,
+    "regenerated_rows": 913,
+    "status_counts": {
+        "ok": 757,
+        "empty_response": 156
+    },
+    "query_count_distribution": {
+        "1": 913
+    },
+    "canonical_pool_rows": 913,
+    "unique_keys": 913,
+    "rows_written_this_invocation": 913,
+    "source_sha256": {
+        "runner": "93cb9d77d778a16f343b4a15e131d1f1663b4d23ca65a35d3183d639f3214fd6",
+        "pool_913": "12bafde1c37c56349b4566b97f839efcd8579996357d7e76ed0b2dee1f92346b",
+        "a1_config_matrix": "93d761c73a0880454e2af2e09123c5788a841390e0d71ba42042afac693adf8a",
+        "historical_judged_pif": "ebf5a4dba2e86a05f3c97811a024ab70d3b52f029801653583d59749af95b372",
+        "pif_attack": "21874b8f4b9ad35de29dccc7cff59a73f17529662880987a8021176d1f28a90e",
+        "pif_target_models": "8fa78f8d1650b299e33b1fd172699f2d1f2608239b590d38260c4f6bb17f05bd",
+        "pif_eval_template": "aed9a0f4d7e1b480f8e08cdf5e7d03387d20b2c14fffe742797a8b0d7ad3797f",
+        "execution_plan": "5a04606c7719c99a7fa6755b77fdc4cbd62aa9d4e4177198f683e894372bb55d"
+    },
+    "output_sha256": {
+        "g3_pif_first_response_native_decodefix_full.csv": "5225afd4b9e906cc90b5edec697b1e662ab3b683075f5a95a3af8e82f00fa6bb"
+    },
+    "raw_prompts_or_responses_in_manifest": false,
+    "raw_working_data_access_mode": "mode 0600 CSV in mode 0700 task directory",
+    "historical_revision_limitation": "Original PiF step logs are absent; regenerated prompts and responses are labeled as current first-query reruns, not exact historical recoveries.",
+    "status": "completed_with_errors",
+    "parent_generation_config_sha256": "2f268f7122aa052b1ec8efb6bdfbc4fc2cdb7f7abf14b1dd20cf92dc677a3f68",
+    "parent_ledger_name": "g3_pif_first_response.csv",
+    "parent_ledger_sha256": "2d1d96709380aa4e60de81c43d83d2c8bde3047a1b2c79bec6e00fa72a1b5ec6",
+    "parent_retryable_rows": 913,
+    "parent_retryable_keys_sha256": "d36fe8759afca4d3219b5af8e24fc0b36cf775b13fe3098e11c822ae26cc1885",
+    "retryable_source_status_counts": {
+        "generation_error": 913
+    },
+    "selected_key_count": 913,
+    "invocation_selected_key_count": 913,
+    "selected_key_sha256": "d36fe8759afca4d3219b5af8e24fc0b36cf775b13fe3098e11c822ae26cc1885",
+    "output_csv": "g3_pif_first_response_native_decodefix_full.csv"
+}

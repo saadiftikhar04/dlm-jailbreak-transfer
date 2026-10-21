@@ -1,0 +1,12 @@
+{
+    "experiment": "G6_decode_only_stochasticity",
+    "config_sha256": "139eb94ac714750060b4562dfdb308c9cd101ccb6b6b5fa72d4d1b70c55380a4",
+    "generation_ledger_sha256": "91711e207e840e730522e7c4ad3e49a2462f75396be23460ce6e4991952ee258",
+    "judge_ledger_sha256": "a5613c89026520c952e20fdb371bf5ae8c52a1b7d124bcd7d59ae03677520634",
+    "summary_sha256": "c01b21340d35920528e0943f240b348f5b325240458331ab60b1ee3c98d303ef",
+    "generation_rows": 560,
+    "judge_rows": 560,
+    "sample_conditional": true,
+    "pool_weighted": false,
+    "raw_prompts_or_responses_in_manifest": false
+}
