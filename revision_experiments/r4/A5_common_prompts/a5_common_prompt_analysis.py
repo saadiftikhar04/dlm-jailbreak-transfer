@@ -37,7 +37,9 @@ ATTACKS = ("pif", "metacipher", "arrattack")
 KEY = ("dataset", "prompt_idx")
 D3_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
 FREE_D3_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
-D3_PRICING = {"prompt": "0.0000006", "completion": "0.0000024"}
+D3_PROVIDER = "DeepInfra"
+D3_ENDPOINT_SLUG = "deepinfra/fp4"
+D3_PRICING = {"prompt": "0.0000005", "completion": "0.0000022"}
 D3_REASONING = {"enabled": False}
 D3_RUN_TAG = "reasoning_disabled"
 D3_ATTEMPT_INTERVAL_SECONDS = 3.2
@@ -391,17 +393,29 @@ def d3_preflight() -> tuple[str, dict]:
     import a4_existing_evidence as A4
 
     key = A4.load_key_from_bashrc("OPENROUTER_API_KEY", "sk-or-v1-")
-    catalog = requests.get("https://openrouter.ai/api/v1/models", timeout=45)
+    catalog = requests.get(
+        f"https://openrouter.ai/api/v1/models/{D3_MODEL}/endpoints", timeout=45
+    )
     catalog.raise_for_status()
-    matches = [row for row in catalog.json().get("data", []) if row.get("id") == D3_MODEL]
-    if len(matches) != 1 or any(str(matches[0].get("pricing", {}).get(k)) != D3_PRICING[k] for k in D3_PRICING):
-        raise RuntimeError("Paid D3 route or frozen input/output pricing changed; no judge request was sent")
+    endpoints = catalog.json().get("data", {}).get("endpoints", [])
+    matches = [
+        endpoint for endpoint in endpoints
+        if endpoint.get("tag") == D3_ENDPOINT_SLUG
+        and endpoint.get("provider_name") == D3_PROVIDER
+        and endpoint.get("status") == 0
+    ]
+    if len(matches) != 1 or any(
+        str(matches[0].get("pricing", {}).get(k)) != D3_PRICING[k]
+        for k in D3_PRICING
+    ):
+        raise RuntimeError("Pinned paid D3 endpoint or its frozen price changed; no judge request was sent")
     auth = requests.get("https://openrouter.ai/api/v1/auth/key", headers={"Authorization": f"Bearer {key}"}, timeout=30)
     if auth.status_code != 200:
         raise RuntimeError("OpenRouter key preflight failed; no judge request was sent")
     return key, {
         "route": D3_MODEL,
-        "provider": "Nvidia via OpenRouter",
+        "provider": f"{D3_PROVIDER} via OpenRouter",
+        "provider_route_slug": D3_ENDPOINT_SLUG,
         "input_price": D3_PRICING["prompt"],
         "output_price": D3_PRICING["completion"],
         "pricing_unit": "USD per token",
@@ -412,8 +426,16 @@ def build_d3_request(record: dict, A4) -> tuple[dict, str]:
     body, _ = A4.d3_request({"original_prompt": record["original_prompt"], "response": record["response"]})
     body["model"] = D3_MODEL
     body["reasoning"] = D3_REASONING
+    body["provider"] = {"only": [D3_ENDPOINT_SLUG], "allow_fallbacks": False}
     request_hash = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
     return body, request_hash
+
+
+def build_unpinned_paid_d3_request_hash(record: dict, A4) -> str:
+    body, _ = A4.d3_request({"original_prompt": record["original_prompt"], "response": record["response"]})
+    body["model"] = D3_MODEL
+    body["reasoning"] = D3_REASONING
+    return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
 
 def build_free_d3_request_hash(record: dict, A4) -> str:
@@ -437,7 +459,7 @@ def audit_d3_response_metadata(payload: object, headers: object = None) -> dict:
     provider = str(payload.get("provider") or "")
     served_model = str(payload.get("model") or "")
     issues = []
-    if provider != "Nvidia":
+    if provider != D3_PROVIDER:
         issues.append("provider_mismatch_or_missing")
     if served_model != D3_MODEL:
         issues.append("served_model_mismatch_or_missing")
@@ -901,6 +923,7 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
             accepted_request_hashes = {expected_request}
             if expected_request:
                 accepted_request_hashes.add(build_free_d3_request_hash(current, A4))
+                accepted_request_hashes.add(build_unpinned_paid_d3_request_hash(current, A4))
             if old["request_sha256"] not in accepted_request_hashes:
                 raise ValueError(f"J1 existing ledger request hash mismatch: {row_id}")
             existing[row_id] = old
@@ -1144,6 +1167,7 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
     all_costs_verified = unverified_cost_count == 0
     manifest = {
         "task_id": "J1",
+        "judge_route": route_info,
         "status": "complete",
         "row_slots": len(ledger),
         "unique_cells": len(set((x["scope"], x["model"]) for x in ledger)),
