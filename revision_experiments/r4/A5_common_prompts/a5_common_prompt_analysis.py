@@ -12,6 +12,7 @@ import json
 import math
 import argparse
 import csv
+import os
 import re
 import sys
 import threading
@@ -175,6 +176,215 @@ def build_primary_d3_inputs() -> tuple[list[dict], dict[str, str]]:
     return inputs, source_hashes
 
 
+def build_studywide_j1_inputs() -> tuple[list[dict], dict[str, str]]:
+    """Build the frozen 913-row J1 attack/control ledger without exposing text."""
+    import a4_existing_evidence as A4
+
+    r4 = REPO / "revision_experiments" / "r4"
+    pool_path = TIER0 / "02_dedup_and_config_audit" / "pool_913.csv"
+    pool_rows = pd.read_csv(pool_path, keep_default_na=False).to_dict("records")
+    pool = {f"{row['dataset']}|{int(row['prompt_idx'])}": row for row in pool_rows}
+    if len(pool) != 913:
+        raise ValueError(f"J1 requires 913 unique canonical prompts, found {len(pool)}")
+
+    source_paths = [
+        pool_path,
+        r4 / "A7_prompt_pool" / "a7_results_ledger.csv",
+        r4 / "G2_plaintext_control" / "g2_manifest.json",
+        r4 / "G2_plaintext_control" / "g2_generation_ledger.csv",
+        r4 / "G2_plaintext_control" / "g2_raw_qwen.csv",
+        r4 / "G2_plaintext_control" / "g2_raw_llama31_8b.csv",
+        r4 / "G2_plaintext_control" / "g2_raw_dream.csv",
+        r4 / "G2_plaintext_control" / "g2_raw_diffucoder.csv",
+        r4 / "G2_plaintext_control" / "g2_raw_llada.csv",
+        r4 / "G1_llama31_8b" / "g1_pif_manifest.json",
+        r4 / "G1_llama31_8b" / "g1_metacipher_manifest.json",
+        r4 / "G1_llama31_8b" / "g1_pif_feedback_control_manifest.json",
+        r4 / "G1_llama31_8b" / "g1_metacipher_plaintext_control_manifest.json",
+        r4 / "G1_llama31_8b" / "pif_query_ledger.csv",
+        r4 / "G1_llama31_8b" / "metacipher_query_ledger.csv",
+        r4 / "G1_llama31_8b" / "pif_feedback_control_rows.csv",
+        r4 / "G1_llama31_8b" / "metacipher_plaintext_control_rows.csv",
+        r4 / "G4_llada_locked" / "metacipher_openrouter_v4_0731" / "g4_metacipher_manifest.json",
+        r4 / "G4_llada_locked" / "metacipher_openrouter_v4_0731" / "metacipher_query_ledger.csv",
+        r4 / "G4_llada_locked" / "arrattack" / "g4_manifest.json",
+        r4 / "G4_llada_locked" / "arrattack" / "arrattack_results.csv",
+        r4 / "G5_falcon_budget" / "pilot_nvidia_single_device" / "g5_budget_pilot_manifest.json",
+        r4 / "G7_arrattack_fullpool" / "qwen2.5" / "g7_manifest.json",
+        r4 / "G7_arrattack_fullpool" / "qwen2.5" / "arrattack_results.csv",
+        r4 / "G7_arrattack_fullpool" / "llama" / "g7_manifest.json",
+        r4 / "G7_arrattack_fullpool" / "llama" / "arrattack_results.csv",
+        r4 / "G7_arrattack_fullpool" / "dream" / "g7_manifest.json",
+        r4 / "G7_arrattack_fullpool" / "dream" / "arrattack_results.csv",
+        r4 / "G7_arrattack_fullpool" / "diffucoder" / "g7_manifest.json",
+        r4 / "G7_arrattack_fullpool" / "diffucoder" / "arrattack_results.csv",
+        r4 / "G3_first_response" / "pif" / "qwen" / "g3_pif_qwen_manifest.json",
+        r4 / "G3_first_response" / "pif" / "qwen" / "g3_pif_first_response.csv",
+        r4 / "G3_first_response" / "pif" / "dream" / "g3_pif_first_response_native_decodefix_full_manifest.json",
+        r4 / "G3_first_response" / "pif" / "dream" / "g3_pif_first_response_native_decodefix_full.csv",
+        r4 / "G3_first_response" / "pif" / "diffucoder" / "g3_pif_first_response_native_decodefix_full_manifest.json",
+        r4 / "G3_first_response" / "pif" / "diffucoder" / "g3_pif_first_response_native_decodefix_full.csv",
+        r4 / "G3_first_response" / "pif" / "llada" / "g3_pif_first_response_smoke10_native_manifest.json",
+        r4 / "G3_first_response" / "pif" / "llada" / "g3_pif_first_response_smoke10_native.csv",
+        REPO / "results/metacipher/Metacipher_Judged/qwen.csv",
+        REPO / "results/metacipher/Metacipher_Judged/dream.csv",
+        REPO / "results/metacipher/Metacipher_Judged/diffucoder.csv",
+        r4 / "A2_attempts" / "a2_attempt_audit.json",
+        r4 / "G1_llama31_8b" / "g1_pif_manifest.json",
+        r4 / "G1_llama31_8b" / "g1_metacipher_manifest.json",
+        r4 / "A5_common_prompts" / "a5_primary_d3_reasoning_disabled_manifest.json",
+        r4 / "A5_common_prompts" / "a5_primary_d3_reasoning_disabled_ledger.csv",
+        REPO / "arrattack_fullpool" / "stage5_fullpool.py",
+        REPO / "scripts" / "r4_g1_generate.py",
+        REPO / "scripts" / "r4_g2_plaintext_control.py",
+        REPO / "submissions" / "TMLR" / "r4_plan.txt",
+    ]
+    source_hashes = {str(path.relative_to(REPO)): file_hash(path) for path in source_paths if path.is_file()}
+    a7_rows = pd.read_csv(r4 / "A7_prompt_pool" / "a7_results_ledger.csv", keep_default_na=False).to_dict("records")
+    a7_by_key = {(str(x["attack"]), str(x["model"]), str(x["canonical_key"])): x for x in a7_rows}
+    inputs: list[dict] = []
+
+    def rows(path: Path) -> list[dict]:
+        with path.open(newline="", encoding="utf-8-sig") as stream:
+            return list(csv.DictReader(stream))
+
+    def decode_hashed(text: str, expected_hash: str) -> str | None:
+        text = text or ""
+        candidates = (text, text.replace("\\r\\n", "\r\n").replace("\\n", "\n"))
+        for candidate in candidates:
+            if hashlib.sha256(candidate.encode("utf-8")).hexdigest() == expected_hash:
+                return candidate
+        return None
+
+    def add(scope: str, model: str, key: str, original: str, response: str, status: str,
+            response_hash: str = "", original_hash: str = "") -> None:
+        key = str(key)
+        if key not in pool:
+            raise ValueError(f"J1 canonical key is absent from pool: {scope}/{model}/{key}")
+        canonical_prompt = str(pool[key]["original_prompt"])
+        canonical_prompt_hash = hashlib.sha256(canonical_prompt.encode("utf-8")).hexdigest()
+        if original_hash and original_hash != canonical_prompt_hash:
+            raise ValueError(f"J1 original-prompt hash mismatch: {scope}/{model}/{key}")
+        if not original_hash and original:
+            original_candidates = (
+                str(original),
+                str(original).replace("\\r\\n", "\r\n").replace("\\n", "\n"),
+            )
+            if not any(comparable_prompt(candidate) == comparable_prompt(canonical_prompt)
+                       for candidate in original_candidates):
+                raise ValueError(f"J1 original prompt differs from canonical pool: {scope}/{model}/{key}")
+        response = response or ""
+        status = str(status or "missing").strip() or "missing"
+        if response_hash and response:
+            decoded = decode_hashed(response, response_hash)
+            if decoded is None:
+                status = "source_integrity_error"
+                response = ""
+            else:
+                response = decoded
+        elif status in {"ok", "completed"} and response:
+            response_hash = hashlib.sha256(response.encode("utf-8")).hexdigest()
+        if status in {"ok", "completed"} and not response.strip():
+            status = "empty_response"
+        inputs.append({
+            "scope": scope,
+            "model": model,
+            "canonical_key": key,
+            "dataset": key.split("|", 1)[0],
+            "prompt_idx": int(key.rsplit("|", 1)[1]),
+            "original_prompt": canonical_prompt,
+            "response": response,
+            "response_sha256": response_hash,
+            "original_prompt_sha256": canonical_prompt_hash,
+            "response_status": "present" if response.strip() else status,
+            "status": status,
+        })
+
+    # Primary PiF first-response rows: G3 for four victims and the G1 Llama-3.1 replacement.
+    pif_sources = [
+        ("qwen", r4 / "G3_first_response/pif/qwen/g3_pif_first_response.csv"),
+        ("dream", r4 / "G3_first_response/pif/dream/g3_pif_first_response_native_decodefix_full.csv"),
+        ("diffucoder", r4 / "G3_first_response/pif/diffucoder/g3_pif_first_response_native_decodefix_full.csv"),
+        ("llada", r4 / "G3_first_response/pif/llada/g3_pif_first_response_smoke10_native.csv"),
+    ]
+    for model, path in pif_sources:
+        for row in rows(path):
+            add("pif", model, row["canonical_key"], row.get("original_prompt", ""), row.get("response", ""),
+                row.get("status", ""), row.get("response_sha256", ""), row.get("original_prompt_sha256", ""))
+    for row in rows(r4 / "G1_llama31_8b/pif_query_ledger.csv"):
+        if str(row.get("query_index")) == "1":
+            add("pif", "llama31_8b", row["canonical_key"], row.get("original_prompt", ""), row.get("response", ""),
+                row.get("query_status", ""), row.get("response_sha256", ""), row.get("original_prompt_sha256", ""))
+
+    # Historical MetaCipher rows: A2 identifies first-response rows via the judged table's `attempts` field.
+    for model in ("qwen", "dream", "diffucoder"):
+        for row in rows(REPO / f"results/metacipher/Metacipher_Judged/{model}.csv"):
+            key = f"{row['dataset']}|{int(row['prompt_idx'])}"
+            try:
+                is_first = int(float(row.get("attempts", "0"))) == 1
+            except (TypeError, ValueError):
+                is_first = False
+            a7 = a7_by_key.get(("metacipher", model, key), {})
+            add("metacipher", model, key, row.get("original_prompt", ""),
+                row.get("final_response", "") if is_first else "", "ok" if is_first else "missing",
+                a7.get("response_sha256", "") if is_first else "")
+    for model, path in [
+        ("llama31_8b", r4 / "G1_llama31_8b/metacipher_query_ledger.csv"),
+        ("llada", r4 / "G4_llada_locked/metacipher_openrouter_v4_0731/metacipher_query_ledger.csv"),
+    ]:
+        for row in rows(path):
+            if str(row.get("query_index")) == "1":
+                add("metacipher", model, row["canonical_key"], row.get("original_prompt", ""), row.get("response", ""),
+                    row.get("query_status", ""), row.get("response_sha256", ""), row.get("original_prompt_sha256", ""))
+
+    # Use G7 ArrAttack outputs, except LLaDA, where D7 requires the G4 schedule-matched replacement.
+    arrattack_sources = [
+        ("qwen", r4 / "G7_arrattack_fullpool/qwen2.5/arrattack_results.csv"),
+        ("llama31_8b", r4 / "G7_arrattack_fullpool/llama/arrattack_results.csv"),
+        ("dream", r4 / "G7_arrattack_fullpool/dream/arrattack_results.csv"),
+        ("diffucoder", r4 / "G7_arrattack_fullpool/diffucoder/arrattack_results.csv"),
+        ("llada", r4 / "G4_llada_locked/arrattack/arrattack_results.csv"),
+    ]
+    for model, path in arrattack_sources:
+        for row in rows(path):
+            add("arrattack", model, row["canonical_key"], row.get("original_prompt", ""), row.get("target_response", ""),
+                row.get("status", ""), row.get("response_sha256", ""), row.get("original_prompt_sha256", ""))
+
+    # Match only decoder-identical controls: eight G2 configurations and both G1 Llama-3.1 controls.
+    g2_controls = [
+        ("qwen", "pif_arrattack_settings"), ("qwen", "metacipher_settings"),
+        ("llama31_8b", "pif_arrattack_settings"),
+        ("dream", "pif_arrattack_settings"), ("dream", "metacipher_settings"),
+        ("diffucoder", "pif_arrattack_settings"), ("diffucoder", "metacipher_settings"),
+        ("llada", "locked_128_steps_per_block"),
+    ]
+    for model, config in g2_controls:
+        path = r4 / f"G2_plaintext_control/g2_raw_{model}.csv"
+        for row in rows(path):
+            if row.get("config_id") == config:
+                add(f"control:{config}", model, row["canonical_key"], row.get("original_prompt", ""), row.get("response", ""),
+                    row.get("status", ""), row.get("response_sha256", ""), row.get("original_prompt_sha256", ""))
+    for config, filename in [
+        ("g1_pif_feedback", "pif_feedback_control_rows.csv"),
+        ("g1_metacipher", "metacipher_plaintext_control_rows.csv"),
+    ]:
+        for row in rows(r4 / f"G1_llama31_8b/{filename}"):
+            add(f"control:{config}", "llama31_8b", row["canonical_key"], row.get("original_prompt", ""), row.get("response", ""),
+                row.get("status", ""), row.get("response_sha256", ""), row.get("original_prompt_sha256", ""))
+
+    cell_counts: dict[tuple[str, str], int] = {}
+    for row in inputs:
+        cell = (row["scope"], row["model"])
+        cell_counts[cell] = cell_counts.get(cell, 0) + 1
+    expected_cells = 25
+    ids = [(row["scope"], row["model"], row["canonical_key"]) for row in inputs]
+    if len(inputs) != expected_cells * 913 or len(set(ids)) != len(ids) or len(cell_counts) != expected_cells:
+        raise ValueError(f"J1 scope cardinality/uniqueness failed: rows={len(inputs)}, cells={len(cell_counts)}")
+    if any(count != 913 for count in cell_counts.values()):
+        raise ValueError("J1 contains a cell without exactly 913 canonical row keys")
+    return inputs, source_hashes
+
+
 def d3_preflight() -> tuple[str, dict]:
     import a4_existing_evidence as A4
 
@@ -195,6 +405,65 @@ def build_d3_request(record: dict, A4) -> tuple[dict, str]:
     body["reasoning"] = D3_REASONING
     request_hash = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
     return body, request_hash
+
+
+def audit_d3_response_metadata(payload: object, headers: object = None) -> dict:
+    """Extract only redacted route and billing metadata from an OpenRouter response."""
+    payload = payload if isinstance(payload, dict) else {}
+    raw_usage = payload.get("usage")
+    usage = raw_usage if isinstance(raw_usage, dict) else {}
+    raw_cost = usage.get("cost")
+    try:
+        usage_cost = float(raw_cost) if raw_cost is not None else None
+    except (TypeError, ValueError):
+        usage_cost = None
+    provider = str(payload.get("provider") or "")
+    served_model = str(payload.get("model") or "")
+    issues = []
+    if provider != "Nvidia":
+        issues.append("provider_mismatch_or_missing")
+    if served_model != D3_MODEL:
+        issues.append("served_model_mismatch_or_missing")
+    if usage_cost is None:
+        issues.append("usage_cost_missing_or_invalid")
+    elif usage_cost != 0.0:
+        issues.append("nonzero_usage_cost")
+    if raw_usage is not None and not isinstance(raw_usage, dict):
+        issues.append("usage_object_invalid")
+    response_headers = headers if hasattr(headers, "get") else {}
+    request_id = str(payload.get("request_id") or response_headers.get("x-request-id", ""))
+    retry_after = str(response_headers.get("retry-after", "")).strip()
+    rate_limit_headers = {
+        name: str(response_headers.get(name, ""))
+        for name in (
+            "retry-after",
+            "x-ratelimit-limit",
+            "x-ratelimit-remaining",
+            "x-ratelimit-reset",
+            "x-ratelimit-reset-requests",
+            "x-ratelimit-reset-tokens",
+        )
+        if response_headers.get(name) is not None
+    }
+    error = payload.get("error")
+    provider_error = {}
+    if isinstance(error, dict):
+        for name in ("code", "type", "message"):
+            value = error.get(name)
+            if isinstance(value, (str, int, float)):
+                provider_error[name] = str(value)[:300]
+    return {
+        "issues": issues,
+        "provider": provider or None,
+        "served_model": served_model or None,
+        "usage_cost": usage_cost,
+        "generation_id": str(payload.get("id") or "") or None,
+        "request_id": request_id or None,
+        "usage_keys": sorted(usage.keys()),
+        "retry_after": retry_after or None,
+        "rate_limit_headers": rate_limit_headers,
+        "provider_error": provider_error,
+    }
 
 
 def run_primary_d3() -> None:
@@ -556,6 +825,328 @@ def holm(p_values: list[float]) -> list[float]:
     return adjusted
 
 
+def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume: bool = False) -> None:
+    """Score the frozen primary 913-row cells; never expose response text in outputs."""
+    import a4_existing_evidence as A4
+
+    inputs, source_hashes = build_studywide_j1_inputs()
+    source_hashes[str((HERE.parent / "A4_discrepancy_audit/a4_existing_evidence.py").relative_to(REPO))] = file_hash(
+        HERE.parent / "A4_discrepancy_audit/a4_existing_evidence.py"
+    )
+    source_hashes[str(Path(__file__).resolve().relative_to(REPO))] = file_hash(Path(__file__).resolve())
+    source_hashes[str((REPO / "submissions/TMLR/r4_plan.txt").relative_to(REPO))] = file_hash(
+        REPO / "submissions/TMLR/r4_plan.txt"
+    )
+
+    api_key, route_info = d3_preflight()
+    ledger_path = HERE / "j1_primary_d3_ledger.csv"
+    manifest_path = HERE / "j1_primary_d3_manifest.json"
+    fields = [
+        "scope", "model", "dataset", "prompt_idx", "canonical_key", "response_sha256",
+        "original_prompt_sha256", "request_sha256", "response_status", "status", "category",
+        "success", "api_attempts", "provider", "served_model", "usage_cost", "judgment_source",
+        "failure_detail",
+    ]
+    by_id = {(r["scope"], r["model"], r["canonical_key"]): r for r in inputs}
+    if len(by_id) != 22825:
+        raise ValueError(f"J1 row-key scope changed unexpectedly: {len(by_id)}")
+
+    prior_path = HERE / "a5_primary_d3_reasoning_disabled_ledger.csv"
+    prior_rows = pd.read_csv(prior_path, keep_default_na=False).to_dict("records")
+    prior_by_id = {(str(x["attack"]), str(x["model"]), str(x["canonical_key"])): x for x in prior_rows}
+    prior_model_name = {"llama31_8b": "llama"}
+    request_by_id: dict[tuple[str, str, str], tuple[dict, str]] = {}
+    request_groups: dict[tuple[str, str, str], list[tuple[str, str, str]]] = {}
+    for row_id, record in by_id.items():
+        if record["status"] not in {"ok", "completed"} or not record["response"].strip():
+            continue
+        body, request_hash = build_d3_request({
+            "original_prompt": record["original_prompt"],
+            "response": record["response"],
+        }, A4)
+        request_by_id[row_id] = (body, request_hash)
+        record["request_sha256"] = request_hash
+        # The frozen analysis identity is configuration + canonical row key.
+        # Do not merge judgments across cells merely because their text matches.
+        request_groups[row_id] = [row_id]
+
+    existing: dict[tuple[str, str, str], dict] = {}
+    if ledger_path.is_file() and ledger_path.stat().st_size:
+        old_rows = pd.read_csv(ledger_path, keep_default_na=False).to_dict("records")
+        for old in old_rows:
+            row_id = (str(old["scope"]), str(old["model"]), str(old["canonical_key"]))
+            if row_id in existing or row_id not in by_id:
+                raise ValueError(f"J1 existing ledger has duplicate or out-of-scope row: {row_id}")
+            current = by_id[row_id]
+            if old["response_sha256"] != current["response_sha256"] or old["original_prompt_sha256"] != current["original_prompt_sha256"]:
+                raise ValueError(f"J1 existing ledger source hash mismatch: {row_id}")
+            expected_request = request_by_id.get(row_id, ({}, ""))[1]
+            if old["request_sha256"] != expected_request:
+                raise ValueError(f"J1 existing ledger request hash mismatch: {row_id}")
+            existing[row_id] = old
+    cost_review_rows = [
+        old for old in existing.values()
+        if old.get("judgment_source") == "api_response_unverified"
+        and not str(old.get("usage_cost", "")).strip()
+    ]
+    nonzero_cost_rows = [
+        old for old in existing.values()
+        if str(old.get("usage_cost", "")).strip()
+        and float(old.get("usage_cost") or 0) != 0.0
+    ]
+
+    def ledger_row(record: dict, status: str, category: str = "", success: int | None = None,
+                   attempts: int = 0, provider: str = "", served_model: str = "", usage_cost: float | str = 0.0,
+                   source: str = "status_only", detail: str = "") -> dict:
+        row_id = (record["scope"], record["model"], record["canonical_key"])
+        request_hash = request_by_id.get(row_id, ({}, ""))[1]
+        return {
+            "scope": record["scope"], "model": record["model"], "dataset": record["dataset"],
+            "prompt_idx": record["prompt_idx"], "canonical_key": record["canonical_key"],
+            "response_sha256": record["response_sha256"],
+            "original_prompt_sha256": record["original_prompt_sha256"],
+            "request_sha256": request_hash, "response_status": record["response_status"],
+            "status": status, "category": category,
+            "success": "" if success is None else int(success), "api_attempts": attempts,
+            "provider": provider, "served_model": served_model, "usage_cost": usage_cost,
+            "judgment_source": source, "failure_detail": detail,
+        }
+
+    seeded: dict[tuple[str, str, str], dict] = dict(existing)
+    for row_id, record in by_id.items():
+        if row_id in seeded:
+            continue
+        request_hash = request_by_id.get(row_id, ({}, ""))[1]
+        if not request_hash:
+            seeded[row_id] = ledger_row(record, record["status"])
+            continue
+        old_id = (record["scope"], prior_model_name.get(record["model"], record["model"]), record["canonical_key"])
+        old = prior_by_id.get(old_id) if record["scope"] in {"pif", "metacipher", "arrattack"} else None
+        if old and old.get("response_sha256") == record["response_sha256"] and old.get("original_prompt_sha256") == record["original_prompt_sha256"]:
+            if old.get("request_sha256") != request_hash:
+                raise ValueError(f"J1 prior A5 request hash mismatch: {row_id}")
+            old_status = str(old.get("status", ""))
+            if old_status in {"ok", "judge_error"}:
+                seeded[row_id] = ledger_row(
+                    record, old_status, old.get("category", ""),
+                    int(old["success"]) if old.get("success", "") != "" else None,
+                    int(old.get("api_attempts", 0) or 0), old.get("provider", ""), old.get("served_model", ""),
+                    0.0, "A5_exact_request_reuse" if old_status == "ok" else "A5_prior_error_retained",
+                    old.get("failure_detail", ""),
+                )
+
+    # Existing J1 results and exact A5 reuses can satisfy identical request bodies across cells.
+    result_by_request: dict[tuple[str, str, str], dict] = {}
+    for row_id, old in seeded.items():
+        if request_by_id.get(row_id, ({}, ""))[1] and old.get("status") in {"ok", "judge_error"}:
+            result_by_request[row_id] = old
+
+    if preflight_only:
+        pending_hashes = [row_id for row_id in request_groups if row_id not in result_by_request]
+        counts = {}
+        for record in inputs:
+            counts[record["status"]] = counts.get(record["status"], 0) + 1
+        print(json.dumps({
+            "mode": "preflight_only", "row_slots": len(inputs), "cell_count": len(set((r["scope"], r["model"]) for r in inputs)),
+            "status_counts": counts, "reused_or_retained_row_keys": len(result_by_request),
+            "unique_new_requests": len(pending_hashes), "route": route_info,
+            "cost_review_rows": len(cost_review_rows),
+            "resume_allowed": not cost_review_rows,
+            "estimated_api_cost_usd": 0 if not cost_review_rows else None,
+        }, indent=4, ensure_ascii=False))
+        return
+
+    if nonzero_cost_rows:
+        raise RuntimeError(f"J1 resume blocked: {len(nonzero_cost_rows)} ledger row(s) report nonzero cost")
+    if cost_review_rows and not allow_unverified_cost_resume:
+        raise RuntimeError(
+            f"J1 resume blocked: {len(cost_review_rows)} prior API call(s) have unknown or nonzero cost; "
+            "reconcile billing or use the explicit user-authorized resume override"
+        )
+
+    if not ledger_path.exists():
+        with ledger_path.open("w", newline="", encoding="utf-8") as stream:
+            csv.DictWriter(stream, fieldnames=fields).writeheader()
+        os.chmod(ledger_path, 0o600)
+    with ledger_path.open("a", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fields)
+        for row_id, item in seeded.items():
+            if row_id not in existing:
+                writer.writerow(item)
+        stream.flush()
+    existing.update(seeded)
+
+    last_request_at = 0.0
+    completed_calls = 0
+    total_cost = 0.0
+    session = requests.Session()
+
+    def persist_unverified_api_row(row_id: tuple[str, str, str], attempts: int, diagnostic: dict) -> None:
+        record = by_id[row_id]
+        cost = diagnostic.get("usage_cost")
+        item = ledger_row(
+            record, "judge_error", attempts=attempts,
+            provider=str(diagnostic.get("provider") or ""),
+            served_model=str(diagnostic.get("served_model") or ""),
+            usage_cost="" if cost is None else float(cost),
+            source="api_response_unverified",
+            detail=json.dumps(diagnostic, ensure_ascii=False, sort_keys=True),
+        )
+        with ledger_path.open("a", newline="", encoding="utf-8") as stream:
+            csv.DictWriter(stream, fieldnames=fields).writerow(item)
+            stream.flush()
+        existing[row_id] = item
+        os.chmod(ledger_path, 0o600)
+
+    pending = [row_id for row_id in request_groups if row_id not in result_by_request]
+    for row_id in pending:
+        row_ids = request_groups[row_id]
+        body = request_by_id[row_id][0]
+        status = "judge_error"
+        category = provider = served_model = failure_detail = ""
+        success: bool | None = None
+        attempts = 0
+        row_cost: float | None = None
+        for attempt in range(2):
+            wait = D3_ATTEMPT_INTERVAL_SECONDS - (time.monotonic() - last_request_at)
+            if wait > 0:
+                time.sleep(wait)
+            last_request_at = time.monotonic()
+            attempts += 1
+            try:
+                response = session.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json",
+                             "X-Title": "TMLR R4 study-wide J1"},
+                    json=body, timeout=300,
+                )
+                payload = response.json() if response.content else {}
+                if not isinstance(payload, dict):
+                    payload = {}
+                if response.status_code == 200:
+                    diagnostic = audit_d3_response_metadata(payload, getattr(response, "headers", {}))
+                    provider = str(diagnostic["provider"] or "")
+                    served_model = str(diagnostic["served_model"] or "")
+                    row_cost = diagnostic["usage_cost"]
+                    if diagnostic["issues"]:
+                        item = ledger_row(
+                            by_id[row_id], "judge_error", attempts=attempts,
+                            provider=provider, served_model=served_model,
+                            usage_cost="" if row_cost is None else row_cost,
+                            source="api_response_unverified",
+                            detail=json.dumps(diagnostic, ensure_ascii=False, sort_keys=True),
+                        )
+                        with ledger_path.open("a", newline="", encoding="utf-8") as stream:
+                            csv.DictWriter(stream, fieldnames=fields).writerow(item)
+                            stream.flush()
+                        existing[row_id] = item
+                        os.chmod(ledger_path, 0o600)
+                        raise RuntimeError(
+                            "J1 stopped after recording redacted route/cost metadata; inspect the ledger row before resuming"
+                        )
+                    content = (payload.get("choices") or [{}])[0].get("message", {}).get("content") or ""
+                    category, success, parsed = A4.parse_d3_result(content)
+                    if parsed == "ok":
+                        status = "ok"
+                        break
+                    failure_detail = parsed
+                else:
+                    diagnostic = audit_d3_response_metadata(payload, getattr(response, "headers", {}))
+                    diagnostic["issues"].append(f"http_{response.status_code}")
+                    diagnostic["http_status"] = response.status_code
+                    provider = str(diagnostic["provider"] or "")
+                    served_model = str(diagnostic["served_model"] or "")
+                    row_cost = diagnostic["usage_cost"]
+                    persist_unverified_api_row(row_id, attempts, diagnostic)
+                    raise RuntimeError(
+                        "J1 stopped after an HTTP error; redacted billing metadata was recorded and the request will not be retried"
+                    )
+            except RuntimeError:
+                raise
+            except Exception as exc:
+                diagnostic = {
+                    "issues": ["transport_or_response_parse_error"],
+                    "exception_type": type(exc).__name__,
+                    "provider": provider or None,
+                    "served_model": served_model or None,
+                    "usage_cost": row_cost,
+                    "generation_id": None,
+                    "request_id": None,
+                    "usage_keys": [],
+                }
+                persist_unverified_api_row(row_id, attempts, diagnostic)
+                raise RuntimeError(
+                    "J1 stopped after a transport/response error; the row is recorded with unverified billing and will not be retried"
+                ) from exc
+            if attempt == 0:
+                time.sleep(10 if status == "http_429" else 2)
+        if status != "ok":
+            category, success, status = "", None, "judge_error"
+        if row_cost is not None:
+            total_cost += row_cost
+        result = {
+            "status": status, "category": category,
+            "success": "" if success is None else int(success), "api_attempts": attempts,
+            "provider": provider, "served_model": served_model, "usage_cost": row_cost,
+            "failure_detail": failure_detail,
+        }
+        with ledger_path.open("a", newline="", encoding="utf-8") as stream:
+            writer = csv.DictWriter(stream, fieldnames=fields)
+            for row_id in row_ids:
+                if row_id in existing:
+                    continue
+                record = by_id[row_id]
+                item = ledger_row(record, result["status"], result["category"],
+                                  int(result["success"]) if result["success"] != "" else None,
+                                  result["api_attempts"], result["provider"], result["served_model"],
+                                  "" if result["usage_cost"] is None else result["usage_cost"], "new_api",
+                                  result["failure_detail"])
+                writer.writerow(item)
+                existing[row_id] = item
+        completed_calls += 1
+        if completed_calls % 100 == 0 or completed_calls == len(pending):
+            print(f"J1 progress: {completed_calls}/{len(pending)} new unique requests; verified cost=${total_cost:.6f}", flush=True)
+
+    os.chmod(ledger_path, 0o600)
+    ledger = pd.read_csv(ledger_path, keep_default_na=False).to_dict("records")
+    actual_ids = {(str(x["scope"]), str(x["model"]), str(x["canonical_key"])) for x in ledger}
+    if len(ledger) != len(inputs) or len(actual_ids) != len(ledger) or actual_ids != set(by_id):
+        raise ValueError(f"J1 ledger incomplete or inconsistent: rows={len(ledger)}, unique_ids={len(actual_ids)}")
+    status_counts = {}
+    for row in ledger:
+        status_counts[row["status"]] = status_counts.get(row["status"], 0) + 1
+    api_rows = [row for row in ledger if row.get("judgment_source") in {"new_api", "api_response_unverified"}]
+    unverified_cost_count = sum(1 for row in api_rows if not str(row.get("usage_cost", "")).strip())
+    verified_cost_total = sum(float(row["usage_cost"]) for row in api_rows if str(row.get("usage_cost", "")).strip())
+    all_costs_verified_zero = unverified_cost_count == 0 and verified_cost_total == 0.0
+    manifest = {
+        "task_id": "J1",
+        "status": "complete",
+        "row_slots": len(ledger),
+        "unique_cells": len(set((x["scope"], x["model"]) for x in ledger)),
+        "status_counts": status_counts,
+        "d3_route": route_info,
+        "judge_configuration": {"temperature": 0, "top_p": 1, "max_tokens": 256, "reasoning": D3_REASONING,
+                                "retry": "one identical retry only for empty output or invalid JSON after verified zero-cost route; HTTP and transport errors fail closed"},
+        "new_unique_requests": len(api_rows),
+        "api_attempt_count": sum(int(row.get("api_attempts", 0) or 0) for row in api_rows),
+        "reported_usage_cost_usd": verified_cost_total,
+        "unverified_cost_rows": unverified_cost_count,
+        "total_cost_verified": all_costs_verified_zero,
+        "input_sha256": source_hashes,
+        "output_sha256": {ledger_path.name: file_hash(ledger_path)},
+        "raw_prompt_or_response_text_in_outputs": False,
+        "source_integrity_errors_are_not_judged": True,
+        "unresolved_prior_a5_errors_are_not_retried": True,
+    }
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=4) + "\n", encoding="utf-8")
+    os.chmod(manifest_path, 0o600)
+    print(json.dumps({"status": manifest["status"], "row_slots": len(ledger), "status_counts": status_counts,
+                      "new_unique_requests": len(api_rows), "reported_usage_cost_usd": verified_cost_total,
+                      "unverified_cost_rows": unverified_cost_count,
+                      "total_cost_verified": all_costs_verified_zero}, indent=4))
+
+
 def main() -> None:
     matrix_rows: list[dict] = []
     source_hashes: dict[str, str] = {}
@@ -797,12 +1388,24 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-primary-d3", action="store_true", help="Run the approved reasoning-disabled D3 batch for the 90-row A7-eligible A5 subset")
     parser.add_argument("--salvage-primary-d3-errors-once", action="store_true", help="Run the user-approved single salvage attempt for 11 remaining failed D3 rows")
+    parser.add_argument("--preflight-studywide-j1", action="store_true", help="Verify the frozen J1 sources, request count, and zero-priced route without scoring")
+    parser.add_argument("--run-studywide-j1", action="store_true", help="Run the approved, resumable, reasoning-disabled study-wide J1 batch")
+    parser.add_argument("--resume-studywide-j1-after-unverified-cost", action="store_true", help="Resume remaining row keys without retrying the recorded cost-unknown row; requires explicit task approval")
     args = parser.parse_args()
-    if args.run_primary_d3 and args.salvage_primary_d3_errors_once:
-        parser.error("Choose either --run-primary-d3 or --salvage-primary-d3-errors-once")
+    selected = [args.run_primary_d3, args.salvage_primary_d3_errors_once,
+                args.preflight_studywide_j1, args.run_studywide_j1,
+                args.resume_studywide_j1_after_unverified_cost]
+    if sum(selected) > 1:
+        parser.error("Choose exactly one run/preflight mode")
     elif args.salvage_primary_d3_errors_once:
         salvage_primary_d3_errors_once()
     elif args.run_primary_d3:
         run_primary_d3()
+    elif args.preflight_studywide_j1:
+        run_studywide_j1(preflight_only=True)
+    elif args.run_studywide_j1:
+        run_studywide_j1()
+    elif args.resume_studywide_j1_after_unverified_cost:
+        run_studywide_j1(allow_unverified_cost_resume=True)
     else:
         main()
