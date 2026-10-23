@@ -35,7 +35,9 @@ import common as C  # noqa: E402
 OUT = HERE
 ATTACKS = ("pif", "metacipher", "arrattack")
 KEY = ("dataset", "prompt_idx")
-D3_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
+D3_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+FREE_D3_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free"
+D3_PRICING = {"prompt": "0.0000006", "completion": "0.0000024"}
 D3_REASONING = {"enabled": False}
 D3_RUN_TAG = "reasoning_disabled"
 D3_ATTEMPT_INTERVAL_SECONDS = 3.2
@@ -392,19 +394,34 @@ def d3_preflight() -> tuple[str, dict]:
     catalog = requests.get("https://openrouter.ai/api/v1/models", timeout=45)
     catalog.raise_for_status()
     matches = [row for row in catalog.json().get("data", []) if row.get("id") == D3_MODEL]
-    if len(matches) != 1 or any(float(matches[0].get("pricing", {}).get(k, "inf")) != 0 for k in ("prompt", "completion")):
-        raise RuntimeError("D3 route is missing or no longer zero-priced; no judge request was sent")
+    if len(matches) != 1 or any(str(matches[0].get("pricing", {}).get(k)) != D3_PRICING[k] for k in D3_PRICING):
+        raise RuntimeError("Paid D3 route or frozen input/output pricing changed; no judge request was sent")
     auth = requests.get("https://openrouter.ai/api/v1/auth/key", headers={"Authorization": f"Bearer {key}"}, timeout=30)
     if auth.status_code != 200:
         raise RuntimeError("OpenRouter key preflight failed; no judge request was sent")
-    return key, {"route": D3_MODEL, "provider": "Nvidia via OpenRouter", "input_price": "0", "output_price": "0"}
+    return key, {
+        "route": D3_MODEL,
+        "provider": "Nvidia via OpenRouter",
+        "input_price": D3_PRICING["prompt"],
+        "output_price": D3_PRICING["completion"],
+        "pricing_unit": "USD per token",
+    }
 
 
 def build_d3_request(record: dict, A4) -> tuple[dict, str]:
     body, _ = A4.d3_request({"original_prompt": record["original_prompt"], "response": record["response"]})
+    body["model"] = D3_MODEL
     body["reasoning"] = D3_REASONING
     request_hash = hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
     return body, request_hash
+
+
+def build_free_d3_request_hash(record: dict, A4) -> str:
+    body, _ = A4.d3_request({"original_prompt": record["original_prompt"], "response": record["response"]})
+    if body.get("model") != FREE_D3_MODEL:
+        raise ValueError("Prior free-tier request identity is not the expected Nemotron model")
+    body["reasoning"] = D3_REASONING
+    return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
 
 def audit_d3_response_metadata(payload: object, headers: object = None) -> dict:
@@ -426,8 +443,8 @@ def audit_d3_response_metadata(payload: object, headers: object = None) -> dict:
         issues.append("served_model_mismatch_or_missing")
     if usage_cost is None:
         issues.append("usage_cost_missing_or_invalid")
-    elif usage_cost != 0.0:
-        issues.append("nonzero_usage_cost")
+    elif usage_cost < 0:
+        issues.append("negative_usage_cost")
     if raw_usage is not None and not isinstance(raw_usage, dict):
         issues.append("usage_object_invalid")
     response_headers = headers if hasattr(headers, "get") else {}
@@ -881,7 +898,10 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
             if old["response_sha256"] != current["response_sha256"] or old["original_prompt_sha256"] != current["original_prompt_sha256"]:
                 raise ValueError(f"J1 existing ledger source hash mismatch: {row_id}")
             expected_request = request_by_id.get(row_id, ({}, ""))[1]
-            if old["request_sha256"] != expected_request:
+            accepted_request_hashes = {expected_request}
+            if expected_request:
+                accepted_request_hashes.add(build_free_d3_request_hash(current, A4))
+            if old["request_sha256"] not in accepted_request_hashes:
                 raise ValueError(f"J1 existing ledger request hash mismatch: {row_id}")
             existing[row_id] = old
     cost_review_rows = [
@@ -889,17 +909,19 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
         if old.get("judgment_source") == "api_response_unverified"
         and not str(old.get("usage_cost", "")).strip()
     ]
-    nonzero_cost_rows = [
+    invalid_cost_rows = [
         old for old in existing.values()
         if str(old.get("usage_cost", "")).strip()
-        and float(old.get("usage_cost") or 0) != 0.0
+        and (not math.isfinite(float(old.get("usage_cost") or 0)) or float(old.get("usage_cost") or 0) < 0)
     ]
 
     def ledger_row(record: dict, status: str, category: str = "", success: int | None = None,
                    attempts: int = 0, provider: str = "", served_model: str = "", usage_cost: float | str = 0.0,
-                   source: str = "status_only", detail: str = "") -> dict:
+                   source: str = "status_only", detail: str = "", request_hash_override: str | None = None) -> dict:
         row_id = (record["scope"], record["model"], record["canonical_key"])
-        request_hash = request_by_id.get(row_id, ({}, ""))[1]
+        request_hash = request_hash_override
+        if request_hash is None:
+            request_hash = request_by_id.get(row_id, ({}, ""))[1]
         return {
             "scope": record["scope"], "model": record["model"], "dataset": record["dataset"],
             "prompt_idx": record["prompt_idx"], "canonical_key": record["canonical_key"],
@@ -923,7 +945,8 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
         old_id = (record["scope"], prior_model_name.get(record["model"], record["model"]), record["canonical_key"])
         old = prior_by_id.get(old_id) if record["scope"] in {"pif", "metacipher", "arrattack"} else None
         if old and old.get("response_sha256") == record["response_sha256"] and old.get("original_prompt_sha256") == record["original_prompt_sha256"]:
-            if old.get("request_sha256") != request_hash:
+            free_request_hash = build_free_d3_request_hash(record, A4)
+            if old.get("request_sha256") not in {request_hash, free_request_hash}:
                 raise ValueError(f"J1 prior A5 request hash mismatch: {row_id}")
             old_status = str(old.get("status", ""))
             if old_status in {"ok", "judge_error"}:
@@ -932,7 +955,7 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
                     int(old["success"]) if old.get("success", "") != "" else None,
                     int(old.get("api_attempts", 0) or 0), old.get("provider", ""), old.get("served_model", ""),
                     0.0, "A5_exact_request_reuse" if old_status == "ok" else "A5_prior_error_retained",
-                    old.get("failure_detail", ""),
+                    old.get("failure_detail", ""), old.get("request_sha256", ""),
                 )
 
     # Existing J1 results and exact A5 reuses can satisfy identical request bodies across cells.
@@ -952,12 +975,12 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
             "unique_new_requests": len(pending_hashes), "route": route_info,
             "cost_review_rows": len(cost_review_rows),
             "resume_allowed": not cost_review_rows,
-            "estimated_api_cost_usd": 0 if not cost_review_rows else None,
+            "estimated_api_cost_usd": None,
         }, indent=4, ensure_ascii=False))
         return
 
-    if nonzero_cost_rows:
-        raise RuntimeError(f"J1 resume blocked: {len(nonzero_cost_rows)} ledger row(s) report nonzero cost")
+    if invalid_cost_rows:
+        raise RuntimeError(f"J1 resume blocked: {len(invalid_cost_rows)} ledger row(s) report invalid cost")
     if cost_review_rows and not allow_unverified_cost_resume:
         raise RuntimeError(
             f"J1 resume blocked: {len(cost_review_rows)} prior API call(s) have unknown or nonzero cost; "
@@ -1118,7 +1141,7 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
     api_rows = [row for row in ledger if row.get("judgment_source") in {"new_api", "api_response_unverified"}]
     unverified_cost_count = sum(1 for row in api_rows if not str(row.get("usage_cost", "")).strip())
     verified_cost_total = sum(float(row["usage_cost"]) for row in api_rows if str(row.get("usage_cost", "")).strip())
-    all_costs_verified_zero = unverified_cost_count == 0 and verified_cost_total == 0.0
+    all_costs_verified = unverified_cost_count == 0
     manifest = {
         "task_id": "J1",
         "status": "complete",
@@ -1132,7 +1155,8 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
         "api_attempt_count": sum(int(row.get("api_attempts", 0) or 0) for row in api_rows),
         "reported_usage_cost_usd": verified_cost_total,
         "unverified_cost_rows": unverified_cost_count,
-        "total_cost_verified": all_costs_verified_zero,
+        "total_cost_verified": all_costs_verified,
+        "total_cost_is_zero": verified_cost_total == 0.0,
         "input_sha256": source_hashes,
         "output_sha256": {ledger_path.name: file_hash(ledger_path)},
         "raw_prompt_or_response_text_in_outputs": False,
@@ -1144,7 +1168,8 @@ def run_studywide_j1(preflight_only: bool = False, allow_unverified_cost_resume:
     print(json.dumps({"status": manifest["status"], "row_slots": len(ledger), "status_counts": status_counts,
                       "new_unique_requests": len(api_rows), "reported_usage_cost_usd": verified_cost_total,
                       "unverified_cost_rows": unverified_cost_count,
-                      "total_cost_verified": all_costs_verified_zero}, indent=4))
+                      "total_cost_verified": all_costs_verified,
+                      "total_cost_is_zero": verified_cost_total == 0.0}, indent=4))
 
 
 def main() -> None:
@@ -1388,7 +1413,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-primary-d3", action="store_true", help="Run the approved reasoning-disabled D3 batch for the 90-row A7-eligible A5 subset")
     parser.add_argument("--salvage-primary-d3-errors-once", action="store_true", help="Run the user-approved single salvage attempt for 11 remaining failed D3 rows")
-    parser.add_argument("--preflight-studywide-j1", action="store_true", help="Verify the frozen J1 sources, request count, and zero-priced route without scoring")
+    parser.add_argument("--preflight-studywide-j1", action="store_true", help="Verify the frozen J1 sources, request count, and paid route pricing without scoring")
     parser.add_argument("--run-studywide-j1", action="store_true", help="Run the approved, resumable, reasoning-disabled study-wide J1 batch")
     parser.add_argument("--resume-studywide-j1-after-unverified-cost", action="store_true", help="Resume remaining row keys without retrying the recorded cost-unknown row; requires explicit task approval")
     args = parser.parse_args()
